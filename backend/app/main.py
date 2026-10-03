@@ -242,6 +242,7 @@ def create_app(data_dir=None, demo_mode=None):
         category: str | None = None,
         q: str = "",
         owner_id: str | None = None,
+        status: str | None = None,
         service_mode: str | None = None,
         location: str | None = None,
         time_start: datetime | None = None,
@@ -265,6 +266,7 @@ def create_app(data_dir=None, demo_mode=None):
                 if (not kind or r["kind"] == kind)
                 and (not category or r["category"] == category)
                 and (not owner_id or r["owner_id"] == owner_id)
+                and (not status or r["status"] == status)
                 and (not service_mode or r["data"]["service_mode"] == service_mode)
                 and (not location or location.lower() in r["data"]["location"].lower())
                 and (not time_start or d.instant(r["data"]["end"]) >= time_start)
@@ -308,16 +310,42 @@ def create_app(data_dir=None, demo_mode=None):
             d.version(row, b.pop("expected_version"))
             if row["owner_id"] != user:
                 d.fail("UNAUTHORIZED_ACTION", "只能修改自己的刊登", status=403)
+            d.ensure_listing_mutable(s, row)
             if row["kind"] != b["kind"]:
                 d.fail("INVALID_INPUT", "不能改變刊登入口", status=422)
             category = b.pop("category")
             b.pop("kind")
             title = b.pop("title")
+            if not set(b["required_skills"] + b["preferred_skills"]) <= set(
+                TEMPLATES[category]["skills"]
+            ):
+                d.fail("INVALID_INPUT", "技能標籤不屬於此服務模板", status=422)
             s.execute(
                 "UPDATE listings SET category=?,title=?,data=?,version=version+1 WHERE id=?",
                 (category, title, dump(b), id),
             )
             d.emit(s, user, "listing", id, "UPDATED")
+            d.cancel_listing_drafts(s, row, user)
+            return d.get(s, "listings", id)
+
+        return command(request, body, run)
+
+    @app.post("/api/v1/listings/{id}/close")
+    def close_listing(request: Request, id: str, body: sc.Command):
+        def run(s, user, b):
+            row = d.get(s, "listings", id)
+            d.version(row, b["expected_version"])
+            if row["owner_id"] != user:
+                d.fail("UNAUTHORIZED_ACTION", "只能撤回自己的刊登", status=403)
+            d.ensure_listing_mutable(s, row)
+            if row["status"] != "OPEN":
+                d.fail("INVALID_STATE", "刊登已不在公開中")
+            s.execute(
+                "UPDATE listings SET status='CLOSED',version=version+1 WHERE id=?",
+                (id,),
+            )
+            d.cancel_listing_drafts(s, row, user)
+            d.emit(s, user, "listing", id, "CLOSED")
             return d.get(s, "listings", id)
 
         return command(request, body, run)
@@ -329,6 +357,8 @@ def create_app(data_dir=None, demo_mode=None):
             d.version(row, b["expected_version"])
             if row["owner_id"] != user:
                 d.fail("UNAUTHORIZED_ACTION", "只能重新開放自己的需求", status=403)
+            if row["status"] == "OPEN":
+                d.fail("INVALID_STATE", "刊登已公開，不需要重新開放")
             if s.one(
                 "SELECT id FROM agreements WHERE listing_id=? AND status IN ('ACTIVE','CLOSING','DISPUTED','UNRESOLVED','COMPLETED')",
                 (id,),
@@ -377,7 +407,7 @@ def create_app(data_dir=None, demo_mode=None):
             if d.get(s, "listings", id)["owner_id"] != user:
                 d.fail("UNAUTHORIZED_ACTION", "只有刊登者可查看全部回應", status=403)
             return [
-                unpack(r)
+                d.proposal_view(s, unpack(r))
                 for r in s.all("SELECT * FROM proposals WHERE listing_id=?", (id,))
             ]
 
@@ -387,12 +417,20 @@ def create_app(data_dir=None, demo_mode=None):
     def proposals(request: Request, body: sc.ProposalInput):
         return command(request, body, lambda s, u, b: d.create_proposal(s, u, b))
 
+    @app.post("/api/v1/proposals/recommended")
+    def recommended_proposal(request: Request, body: sc.ProposalInput):
+        def run(s, u, b):
+            p = d.create_proposal(s, u, b)
+            return d.recommend(s, u, p, p["version"])
+
+        return command(request, body, run)
+
     @app.get("/api/v1/me/proposals")
     def my_proposals(request: Request):
         return read(
             request,
             lambda s, u: [
-                unpack(r)
+                d.proposal_view(s, unpack(r))
                 for r in s.all(
                     "SELECT * FROM proposals WHERE requester_id=? OR provider_id=? ORDER BY rowid DESC",
                     (u, u),
@@ -405,7 +443,7 @@ def create_app(data_dir=None, demo_mode=None):
         def run(s, u):
             p = d.get(s, "proposals", id)
             d.participant(p, u)
-            return p
+            return d.proposal_view(s, p)
 
         return read(request, run)
 
@@ -516,6 +554,16 @@ def create_app(data_dir=None, demo_mode=None):
             lambda s, u, b: d.confirm(s, u, d.get(s, "agreements", id), b),
         )
 
+    @app.post("/api/v1/agreements/{id}/cancel-draft")
+    def cancel_draft(request: Request, id: str, body: sc.Command):
+        return command(
+            request,
+            body,
+            lambda s, u, b: d.cancel_agreement_draft(
+                s, u, d.get(s, "agreements", id), b["expected_version"]
+            ),
+        )
+
     @app.post("/api/v1/stages/{id}/fund")
     def fund(request: Request, id: str, body: sc.Command):
         return command(
@@ -585,7 +633,7 @@ def create_app(data_dir=None, demo_mode=None):
         return read(
             request,
             lambda s, u: [
-                unpack(r)
+                d.agreement_view(s, unpack(r), u)
                 for r in s.all(
                     "SELECT * FROM agreements WHERE requester_id=? OR provider_id=? ORDER BY rowid DESC",
                     (u, u),
@@ -600,7 +648,7 @@ def create_app(data_dir=None, demo_mode=None):
             lambda s, u: {
                 **s.one("SELECT * FROM accounts WHERE user_id=?", (u,)),
                 "ledger": s.all(
-                    "SELECT l.* FROM ledger l JOIN payment_intents p ON p.id=l.payment_id WHERE p.payer_id=? OR p.payee_id=? ORDER BY l.created DESC",
+                    "SELECT l.*,p.agreement_id FROM ledger l JOIN payment_intents p ON p.id=l.payment_id WHERE p.payer_id=? OR p.payee_id=? ORDER BY l.created DESC",
                     (u, u),
                 ),
                 "simulated": True,

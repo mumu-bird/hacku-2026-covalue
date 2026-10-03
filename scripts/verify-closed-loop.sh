@@ -26,6 +26,7 @@ for attempt in {1..30}; do
 done
 if [[ "$ready" != true ]]; then cat "$run_dir/server.log" >&2; exit 1; fi
 unset HOURLINK_SCENARIO
+HOURLINK_UI_URL="$HOURLINK_TEST_URL" node scripts/ui-review.cjs | tee artifacts/browser/closed-loop/ui-review.log
 node scripts/closed-loop-check.cjs | tee artifacts/browser/closed-loop/browser.log
 uv run python -m scripts.audit_closed_loop | tee artifacts/browser/closed-loop/audit.log
 uv run python -m scripts.mechanism_experiments | tee artifacts/browser/closed-loop/mechanism.log

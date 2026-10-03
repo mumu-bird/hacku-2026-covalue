@@ -1,4 +1,12 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  createContext,
+  useContext,
+} from "react";
+import { Journey, NextStep, nextAction, ValuePreview } from "./Workflow";
+import { AppBoundary } from "./AppBoundary";
 import { ValuePerspectives } from "./ValuePerspectives";
 import { ValueModelLab } from "./ValueModelLab";
 import { MechanismLab } from "./MechanismLab";
@@ -51,6 +59,7 @@ import {
 } from "lucide-react";
 import { api, Data, APIError, money, minutes, date, labels } from "./api";
 import "./styles.css";
+import "./design-system.css";
 const qc = new QueryClient({
   defaultOptions: { queries: { retry: false, refetchOnWindowFocus: false } },
 });
@@ -119,9 +128,12 @@ function Loading() {
 }
 function ErrorBox({ error }: { error: unknown }) {
   return (
-    <div className="notice danger">
+    <div className="notice danger" role="alert">
       <AlertCircle size={17} />
-      {error instanceof Error ? error.message : "無法讀取資料"}
+      <span>{error instanceof Error ? error.message : "無法讀取資料"}</span>
+      <button className="text-button" onClick={() => qc.invalidateQueries()}>
+        重新讀取
+      </button>
     </div>
   );
 }
@@ -134,9 +146,66 @@ function Modal({
   children: React.ReactNode;
   onClose: () => void;
 }) {
+  const dialog = useRef<HTMLElement>(null);
+  const close = useRef(onClose);
+  close.current = onClose;
+  useEffect(() => {
+    const previous = document.activeElement as HTMLElement | null;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusable = () =>
+      Array.from(
+        dialog.current?.querySelectorAll<HTMLElement>(
+          'button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex="0"]',
+        ) || [],
+      ).filter((e) => e.getClientRects().length);
+    const firstField = dialog.current?.querySelector<HTMLElement>(
+      "input:not(:disabled), select:not(:disabled), textarea:not(:disabled)",
+    );
+    (firstField || dialog.current)?.focus();
+    const keydown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        close.current();
+      }
+      if (e.key === "Tab") {
+        const items = focusable();
+        if (!items.length) {
+          e.preventDefault();
+          dialog.current?.focus();
+          return;
+        }
+        const first = items[0],
+          last = items[items.length - 1];
+        if (
+          e.shiftKey &&
+          (document.activeElement === first ||
+            document.activeElement === dialog.current)
+        ) {
+          e.preventDefault();
+          last.focus();
+        } else if (
+          !e.shiftKey &&
+          (document.activeElement === last ||
+            document.activeElement === dialog.current)
+        ) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", keydown);
+    return () => {
+      document.removeEventListener("keydown", keydown);
+      document.body.style.overflow = overflow;
+      previous?.focus();
+    };
+  }, []);
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <section
+        ref={dialog}
+        tabIndex={-1}
         className="modal"
         role="dialog"
         aria-modal="true"
@@ -179,6 +248,7 @@ function App() {
   } | null>(null);
   const [busy, setBusy] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
+  const [bootError, setBootError] = useState<Error | null>(null);
   const location = useLocation();
   const notify = (message: string, error = false) => {
     setToast({ message, error });
@@ -202,8 +272,14 @@ function App() {
   useEffect(() => {
     Promise.all([
       api<Data[]>("/demo/users"),
-      api("/me").catch(async () => {
-        const saved = JSON.parse(localStorage.getItem("hourlink-demo") || "{}");
+      api("/me").catch(async (e) => {
+        if (!(e instanceof APIError) || e.status !== 401) throw e;
+        let saved: Data = {};
+        try {
+          saved = JSON.parse(localStorage.getItem("hourlink-demo") || "{}");
+        } catch {
+          localStorage.removeItem("hourlink-demo");
+        }
         await api("/auth/demo-login", {
           username: saved.username || "zao",
           case: saved.case || "cash",
@@ -215,12 +291,30 @@ function App() {
         setUsers(u);
         setMe(m);
       })
-      .catch((e) => notify(e.message, true));
+      .catch((e) =>
+        setBootError(e instanceof Error ? e : new Error("連線失敗")),
+      );
   }, []);
   useEffect(() => {
     setAccountOpen(false);
     window.scrollTo(0, 0);
   }, [location.pathname]);
+  useEffect(() => {
+    if (!accountOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setAccountOpen(false);
+    };
+    const onClick = (e: MouseEvent) => {
+      if (!(e.target as Element).closest(".header-actions"))
+        setAccountOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("click", onClick);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("click", onClick);
+    };
+  }, [accountOpen]);
   async function act<T>(
     fn: () => Promise<T>,
     message?: string,
@@ -233,6 +327,8 @@ function App() {
       if (message) notify(message);
       return result;
     } catch (e) {
+      if (e instanceof APIError && e.code === "VERSION_CONFLICT")
+        await qc.invalidateQueries();
       notify(e instanceof Error ? e.message : "操作失敗", true);
       return undefined;
     } finally {
@@ -245,12 +341,26 @@ function App() {
         <div className="brand">
           hourlink<span>時間有價</span>
         </div>
-        <Loading />
-        {toast && <ErrorBox error={new Error(toast.message)} />}
+        {bootError ? (
+          <>
+            <p role="alert">{bootError.message}</p>
+            <button
+              className="button primary"
+              onClick={() => window.location.reload()}
+            >
+              重新連線
+            </button>
+          </>
+        ) : (
+          <Loading />
+        )}
       </main>
     );
   return (
     <AppContext.Provider value={{ me, users, notify, act, login, busy }}>
+      <a className="skip-link" href="#main-content">
+        跳到主要內容
+      </a>
       <header className="site-header">
         <div className="header-inner">
           <Link to="/" className="brand">
@@ -259,7 +369,7 @@ function App() {
             </span>
             hourlink<span className="brand-sub">時間有價</span>
           </Link>
-          <nav>
+          <nav aria-label="主要導覽">
             <Link className={location.pathname === "/" ? "active" : ""} to="/">
               探索市場
             </Link>
@@ -287,13 +397,15 @@ function App() {
               className="account-button"
               onClick={() => setAccountOpen(!accountOpen)}
               aria-label="切換演示身份"
+              aria-expanded={accountOpen}
+              aria-controls="account-options"
             >
               <Avatar initials={me.user.initials} />
               <span>{me.user.name}</span>
               <ChevronDown size={14} />
             </button>
             {accountOpen && (
-              <div className="account-menu">
+              <div className="account-menu" id="account-options">
                 <small>切換演示身份 · 非實名登入</small>
                 {users.map((u) => (
                   <button key={u.id} onClick={() => act(() => login(u.id))}>
@@ -315,10 +427,36 @@ function App() {
         <span>所有歷史、估值與資金均為演示資料 · 不涉及真實支付</span>
         <span className="strip-right">HacKU 2026</span>
       </div>
-      <main>
+      <div className="workspace-nav">
+        <div className="page-width">
+          <span>時間交換工作台</span>
+          <nav aria-label="分析與演示導覽">
+            {[
+              ["/value-model", "價值分析"],
+              ["/mechanism", "交易規則"],
+              ["/study", "試用指南"],
+            ].map(([to, name]) => (
+              <Link
+                key={to}
+                className={location.pathname === to ? "active" : ""}
+                to={to}
+              >
+                {name}
+                <ArrowUpRight size={13} />
+              </Link>
+            ))}
+            <Link className="workspace-publish" to="/publish">
+              <Plus size={14} />
+              發佈
+            </Link>
+          </nav>
+        </div>
+      </div>
+      <main id="main-content" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<Market />} />
           <Route path="/publish" element={<Publish />} />
+          <Route path="/listing/:editId/edit" element={<Publish />} />
           <Route path="/listing/:id" element={<Listing />} />
           <Route path="/proposal/:id" element={<Proposal />} />
           <Route path="/orders" element={<Orders />} />
@@ -328,7 +466,20 @@ function App() {
           <Route path="/mechanism" element={<MechanismLab />} />
           <Route path="/value-model" element={<ValueModelLab />} />
           <Route path="/study" element={<UserStudy />} />
-          <Route path="*" element={<Empty title="找不到這個頁面" />} />
+          <Route
+            path="*"
+            element={
+              <div className="page-width content-page">
+                <Empty
+                  title="找不到這個頁面"
+                  text="請檢查連結，或返回市場繼續探索。"
+                />
+                <Link className="button primary" to="/">
+                  返回市場
+                </Link>
+              </div>
+            }
+          />
         </Routes>
       </main>
       <footer>
@@ -401,7 +552,7 @@ function Market() {
   const [availableEnd, setAvailableEnd] = useState("");
   const [filters, setFilters] = useState(false);
   const { data, isLoading, error } = useData(
-    `/listings?kind=${kind}&category=${category}&q=${encodeURIComponent(q)}&service_mode=${serviceMode}&location=${encodeURIComponent(place)}${availableStart ? `&time_start=${encodeURIComponent(new Date(availableStart).toISOString())}` : ""}${availableEnd ? `&time_end=${encodeURIComponent(new Date(availableEnd).toISOString())}` : ""}`,
+    `/listings?status=OPEN&kind=${kind}&category=${category}&q=${encodeURIComponent(q)}&service_mode=${serviceMode}&location=${encodeURIComponent(place)}${availableStart ? `&time_start=${encodeURIComponent(new Date(availableStart).toISOString())}` : ""}${availableEnd ? `&time_end=${encodeURIComponent(new Date(availableEnd).toISOString())}` : ""}`,
   );
   const listings = (data || []) as Data[];
   return (
@@ -449,7 +600,7 @@ function Market() {
             <span>讓每一次付出，都有清楚的回應。</span>
           </div>
         </div>
-        <TimeIllustration />
+        <ValuePreview />
       </section>
       <section className="principles page-width">
         <div>
@@ -511,6 +662,7 @@ function Market() {
             <label className="search-field">
               <Search size={17} />
               <input
+                aria-label="搜尋需求、能力或關鍵字"
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="搜尋需求、能力或關鍵字"
@@ -520,6 +672,7 @@ function Market() {
               className={`filter-button ${filters ? "selected" : ""}`}
               onClick={() => setFilters(!filters)}
               aria-label="篩選"
+              aria-expanded={filters}
             >
               <SlidersHorizontal size={17} />
               <span>篩選</span>
@@ -563,6 +716,19 @@ function Market() {
                 onChange={(e) => setAvailableEnd(e.target.value)}
               />
             </label>
+            <button
+              className="text-button"
+              onClick={() => {
+                setQ("");
+                setCategory("");
+                setServiceMode("");
+                setPlace("");
+                setAvailableStart("");
+                setAvailableEnd("");
+              }}
+            >
+              清除所有篩選
+            </button>
           </div>
         )}
         <div className="category-pills">
@@ -658,6 +824,16 @@ function localDateTime(d: Date) {
 }
 function Publish() {
   const { me, act, busy } = useApp();
+  const { editId } = useParams();
+  const {
+    data: existing,
+    isLoading: editLoading,
+    error: editError,
+  } = useQuery({
+    queryKey: ["edit-listing", editId],
+    queryFn: () => api(`/listings/${editId}`),
+    enabled: !!editId,
+  });
   const navigate = useNavigate();
   const { data: templates } = useData("/templates");
   const initialKind =
@@ -688,19 +864,58 @@ function Publish() {
   });
   const update = (key: string, v: any) => setForm((f) => ({ ...f, [key]: v }));
   const template = templates?.templates[form.category];
+  const [formError, setFormError] = useState("");
+  useEffect(() => {
+    if (existing)
+      setForm({
+        ...existing.data,
+        title: existing.title,
+        kind: existing.kind,
+        category: existing.category,
+        start: localDateTime(new Date(existing.data.start)),
+        end: localDateTime(new Date(existing.data.end)),
+      });
+  }, [existing]);
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    setFormError("");
+    if (new Date(form.end) <= new Date(form.start)) {
+      setFormError("結束時間必須晚於開始時間，請調整可用時段。");
+      return;
+    }
     const b = {
       ...form,
       start: new Date(form.start).toISOString(),
       end: new Date(form.end).toISOString(),
+      ...(editId ? { expected_version: existing!.version } : {}),
     };
     const r = await act(
-      () => api("/listings", b),
-      "已發佈，接下來看看適合的人",
+      () =>
+        api(
+          editId ? `/listings/${editId}` : "/listings",
+          b,
+          editId ? "PATCH" : "POST",
+        ),
+      editId ? "刊登已更新，請依新內容建立提案" : "已發佈，接下來看看適合的人",
     );
     if (r) navigate(`/listing/${r.id}`);
   }
+  if (editId && editLoading) return <Loading />;
+  if (editError) return <ErrorBox error={editError} />;
+  if (editId && existing?.owner_id !== me.user.id)
+    return <Empty title="這不是你的刊登" text="只有刊登者可以修改內容。" />;
+  if (editId && existing?.status === "TAKEN")
+    return (
+      <div className="page-width content-page">
+        <Empty
+          title="此需求已有生效承諾"
+          text="請到原訂單處理結清；新的需求另建刊登。"
+        />
+        <Link to="/orders" className="button primary">
+          查看我的交換
+        </Link>
+      </div>
+    );
   return (
     <div className="page-width narrow-page">
       <Link className="back-link" to="/">
@@ -709,13 +924,29 @@ function Publish() {
       </Link>
       <div className="page-title">
         <div className="eyebrow muted">MAKE A CONNECTION</div>
-        <h1>從一個清楚的約定開始</h1>
+        <h1>{editId ? "完善你的刊登" : "從一個清楚的約定開始"}</h1>
         <p>你說明需要什麼，平臺幫你分析合適的人與時間投入。</p>
       </div>
+      <Journey current={0} />
       <form onSubmit={submit} className="panel publish-form">
+        {editId && (
+          <div className="notice amber">
+            <Info size={17} />
+            <span>
+              修改內容會讓舊提案失效，尚未生效的協議將撤回；已生效協議請在原訂單處理。
+            </span>
+          </div>
+        )}
+        {formError && (
+          <div className="notice danger" role="alert">
+            <AlertCircle size={17} />
+            {formError}
+          </div>
+        )}
         <div className="segmented">
           <button
             type="button"
+            disabled={!!editId}
             className={form.kind === "REQUEST" ? "selected" : ""}
             onClick={() => update("kind", "REQUEST")}
           >
@@ -723,6 +954,7 @@ function Publish() {
           </button>
           <button
             type="button"
+            disabled={!!editId}
             className={form.kind === "OFFER" ? "selected" : ""}
             onClick={() => update("kind", "OFFER")}
           >
@@ -822,6 +1054,33 @@ function Publish() {
               ))}
             </div>
           </fieldset>
+          <fieldset className="full">
+            <legend>優選技能 · 可選</legend>
+            <small>這些技能提高本單適配度；不會取代必需技能門檻。</small>
+            <div className="check-options">
+              {template?.skills
+                .filter((s: string) => !form.required_skills.includes(s))
+                .map((skill: string) => (
+                  <label key={skill}>
+                    <input
+                      type="checkbox"
+                      checked={form.preferred_skills.includes(skill)}
+                      onChange={(e) =>
+                        update(
+                          "preferred_skills",
+                          e.target.checked
+                            ? [...form.preferred_skills, skill]
+                            : form.preferred_skills.filter(
+                                (s: string) => s !== skill,
+                              ),
+                        )
+                      }
+                    />
+                    {skill}
+                  </label>
+                ))}
+            </div>
+          </fieldset>
           <label>
             工作量
             <select
@@ -850,6 +1109,7 @@ function Publish() {
             <input
               type="number"
               min="0"
+              max="1440"
               value={form.preparation}
               onChange={(e) => update("preparation", +e.target.value)}
             />
@@ -869,6 +1129,7 @@ function Publish() {
             <input
               type="number"
               min="0"
+              max="1440"
               value={form.travel}
               onChange={(e) => update("travel", +e.target.value)}
             />
@@ -979,7 +1240,7 @@ function Publish() {
             className="button primary"
             disabled={busy || !templates || !form.accepted_modes.length}
           >
-            發佈並分析 <ArrowRight size={17} />
+            {editId ? "保存刊登" : "發佈並分析"} <ArrowRight size={17} />
           </button>
         </div>
       </form>
@@ -991,37 +1252,52 @@ function Listing() {
   const { me, act, busy, users } = useApp();
   const navigate = useNavigate();
   const { data: l, isLoading, error } = useData(`/listings/${id}`);
-  const { data: matching } = useData(`/listings/${id}/matches`);
+  const {
+    data: matching,
+    isLoading: matchingLoading,
+    error: matchingError,
+  } = useData(`/listings/${id}/matches`);
   const { data: own } = useData(`/listings?kind=OFFER&owner_id=${me.user.id}`);
   const [sort, setSort] = useState("fit");
-  const [mode, setMode] = useState("MONEY");
+  const [requestedMode, setMode] = useState("MONEY");
   const [reverse, setReverse] = useState("");
   const [detail, setDetail] = useState<Data | null>(null);
   const [analysis, setAnalysis] = useState<Data | null>(null);
+  const [compare, setCompare] = useState<string[]>([]);
+  const [comparisonOpen, setComparisonOpen] = useState(false);
+  const [closeOpen, setCloseOpen] = useState(false);
+  const { data: responses, error: responseError } = useQuery({
+    queryKey: ["listing-responses", id, me.user.id],
+    queryFn: () => api<Data[]>(`/listings/${id}/proposals`),
+    enabled: l?.owner_id === me.user.id,
+  });
   if (isLoading) return <Loading />;
   if (error) return <ErrorBox error={error} />;
   if (!l) return null;
   const isOwner = l.owner_id === me.user.id;
+  const mode = l.data.accepted_modes.includes(requestedMode)
+    ? requestedMode
+    : l.data.accepted_modes[0];
+  const offers = (own || []).filter((o: Data) => o.status === "OPEN");
   const candidates = [...(matching?.candidates || [])].sort(
     (a: Data, b: Data) =>
-      sort === "budget"
-        ? a.total_amount - b.total_amount
-        : sort === "fast"
-          ? a.estimated_minutes - b.estimated_minutes
-          : (b.recommendation_score ?? -1) - (a.recommendation_score ?? -1),
+      a.quality === null || b.quality === null
+        ? (a.quality === null ? 1 : 0) - (b.quality === null ? 1 : 0)
+        : sort === "budget"
+          ? a.total_amount - b.total_amount
+          : sort === "fast"
+            ? a.estimated_minutes - b.estimated_minutes
+            : (b.recommendation_score ?? -1) - (a.recommendation_score ?? -1),
   );
   async function choose(provider: string) {
-    const p = await act(async () => {
-      const proposal = await api("/proposals", {
+    const p = await act(() =>
+      api("/proposals/recommended", {
         listing_id: id,
         provider_id: provider,
         mode,
-        reverse_listing_id: mode === "MONEY" ? null : reverse || own?.[0]?.id,
-      });
-      return api(`/proposals/${proposal.id}/recommend`, {
-        expected_version: proposal.version,
-      });
-    });
+        reverse_listing_id: mode === "MONEY" ? null : reverse || offers[0]?.id,
+      }),
+    );
     if (p) navigate(`/proposal/${p.id}`);
   }
   return (
@@ -1030,6 +1306,7 @@ function Listing() {
         <ChevronLeft size={16} />
         返回市場
       </Link>
+      <Journey current={1} />
       <div className="detail-layout">
         <div>
           <section className="panel request-detail">
@@ -1039,6 +1316,9 @@ function Listing() {
               <Badge tone="green">
                 {l.kind === "REQUEST" ? "需求" : "服務"}
               </Badge>
+              {l.status !== "OPEN" && (
+                <Badge>{labels[l.status] || "已承接"}</Badge>
+              )}
             </div>
             <h1>{l.title}</h1>
             <p className="large-muted">{l.data.scenario}</p>
@@ -1074,19 +1354,55 @@ function Listing() {
               ))}
             </div>
             {isOwner && (
-              <button
-                className="button outline small"
-                onClick={async () => {
-                  const r = await act(() =>
-                    api(`/listings/${id}/analyze`, {
-                      expected_version: l.version,
-                    }),
-                  );
-                  if (r) setAnalysis(r);
-                }}
-              >
-                分析需求 <Activity size={15} />
-              </button>
+              <div className="listing-owner-actions">
+                {l.status !== "TAKEN" && (
+                  <Link
+                    className="button outline small"
+                    to={`/listing/${id}/edit`}
+                  >
+                    編輯刊登
+                  </Link>
+                )}
+                {l.status === "OPEN" && (
+                  <button
+                    className="text-button"
+                    onClick={() => setCloseOpen(true)}
+                    disabled={busy}
+                  >
+                    撤回刊登
+                  </button>
+                )}
+                {l.status === "CLOSED" && (
+                  <button
+                    className="button primary small"
+                    disabled={busy}
+                    onClick={() =>
+                      act(
+                        () =>
+                          api(`/listings/${id}/reopen`, {
+                            expected_version: l.version,
+                          }),
+                        "刊登已重新公開；請建立新的提案",
+                      )
+                    }
+                  >
+                    重新公開
+                  </button>
+                )}
+                <button
+                  className="button outline small"
+                  onClick={async () => {
+                    const r = await act(() =>
+                      api(`/listings/${id}/analyze`, {
+                        expected_version: l.version,
+                      }),
+                    );
+                    if (r) setAnalysis(r);
+                  }}
+                >
+                  分析需求 <Activity size={15} />
+                </button>
+              </div>
             )}
             {analysis && (
               <div className="notice">
@@ -1099,7 +1415,11 @@ function Listing() {
             {!isOwner && (
               <button
                 className="button primary"
-                disabled={busy}
+                disabled={
+                  busy ||
+                  l.status !== "OPEN" ||
+                  (mode !== "MONEY" && !offers.length)
+                }
                 onClick={() =>
                   choose(l.kind === "OFFER" ? l.owner_id : me.user.id)
                 }
@@ -1109,6 +1429,51 @@ function Listing() {
               </button>
             )}
           </section>
+          {isOwner && (
+            <section className="panel listing-responses">
+              <h3>收到的提案</h3>
+              {responseError ? (
+                <ErrorBox error={responseError} />
+              ) : responses?.length ? (
+                responses.map((p: Data) => (
+                  <Link
+                    key={p.id}
+                    className="response-row"
+                    to={
+                      p.agreement
+                        ? `/orders/${p.agreement.id}`
+                        : `/proposal/${p.id}`
+                    }
+                  >
+                    <span>
+                      {
+                        users.find(
+                          (u) =>
+                            u.id ===
+                            (l.kind === "OFFER"
+                              ? p.requester_id
+                              : p.provider_id),
+                        )?.name
+                      }{" "}
+                      · {labels[p.mode]}
+                    </span>
+                    <Badge>
+                      {p.agreement
+                        ? labels[p.agreement.status]
+                        : p.stale_listing
+                          ? "內容已更新"
+                          : "待協商"}
+                    </Badge>
+                    <ArrowRight size={16} />
+                  </Link>
+                ))
+              ) : (
+                <p className="muted-text">
+                  目前還沒有提案。你也可以從下方選擇候選人。
+                </p>
+              )}
+            </section>
+          )}
           <div className="section-heading compact">
             <div>
               <div className="eyebrow muted">MATCHED FOR THIS TASK</div>
@@ -1131,6 +1496,23 @@ function Listing() {
               </button>
             ))}
           </div>
+          {matchingLoading && <Loading />}
+          {matchingError && <ErrorBox error={matchingError} />}
+          {compare.length > 0 && (
+            <div className="compare-bar">
+              <span>已選 {compare.length} 位候選</span>
+              <button
+                className="button outline small"
+                disabled={compare.length < 2}
+                onClick={() => setComparisonOpen(true)}
+              >
+                比較候選
+              </button>
+              <button className="text-button" onClick={() => setCompare([])}>
+                清除
+              </button>
+            </div>
+          )}
           <div className="candidate-list">
             {candidates.map((c: Data, i: number) => (
               <div className="candidate-card panel" key={c.user_id}>
@@ -1183,6 +1565,24 @@ function Listing() {
                   <Badge>{c.confidence}證據</Badge>
                 </div>
                 <div className="candidate-footer">
+                  <label className="compare-toggle">
+                    <input
+                      type="checkbox"
+                      aria-label={`比較${c.name}`}
+                      checked={compare.includes(c.user_id)}
+                      disabled={
+                        !compare.includes(c.user_id) && compare.length >= 3
+                      }
+                      onChange={(e) =>
+                        setCompare(
+                          e.target.checked
+                            ? [...compare, c.user_id]
+                            : compare.filter((x) => x !== c.user_id),
+                        )
+                      }
+                    />
+                    比較
+                  </label>
                   <button className="text-button" onClick={() => setDetail(c)}>
                     查看評估依據 <ChevronRight size={15} />
                   </button>
@@ -1190,19 +1590,22 @@ function Listing() {
                     className="button primary small"
                     disabled={
                       !isOwner ||
+                      l.kind !== "REQUEST" ||
                       busy ||
+                      c.quality === null ||
                       l.status !== "OPEN" ||
-                      (mode !== "MONEY" && !(own || []).length)
+                      (mode !== "MONEY" && !offers.length)
                     }
                     onClick={() => choose(c.user_id)}
                   >
-                    選擇並生成方案 <ArrowRight size={15} />
+                    {c.quality === null ? "先復核能力證據" : "選擇並生成方案"}{" "}
+                    <ArrowRight size={15} />
                   </button>
                 </div>
               </div>
             ))}
           </div>
-          {!candidates.length && (
+          {!matchingLoading && !matchingError && !candidates.length && (
             <Empty
               title="暫時沒有符合條件的人"
               text="平臺不會把技能或時段不符的人列為合格候選。"
@@ -1244,16 +1647,16 @@ function Listing() {
               <label>
                 我提供的反向服務
                 <select
-                  value={reverse || own?.[0]?.id || ""}
+                  value={reverse || offers[0]?.id || ""}
                   onChange={(e) => setReverse(e.target.value)}
                 >
-                  {(own || []).map((o: Data) => (
+                  {offers.map((o: Data) => (
                     <option key={o.id} value={o.id}>
                       {o.title}
                     </option>
                   ))}
                 </select>
-                {!own?.length && (
+                {!offers.length && (
                   <small>
                     先<Link to="/publish?kind=OFFER">發佈一項能力</Link>
                     ，再建立互換。
@@ -1274,6 +1677,78 @@ function Listing() {
           </div>
         </aside>
       </div>
+      {closeOpen && (
+        <Modal title="撤回這份刊登？" onClose={() => setCloseOpen(false)}>
+          <p>
+            刊登會退出公開市場，舊提案將失效，尚未生效的協議會撤回。你可以稍後重新公開。
+          </p>
+          <div className="modal-actions">
+            <button
+              className="button outline"
+              onClick={() => setCloseOpen(false)}
+            >
+              保留刊登
+            </button>
+            <button
+              className="button primary"
+              disabled={busy}
+              onClick={async () => {
+                const result = await act(
+                  () =>
+                    api(`/listings/${id}/close`, {
+                      expected_version: l.version,
+                    }),
+                  "刊登已撤回，仍可在我的交換查看",
+                );
+                if (result) setCloseOpen(false);
+              }}
+            >
+              確認撤回
+            </button>
+          </div>
+        </Modal>
+      )}
+      {comparisonOpen && (
+        <Modal title="比較本單候選" onClose={() => setComparisonOpen(false)}>
+          <p className="muted-text">
+            先比較本單總投入與能力依據，價格區間是演示估計。
+          </p>
+          <div className="table-scroll">
+            <table className="mechanism-table">
+              <thead>
+                <tr>
+                  <th>候選</th>
+                  <th>相關品質</th>
+                  <th>總投入</th>
+                  <th>本單參考</th>
+                  <th>獨立對手</th>
+                </tr>
+              </thead>
+              <tbody>
+                {candidates
+                  .filter((c) => compare.includes(c.user_id))
+                  .map((c) => (
+                    <tr key={c.user_id}>
+                      <th>{c.name}</th>
+                      <td>{c.quality ?? "未評估"}</td>
+                      <td>
+                        {minutes(c.estimated_minutes)}
+                        <small>
+                          {c.minutes_range[0]}—{c.minutes_range[1]} 分鐘
+                        </small>
+                      </td>
+                      <td>
+                        {money(c.total_amount)}
+                        <small>{money(c.hourly_rate)}／小時</small>
+                      </td>
+                      <td>{c.independent_peers} 位</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        </Modal>
+      )}
       {detail && (
         <Modal title="本單評估依據" onClose={() => setDetail(null)}>
           <div className="metrics-row">
@@ -1339,11 +1814,27 @@ function Proposal() {
   const [bound, setBound] = useState("");
   const [chosenRounds, setChosenRounds] = useState("");
   const [calculated, setCalculated] = useState<Data | null>(null);
+  const [newMode, setNewMode] = useState("");
+  const { data: ownPreference } = useQuery({
+    queryKey: ["own-preference", id, me.user.id, p?.scope_version],
+    queryFn: () => api(`/proposals/${id}/preference`),
+    enabled: !!p,
+  });
+  useEffect(() => {
+    setCalculated(null);
+    setBound("");
+    setAmount("");
+    setReverse("");
+    setPayer("");
+    setNewMode("");
+  }, [p?.scope_version, me.user.id]);
   if (isLoading) return <Loading />;
   if (error) return <ErrorBox error={error} />;
   if (!p) return null;
   const d = p.data;
   const r = d.recommendation;
+  const frozen =
+    !!p.agreement || p.stale_listing || p.listing_status !== "OPEN";
   const provider = users.find((u) => u.id === p.provider_id);
   const requester = users.find((u) => u.id === p.requester_id);
   async function draft() {
@@ -1384,6 +1875,33 @@ function Proposal() {
         <h1>把時間，變成清楚的約定</h1>
         <p>平臺已準備預設方案。你們可以直接確認，也可以調整。</p>
       </div>
+      <Journey current={1} />
+      {p.agreement && (
+        <div className="next-step">
+          <ShieldCheck size={23} />
+          <div>
+            <h3>這份提案已建立協議</h3>
+            <p>
+              {labels[p.agreement.status]} ·
+              後續確認、履約與結清請在原訂單進行。
+            </p>
+          </div>
+          <Link className="button primary" to={`/orders/${p.agreement.id}`}>
+            前往原訂單 <ArrowRight size={16} />
+          </Link>
+        </div>
+      )}
+      {p.stale_listing && (
+        <div className="notice amber">
+          <Info size={17} />
+          <span>
+            原刊登內容或反向服務已更新，這份提案不能繼續建單。請返回刊登，根據最新條件重新建立。
+          </span>
+          <Link className="text-button" to={`/listing/${p.listing_id}`}>
+            查看最新刊登
+          </Link>
+        </div>
+      )}
       <div className="panel proposal-panel">
         <div className="panel-top">
           <Badge tone="green">{labels[p.mode]}</Badge>
@@ -1516,7 +2034,7 @@ function Proposal() {
         <div className="proposal-actions">
           <button
             className="button outline"
-            disabled={busy}
+            disabled={busy || frozen}
             onClick={() =>
               act(
                 () =>
@@ -1529,11 +2047,46 @@ function Proposal() {
           >
             重新計算建議
           </button>
-          <button className="button primary" disabled={busy} onClick={draft}>
+          <button
+            className="button primary"
+            disabled={busy || frozen}
+            onClick={draft}
+          >
             建立雙方協議 <ArrowRight size={17} />
           </button>
         </div>
       </div>
+      {p.mode === "MONEY" && r && (
+        <section className="panel paid-value-panel">
+          <div className="eyebrow muted">TIME VALUE BREAKDOWN</div>
+          <h3>本單時間估值</h3>
+          <div className="metrics-row">
+            <div>
+              <small>相關品質</small>
+              <b>{r.main.quality ?? "待驗證"}</b>
+            </div>
+            <div>
+              <small>預計認可投入</small>
+              <b>{minutes(r.main.estimated_minutes)}</b>
+            </div>
+            <div>
+              <small>參考範圍</small>
+              <b>
+                {r.main.value_estimate?.amount_range
+                  ? `${money(r.main.value_estimate.amount_range[0])}—${money(r.main.value_estimate.amount_range[1])}`
+                  : "依協議快照"}
+              </b>
+            </div>
+          </div>
+          <p className="muted-text">
+            工時：{r.main.estimate_source}
+            。品質影響單價，效率影響總投入；實際成交價由雙方確認。
+          </p>
+          <Link className="text-button" to="/value-model">
+            了解平台怎麼衡量時間價值 <ArrowRight size={15} />
+          </Link>
+        </section>
+      )}
       {p.mode !== "MONEY" && (
         <ValuePerspectives
           key={`${p.id}-${p.scope_version}-${me.user.id}`}
@@ -1543,163 +2096,220 @@ function Proposal() {
           act={act}
         />
       )}
-      <details className="panel negotiation-panel">
-        <summary>
-          想調整條件？直接協商或填寫私人接受條件 <ChevronDown size={17} />
-        </summary>
-        <div className="form-grid">
-          {p.mode !== "BARTER" && (
-            <label>
-              協商金額（HKD）
-              <input
-                type="number"
-                min="0"
-                step="1"
-                placeholder={String(d.amount / 100)}
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
-            </label>
-          )}
-          {p.mode !== "MONEY" && (
-            <label>
-              反向服務分鐘數
-              <input
-                type="number"
-                min="15"
-                step="15"
-                placeholder={String(d.reverse_minutes)}
-                value={reverse}
-                onChange={(e) => setReverse(e.target.value)}
-              />
-            </label>
-          )}
-          {p.mode === "HYBRID" && (
-            <label>
-              補差付款方
-              <select
-                value={payer || d.payer_id}
-                onChange={(e) => setPayer(e.target.value)}
-              >
-                {[p.requester_id, p.provider_id].map((u) => (
-                  <option key={u} value={u}>
-                    {users.find((x) => x.id === u)?.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-        </div>
-        <button
-          className="button outline small"
-          onClick={() =>
-            act(
-              () =>
-                api(`/proposals/${id}/revise`, {
-                  expected_version: p.version,
-                  ...(amount !== ""
-                    ? { amount: Math.round(+amount * 100) }
-                    : {}),
-                  ...(reverse !== "" ? { reverse_minutes: +reverse } : {}),
-                  ...(payer ? { cash_payer_id: payer } : {}),
-                }),
-              "條件已更新，過期接受條件已清除",
-            )
-          }
-        >
-          保存協商條件
-        </button>
-        <hr />
-        <h4>我的私人接受條件</h4>
-        <p className="muted-text">
-          只供本人和計算後端讀取。
-          {p.mode === "BARTER"
-            ? me.user.id === p.provider_id
-              ? "你最低接受多少分鐘反向服務？"
-              : "你最多願意提供多少分鐘反向服務？"
-            : me.user.id === d.payee_id
-              ? "你最低接受多少 HKD？"
-              : "你最高願意支付多少 HKD？"}
-        </p>
-        <div className="inline-form">
-          <input
-            type="number"
-            min="0"
-            value={bound}
-            onChange={(e) => setBound(e.target.value)}
-            placeholder={p.mode === "BARTER" ? "分鐘" : "HKD"}
-          />
+      {!frozen && (
+        <details className="panel negotiation-panel">
+          <summary>
+            想調整條件？直接協商或填寫私人接受條件 <ChevronDown size={17} />
+          </summary>
+          <div className="form-grid">
+            {d.reverse && (
+              <label>
+                調整交易方式
+                <select
+                  value={newMode || p.mode}
+                  onChange={(e) => setNewMode(e.target.value)}
+                >
+                  {d.scope.accepted_modes.map((m: string) => (
+                    <option key={m} value={m}>
+                      {labels[m]}
+                    </option>
+                  ))}
+                </select>
+                <small>
+                  改變模式後需重新計算，舊接受條件和未生效協議會失效。
+                </small>
+              </label>
+            )}
+            {p.mode !== "BARTER" && (
+              <label>
+                協商金額（HKD）
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  placeholder={String(d.amount / 100)}
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                />
+              </label>
+            )}
+            {p.mode !== "MONEY" && (
+              <label>
+                反向服務分鐘數
+                <input
+                  type="number"
+                  min="15"
+                  step="15"
+                  placeholder={String(d.reverse_minutes)}
+                  value={reverse}
+                  onChange={(e) => setReverse(e.target.value)}
+                />
+              </label>
+            )}
+            {p.mode === "HYBRID" && (
+              <label>
+                補差付款方
+                <select
+                  value={payer || d.payer_id}
+                  onChange={(e) => setPayer(e.target.value)}
+                >
+                  {[p.requester_id, p.provider_id].map((u) => (
+                    <option key={u} value={u}>
+                      {users.find((x) => x.id === u)?.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+          </div>
           <button
             className="button outline small"
-            disabled={bound === ""}
             onClick={() =>
               act(
                 () =>
-                  api(
-                    `/proposals/${id}/preference`,
-                    {
-                      expected_version: p.version,
-                      scope_version: p.scope_version,
-                      value:
-                        p.mode === "BARTER" ? +bound : Math.round(+bound * 100),
-                    },
-                    "PUT",
-                  ),
-                "私人接受條件已保存",
+                  api(`/proposals/${id}/revise`, {
+                    expected_version: p.version,
+                    ...(newMode ? { mode: newMode } : {}),
+                    ...(amount !== ""
+                      ? { amount: Math.round(+amount * 100) }
+                      : {}),
+                    ...(reverse !== "" ? { reverse_minutes: +reverse } : {}),
+                    ...(payer ? { cash_payer_id: payer } : {}),
+                  }),
+                "條件已更新，過期接受條件已清除",
               )
             }
           >
-            保存
+            保存協商條件
           </button>
-          <button
-            className="button primary small"
-            onClick={async () => {
-              const result = await act(() =>
-                api(`/proposals/${id}/calculate`, {
-                  expected_version: p.version,
-                }),
-              );
-              if (result) setCalculated(result);
-            }}
-          >
-            計算交集
-          </button>
-        </div>
-        {calculated && (
-          <div className="notice">
-            <CheckCircle2 size={17} />
-            <span>
-              候選：
-              {calculated.candidates
-                .map((x: number) =>
-                  calculated.unit === "港仙" ? money(x) : minutes(x),
-                )
-                .join("、")}{" "}
-              <button
-                className="text-button"
-                onClick={() =>
-                  act(
-                    () =>
-                      api(`/proposals/${id}/select`, {
+          <hr />
+          <h4>我的私人接受條件</h4>
+          {ownPreference?.value != null && (
+            <p className="muted-text">
+              目前已保存：
+              {p.mode === "BARTER"
+                ? minutes(ownPreference.value)
+                : money(ownPreference.value)}
+              ，僅本人可見。
+            </p>
+          )}
+          <p className="muted-text">
+            只供本人和計算後端讀取。
+            {p.mode === "BARTER"
+              ? me.user.id === p.provider_id
+                ? "你最低接受多少分鐘反向服務？"
+                : "你最多願意提供多少分鐘反向服務？"
+              : me.user.id === d.payee_id
+                ? "你最低接受多少 HKD？"
+                : "你最高願意支付多少 HKD？"}
+          </p>
+          <div className="inline-form">
+            <input
+              type="number"
+              min="0"
+              value={bound}
+              onChange={(e) => setBound(e.target.value)}
+              placeholder={p.mode === "BARTER" ? "分鐘" : "HKD"}
+            />
+            <button
+              className="button outline small"
+              disabled={busy || bound === ""}
+              onClick={() =>
+                act(
+                  () =>
+                    api(
+                      `/proposals/${id}/preference`,
+                      {
                         expected_version: p.version,
-                        value: calculated.candidates[0],
-                      }),
-                    "已選用協商候選",
-                  )
-                }
-              >
-                選用首個候選
-              </button>
-            </span>
+                        scope_version: p.scope_version,
+                        value:
+                          p.mode === "BARTER"
+                            ? +bound
+                            : Math.round(+bound * 100),
+                      },
+                      "PUT",
+                    ),
+                  "私人接受條件已保存",
+                )
+              }
+            >
+              保存
+            </button>
+            <button
+              className="button primary small"
+              disabled={busy}
+              onClick={async () => {
+                const result = await act(() =>
+                  api(`/proposals/${id}/calculate`, {
+                    expected_version: p.version,
+                  }),
+                );
+                if (result) setCalculated(result);
+              }}
+            >
+              計算交集
+            </button>
           </div>
-        )}
-      </details>
+          {calculated && (
+            <div className="notice">
+              <CheckCircle2 size={17} />
+              <span>
+                候選：
+                {calculated.candidates
+                  .map((x: number) =>
+                    calculated.unit === "港仙" ? money(x) : minutes(x),
+                  )
+                  .join("、")}{" "}
+                <button
+                  className="text-button"
+                  onClick={() =>
+                    act(
+                      () =>
+                        api(`/proposals/${id}/select`, {
+                          expected_version: p.version,
+                          value: calculated.candidates[0],
+                        }),
+                      "已選用協商候選",
+                    )
+                  }
+                >
+                  選用首個候選
+                </button>
+              </span>
+            </div>
+          )}
+        </details>
+      )}
     </div>
   );
 }
 function Orders() {
+  const { me } = useApp();
   const { data: orders, isLoading, error } = useData("/me/orders");
-  const { data: proposals } = useData("/me/proposals");
+  const {
+    data: proposals,
+    isLoading: proposalsLoading,
+    error: proposalsError,
+  } = useData("/me/proposals");
+  const {
+    data: ownListings,
+    isLoading: listingsLoading,
+    error: listingsError,
+  } = useData(`/listings?owner_id=${me.user.id}`);
+  const [filter, setFilter] = useState("live");
+  const live = (orders || []).filter(
+    (a: Data) => !["COMPLETED", "CANCELLED"].includes(a.status),
+  );
+  const visible = (orders || []).filter(
+    (a: Data) =>
+      filter === "all" ||
+      (filter === "live"
+        ? !["COMPLETED", "CANCELLED"].includes(a.status)
+        : filter === "mine"
+          ? nextAction(a, me.user.id).mine
+          : ["COMPLETED", "CANCELLED"].includes(a.status)),
+  );
+  const negotiating = (proposals || []).filter((p: Data) => !p.agreement);
   return (
     <div className="page-width content-page">
       <div className="page-title">
@@ -1707,14 +2317,53 @@ function Orders() {
         <h1>每一份交換，都有下文</h1>
         <p>查看協商中的方案，以及仍在履行的承諾。</p>
       </div>
+      <div className="workflow-stats">
+        <div className="panel">
+          <small>進行中的交換</small>
+          <b>{isLoading || error ? "—" : live.length}</b>
+        </div>
+        <div className="panel">
+          <small>輪到我處理</small>
+          <b>
+            {isLoading || error
+              ? "—"
+              : live.filter((a: Data) => nextAction(a, me.user.id).mine).length}
+          </b>
+        </div>
+        <div className="panel">
+          <small>待協商提案</small>
+          <b>
+            {proposalsLoading || proposalsError
+              ? "—"
+              : negotiating.filter((p: Data) => !p.stale_listing).length}
+          </b>
+        </div>
+      </div>
       <h2 className="subheading">我的訂單</h2>
+      <div className="order-filters" aria-label="訂單篩選">
+        {[
+          ["live", "進行中"],
+          ["mine", "輪到我"],
+          ["history", "已完成／取消"],
+          ["all", "全部"],
+        ].map(([v, n]) => (
+          <button
+            key={v}
+            aria-pressed={filter === v}
+            className={filter === v ? "selected" : ""}
+            onClick={() => setFilter(v)}
+          >
+            {n}
+          </button>
+        ))}
+      </div>
       {isLoading ? (
         <Loading />
       ) : error ? (
         <ErrorBox error={error} />
-      ) : orders?.length ? (
+      ) : visible.length ? (
         <div className="order-list">
-          {orders.map((a: Data) => (
+          {visible.map((a: Data) => (
             <Link key={a.id} className="panel order-row" to={`/orders/${a.id}`}>
               <div className="category-symbol">
                 <CategoryIcon category={a.data.scope.category} />
@@ -1723,6 +2372,9 @@ function Orders() {
                 <h3>{a.data.scope.title}</h3>
                 <span>
                   {labels[a.mode]} · {a.data.rounds} 個階段
+                </span>
+                <span className="row-next">
+                  {nextAction(a, me.user.id).title}
                 </span>
               </div>
               <Badge tone={a.status === "COMPLETED" ? "green" : "neutral"}>
@@ -1734,13 +2386,29 @@ function Orders() {
         </div>
       ) : (
         <Empty
-          title="還沒有訂單"
-          text="選擇一個適合的人，先建立一份清楚的協議。"
+          title={orders?.length ? "目前沒有符合的訂單" : "還沒有訂單"}
+          text={
+            orders?.length
+              ? "可切換篩選查看其他交換記錄。"
+              : "選擇一個適合的人，先建立一份清楚的協議。"
+          }
         />
       )}
       <h2 className="subheading">協商中的提案</h2>
+      {proposalsLoading ? (
+        <Loading />
+      ) : proposalsError ? (
+        <ErrorBox error={proposalsError} />
+      ) : (
+        !negotiating.length && (
+          <Empty
+            title="目前沒有待協商提案"
+            text="雙方確認後，提案會轉入上方的訂單。"
+          />
+        )
+      )}
       <div className="order-list">
-        {proposals?.map((p: Data) => (
+        {negotiating.map((p: Data) => (
           <Link key={p.id} className="panel order-row" to={`/proposal/${p.id}`}>
             <div className="category-symbol">
               <Repeat2 size={21} />
@@ -1751,6 +2419,9 @@ function Orders() {
                 {labels[p.mode]} ·{" "}
                 {p.path === "ASSISTED" ? "輔助協商" : "平臺預設方案／直接協商"}
               </span>
+              {p.stale_listing && (
+                <span className="row-next">刊登已更新，請依最新內容重建</span>
+              )}
             </div>
             <span>
               {p.mode === "BARTER"
@@ -1761,6 +2432,52 @@ function Orders() {
           </Link>
         ))}
       </div>
+      <div className="section-heading compact">
+        <h2 className="subheading">我的刊登</h2>
+        <Link className="button outline small" to="/publish">
+          <Plus size={15} />
+          發佈需求或能力
+        </Link>
+      </div>
+      {listingsLoading ? (
+        <Loading />
+      ) : listingsError ? (
+        <ErrorBox error={listingsError} />
+      ) : ownListings?.length ? (
+        <div className="order-list">
+          {ownListings.map((l: Data) => (
+            <Link
+              key={l.id}
+              className="panel order-row"
+              to={`/listing/${l.id}`}
+            >
+              <div className="category-symbol">
+                <CategoryIcon category={l.category} />
+              </div>
+              <div>
+                <h3>{l.title}</h3>
+                <span>
+                  {l.kind === "REQUEST" ? "我的需求" : "我提供的能力"} ·{" "}
+                  {labels[l.category]}
+                </span>
+              </div>
+              <Badge>
+                {l.status === "OPEN"
+                  ? "公開中"
+                  : l.status === "CLOSED"
+                    ? "已撤回"
+                    : "已有承諾"}
+              </Badge>
+              <ArrowRight size={18} />
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <Empty
+          title="還沒有刊登"
+          text="發佈一個具體需求，或分享你能提供的能力。"
+        />
+      )}
     </div>
   );
 }
@@ -1901,6 +2618,23 @@ function Order() {
           }),
         "已暫停新增履約，請確認結清方案",
       );
+    if (modal.kind === "cancel-draft")
+      result = await act(
+        () =>
+          api(`/agreements/${id}/cancel-draft`, {
+            expected_version: a!.version,
+          }),
+        "尚未生效的協議已撤回，可回到提案重新協商",
+      );
+    if (modal.kind === "remedy")
+      result = await act(
+        () =>
+          api(`/disputes/${ob!.id}/remedy`, {
+            expected_version: ob!.version,
+            reason: text,
+          }),
+        "補救已記錄，後端將重新檢查交易限制",
+      );
     if (modal.kind === "dispute")
       result = await act(
         () =>
@@ -1951,6 +2685,16 @@ function Order() {
           {labels[a.status]}
         </Badge>
       </div>
+      <Journey
+        current={
+          a.status === "COMPLETED"
+            ? 4
+            : a.status === "AWAITING_CONFIRMATION"
+              ? 2
+              : 3
+        }
+      />
+      <NextStep agreement={a} user={me.user.id} />
       <div className="detail-layout">
         <div>
           <section className="panel order-overview">
@@ -1981,7 +2725,7 @@ function Order() {
               已確認的貢獻保留；剩餘義務不因退出消失，亦不能跨服務相減。
             </div>
             {a.status === "AWAITING_CONFIRMATION" && (
-              <div className="consent-area">
+              <div className="consent-area" id="agreement-confirmation">
                 <p>確認同一版本的完整服務、階段、時間安排及取消規則。</p>
                 <div className="consent-people">
                   {[a.requester_id, a.provider_id].map((u) => (
@@ -2022,10 +2766,11 @@ function Order() {
             <h2>履約與時間承諾</h2>
             <span className="muted-text">按輪次推進，先完成這一輪</span>
           </div>
-          <div className="stage-list">
+          <div className="stage-list" id="fulfillment">
             {a.stages.map((stage: Data) => (
               <section
                 key={stage.id}
+                id={`stage-${stage.id}`}
                 className={`panel stage-card ${stage.status === "LOCKED" ? "stage-locked" : ""}`}
               >
                 <div className="stage-heading">
@@ -2035,11 +2780,13 @@ function Order() {
                   <div>
                     <h3>第 {stage.round_no} 階段</h3>
                     <small>
-                      {stage.status === "COMPLETED"
-                        ? "本輪服務已完成"
-                        : stage.status === "ACTIVE"
-                          ? "目前履約階段"
-                          : "待前一輪完成"}
+                      {stage.status === "CANCELLED"
+                        ? "本輪尚未生效，已取消"
+                        : stage.status === "COMPLETED"
+                          ? "本輪服務已完成"
+                          : stage.status === "ACTIVE"
+                            ? "目前履約階段"
+                            : "待前一輪完成"}
                     </small>
                   </div>
                   {stage.status === "COMPLETED" && (
@@ -2156,8 +2903,27 @@ function Order() {
               </section>
             ))}
           </div>
+          {a.status === "COMPLETED" && (
+            <section className="panel completion-panel" id="completion">
+              <h3>
+                <CheckCircle2 size={21} />
+                每份承諾已完成
+              </h3>
+              <p>
+                本單已驗收{" "}
+                {all.filter((o: Data) => o.status === "ACCEPTED").length}{" "}
+                項服務，模擬資金已按條款處理。時間與相關能力證據已保存。
+              </p>
+              <Link className="button primary" to="/me">
+                查看能力與時間記錄 <ArrowRight size={16} />
+              </Link>
+              <Link className="button outline" to="/">
+                尋找下一次交換
+              </Link>
+            </section>
+          )}
           {a.closeouts?.length > 0 && (
-            <section className="panel closeout-list">
+            <section className="panel closeout-list" id="closeouts">
               <h3>結清方案</h3>
               {a.closeouts.map((c: Data) => (
                 <div key={c.id}>
@@ -2213,7 +2979,7 @@ function Order() {
             </section>
           )}
           {a.disputes?.length > 0 && (
-            <section className="panel dispute-list">
+            <section className="panel dispute-list" id="disputes">
               <h3>爭議與復核紀錄</h3>
               {a.disputes.map((r: Data) => (
                 <div key={r.id}>
@@ -2226,13 +2992,33 @@ function Order() {
                       依據：{r.data.review.basis} · 結果 {r.data.review.outcome}
                     </p>
                   )}
+                  {r.data.review?.confirmed_breach_user_id && (
+                    <p className="muted-text">
+                      已確認需補救：
+                      {person(r.data.review.confirmed_breach_user_id)} ·{" "}
+                      {r.data.remedied
+                        ? "已完成補救復核"
+                        : "待原義務結清後復核補救"}
+                    </p>
+                  )}
+                  {me.user.reviewer &&
+                    r.data.review?.confirmed_breach_user_id &&
+                    !r.data.remedied &&
+                    ["COMPLETED", "CANCELLED"].includes(a.status) && (
+                      <button
+                        className="button outline small"
+                        onClick={() => open("remedy", r)}
+                      >
+                        記錄完成補救
+                      </button>
+                    )}
                 </div>
               ))}
             </section>
           )}
         </div>
         <aside>
-          <section className="panel sticky-panel">
+          <section className="panel sticky-panel" id="order-tools">
             <h3>清楚知道，接下來做什麼</h3>
             <p>
               目前以 <b>{me.user.name}</b>{" "}
@@ -2258,6 +3044,23 @@ function Order() {
               <p>準備／差旅只計入事前約定的投入。</p>
               <p>先行方：{person(a.data.first_provider_id)}</p>
             </details>
+            {!me.user.reviewer && a.status === "AWAITING_CONFIRMATION" && (
+              <button
+                className="button outline full-width"
+                disabled={busy}
+                onClick={() => open("cancel-draft")}
+              >
+                撤回未生效協議
+              </button>
+            )}
+            {a.status === "CANCELLED" && (
+              <Link
+                className="button outline full-width"
+                to={`/proposal/${a.proposal_id}`}
+              >
+                返回提案重新協商
+              </Link>
+            )}
             {!me.user.reviewer &&
               ["ACTIVE", "DISPUTED", "UNRESOLVED"].includes(a.status) && (
                 <button
@@ -2298,11 +3101,18 @@ function Order() {
               withdraw: "申請退出",
               dispute: "提出異議與證據",
               closeout: "確認原義務怎樣結清",
+              "cancel-draft": "撤回尚未生效的協議",
+              remedy: "復核原義務已完成補救",
             }[modal.kind]!
           }
           onClose={() => setModal(null)}
         >
           <form onSubmit={executeModal}>
+            {modal.kind === "cancel-draft" && (
+              <p>
+                雙方尚未完成確認，本協議還沒有啟動服務或預留資金。撤回後原簽署將失效，可重新協商並建立新版本。
+              </p>
+            )}
             {modal.kind === "submit" && (
               <>
                 <p>{modal.ob?.data.stage_deliverable}</p>
@@ -2391,16 +3201,18 @@ function Order() {
                 ))}
               </>
             )}
-            <label>
-              {modal.kind === "submit" ? "交付證據與說明" : "說明與依據"}
-              <textarea
-                required
-                minLength={modal.kind === "submit" ? 5 : 3}
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                placeholder="具體說明成果、需要處理的問題或雙方同意的安排。"
-              />
-            </label>
+            {modal.kind !== "cancel-draft" && (
+              <label>
+                {modal.kind === "submit" ? "交付證據與說明" : "說明與依據"}
+                <textarea
+                  required
+                  minLength={modal.kind === "submit" ? 5 : 3}
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="具體說明成果、需要處理的問題或雙方同意的安排。"
+                />
+              </label>
+            )}
             <div className="modal-actions">
               <button
                 type="button"
@@ -2421,9 +3233,30 @@ function Order() {
 }
 function Profile() {
   const { me, act, busy } = useApp();
-  const { data: summary } = useData("/me/time-summary");
-  const { data: account } = useData("/me/mock-account");
-  const { data: evidence } = useData("/me/evidence");
+  const {
+    data: summary,
+    isLoading: summaryLoading,
+    error: summaryError,
+  } = useData("/me/time-summary");
+  const {
+    data: account,
+    isLoading: accountLoading,
+    error: accountError,
+  } = useData("/me/mock-account");
+  const {
+    data: evidence,
+    isLoading: evidenceLoading,
+    error: evidenceError,
+  } = useData("/me/evidence");
+  const { data: credits, error: creditError } = useQuery({
+    queryKey: ["category-credit", me.user.id],
+    queryFn: () =>
+      Promise.all(
+        ["spreadsheet", "tutoring", "english"].map((category) =>
+          api(`/users/${me.user.id}/credit?category=${category}&role=PROVIDER`),
+        ),
+      ),
+  });
   const [form, setForm] = useState<Data>({
     category: "spreadsheet",
     kind: "WORK",
@@ -2455,28 +3288,68 @@ function Profile() {
         <div className="panel">
           <Clock size={22} />
           <small>已確認貢獻</small>
-          <b>{minutes(summary?.provided_minutes)}</b>
+          <b>
+            {summaryLoading || summaryError
+              ? "—"
+              : minutes(summary?.provided_minutes)}
+          </b>
           <span>按類別與原訂單追蹤</span>
         </div>
         <div className="panel">
           <Repeat2 size={22} />
           <small>已獲得服務</small>
-          <b>{minutes(summary?.received_service_minutes)}</b>
+          <b>
+            {summaryLoading || summaryError
+              ? "—"
+              : minutes(summary?.received_service_minutes)}
+          </b>
           <span>僅計服務，不把等待計成貢獻</span>
         </div>
         <div className="panel">
           <ShieldCheck size={22} />
           <small>待履行承諾</small>
-          <b>{summary?.pending?.length || 0} 項</b>
+          <b>
+            {summaryLoading || summaryError
+              ? "—"
+              : `${summary?.pending?.length || 0} 項`}
+          </b>
           <span>退出後仍保留原義務</span>
         </div>
         <div className="panel">
           <Wallet size={22} />
           <small>模擬可用餘額</small>
-          <b>{money(account?.available)}</b>
+          <b>
+            {accountLoading || accountError ? "—" : money(account?.available)}
+          </b>
           <span>已預留 {money(account?.reserved)} · 不可提現</span>
         </div>
       </div>
+      {summaryError && <ErrorBox error={summaryError} />}
+      {accountError && <ErrorBox error={accountError} />}
+      <h2 className="subheading">分類履約與交易保護</h2>
+      {creditError ? (
+        <ErrorBox error={creditError} />
+      ) : (
+        <div className="workflow-stats category-credit">
+          {credits?.map((c: Data) => (
+            <div key={c.category} className="panel">
+              <small>{labels[c.category]}</small>
+              <b>
+                {c.completed_orders} <small>筆完成</small>
+              </b>
+              <span className="muted-text">
+                {c.independent_peers} 位獨立對手 · 在途 {c.policy.in_flight}／
+                {c.policy.limit}
+              </span>
+              <Badge tone={c.policy.blocked ? "amber" : "green"}>
+                {c.policy.blocked
+                  ? "先完成補救，仍可處理原義務"
+                  : "依本類履約事實提供保護"}
+              </Badge>
+            </div>
+          ))}
+        </div>
+      )}
       <div className="notice subtle">
         <Info size={17} />
         {summary?.notice || "時間記錄不是可消費積分；不同服務不能相減。"}
@@ -2484,6 +3357,18 @@ function Profile() {
       <div className="detail-layout">
         <div>
           <h2 className="subheading">我的能力證據</h2>
+          {evidenceLoading ? (
+            <Loading />
+          ) : evidenceError ? (
+            <ErrorBox error={evidenceError} />
+          ) : (
+            !evidence?.length && (
+              <Empty
+                title="尚未提交能力證據"
+                text="可在右側提交作品或測評，等待結構化復核。"
+              />
+            )
+          )}
           <div className="evidence-list panel">
             {evidence?.map((e: Data) => (
               <div key={e.id}>
@@ -2500,6 +3385,50 @@ function Profile() {
               </div>
             ))}
           </div>
+          <h2 className="subheading">已確認的時間記錄</h2>
+          {summary?.provided?.length || summary?.received?.length ? (
+            <div className="panel ledger-table">
+              {[
+                ...(summary.provided || []).map((x: Data) => ({
+                  ...x,
+                  direction: "我提供",
+                })),
+                ...(summary.received || []).map((x: Data) => ({
+                  ...x,
+                  direction: "我收到",
+                })),
+              ].map((x: Data, i: number) => (
+                <div key={`${x.obligation_id}-${x.component}-${i}`}>
+                  <span>
+                    {x.direction} · {labels[x.category]}
+                    <small>
+                      {
+                        (
+                          {
+                            EXECUTION: "服務",
+                            PREPARATION: "準備",
+                            TRAVEL: "差旅",
+                          } as Data
+                        )[x.component]
+                      }
+                    </small>
+                  </span>
+                  <b>{minutes(x.minutes)}</b>
+                  <Link
+                    className="text-button"
+                    to={`/orders/${x.agreement_id}`}
+                  >
+                    查看原訂單 <ArrowRight size={14} />
+                  </Link>
+                </div>
+              ))}
+            </div>
+          ) : (
+            !summaryLoading &&
+            !summaryError && (
+              <p className="muted-text">尚未發生已驗收的時間紀錄。</p>
+            )
+          )}
           <h2 className="subheading">仍需完成的承諾</h2>
           {summary?.pending?.length ? (
             <div className="order-list">
@@ -2543,6 +3472,12 @@ function Profile() {
                   </span>
                   <b>{money(l.amount)}</b>
                   <small>{date(l.created)}</small>
+                  <Link
+                    className="text-button"
+                    to={`/orders/${l.agreement_id}`}
+                  >
+                    原訂單 <ArrowRight size={14} />
+                  </Link>
                 </div>
               ))}
             </div>
@@ -2647,9 +3582,17 @@ function Profile() {
   );
 }
 function Demo() {
-  const { me, act, login, busy, notify } = useApp();
+  const { me, users, act, login, busy, notify } = useApp();
   const { data: cases } = useData("/demo/cases");
-  const { data: queue, error } = useData("/review/queue");
+  const {
+    data: queue,
+    error,
+    isLoading: queueLoading,
+  } = useQuery({
+    queryKey: ["/review/queue"],
+    queryFn: () => api("/review/queue"),
+    enabled: !!me.user.reviewer,
+  });
   const [selected, setSelected] = useState<Data | null>(null);
   const [scores, setScores] = useState<Data>({
     correctness: 90,
@@ -2658,6 +3601,13 @@ function Demo() {
   });
   const [basis, setBasis] = useState("");
   const [outcome, setOutcome] = useState("RESUME");
+  const [approve, setApprove] = useState(true);
+  const [breach, setBreach] = useState("");
+  const { data: reviewAgreement } = useQuery({
+    queryKey: ["review-agreement", selected?.agreement_id],
+    queryFn: () => api(`/agreements/${selected!.agreement_id}`),
+    enabled: selected?.type === "dispute",
+  });
   async function review(e: React.FormEvent) {
     e.preventDefault();
     if (!selected) return;
@@ -2668,11 +3618,12 @@ function Demo() {
             ? `/capability-evidence/${selected.id}/review`
             : `/disputes/${selected.id}/review`,
           selected.type === "evidence"
-            ? { approve: true, scores, basis }
+            ? { approve, scores, basis }
             : {
                 expected_version: selected.version,
                 outcome,
                 basis,
+                confirmed_breach_user_id: breach || null,
                 ...(outcome === "ACCEPT" ? { scores } : {}),
               },
         ),
@@ -2773,6 +3724,8 @@ function Demo() {
           <ShieldCheck size={17} />
           此區需要復核員身份。交易雙方仍可在訂單中提出異議。
         </div>
+      ) : queueLoading ? (
+        <Loading />
       ) : error ? (
         <ErrorBox error={error} />
       ) : (
@@ -2790,6 +3743,7 @@ function Demo() {
                 onClick={() => {
                   setSelected({ ...e, type: "evidence" });
                   setBasis("");
+                  setApprove(true);
                 }}
               >
                 查看並復核
@@ -2808,6 +3762,8 @@ function Demo() {
                 onClick={() => {
                   setSelected({ ...d, type: "dispute" });
                   setBasis("");
+                  setOutcome("RESUME");
+                  setBreach("");
                 }}
               >
                 記錄復核結果
@@ -2840,6 +3796,30 @@ function Demo() {
           onClose={() => setSelected(null)}
         >
           <form onSubmit={review}>
+            <div className="submitted-evidence">
+              <small>
+                {selected.type === "evidence"
+                  ? "待復核的原始材料"
+                  : "提出的問題"}
+              </small>
+              <p>
+                {selected.type === "evidence"
+                  ? selected.data.body
+                  : selected.data.reason}
+              </p>
+            </div>
+            {selected.type === "evidence" && (
+              <label>
+                材料復核結果
+                <select
+                  value={approve ? "approve" : "reject"}
+                  onChange={(e) => setApprove(e.target.value === "approve")}
+                >
+                  <option value="approve">通過，納入相關能力評估</option>
+                  <option value="reject">未通過，不納入能力評估</option>
+                </select>
+              </label>
+            )}
             {selected.type === "dispute" && (
               <label>
                 復核處理
@@ -2848,12 +3828,42 @@ function Demo() {
                   onChange={(e) => setOutcome(e.target.value)}
                 >
                   <option value="RESUME">恢復原流程</option>
-                  <option value="ACCEPT">依證據確認成果</option>
-                  <option value="REDO">返回原義務重做</option>
+                  <option value="ACCEPT" disabled={!selected.obligation_id}>
+                    依證據確認成果
+                  </option>
+                  <option value="REDO" disabled={!selected.obligation_id}>
+                    返回原義務重做
+                  </option>
                   <option value="CLOSEOUT">轉入雙方結清</option>
                   <option value="UNRESOLVED">證據不足，保留未解決</option>
                 </select>
               </label>
+            )}
+            {selected.type === "dispute" && (
+              <details>
+                <summary>需要記錄已確認的違約與補救？</summary>
+                <p className="muted-text">
+                  單方投訴不等於違約。只有可核對條款與證據時才記錄；當事人仍可完成原義務並申請補救。
+                </p>
+                <label>
+                  已確認需補救的當事人
+                  <select
+                    value={breach}
+                    onChange={(e) => setBreach(e.target.value)}
+                  >
+                    <option value="">沒有已確認違約</option>
+                    {reviewAgreement &&
+                      [
+                        reviewAgreement.requester_id,
+                        reviewAgreement.provider_id,
+                      ].map((u) => (
+                        <option key={u} value={u}>
+                          {users.find((x) => x.id === u)?.name}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+              </details>
             )}
             {(selected.type === "evidence" || outcome === "ACCEPT") && (
               <ScoreFields scores={scores} setScores={setScores} />
@@ -2881,7 +3891,9 @@ createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={qc}>
       <BrowserRouter>
-        <App />
+        <AppBoundary>
+          <App />
+        </AppBoundary>
       </BrowserRouter>
     </QueryClientProvider>
   </React.StrictMode>,

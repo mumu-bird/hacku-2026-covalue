@@ -4,7 +4,10 @@ const path = require("node:path");
 const { execFileSync } = require("node:child_process");
 const { chromium } = require(
   process.env.HOURLINK_PLAYWRIGHT ||
-    require("node:path").join(require("node:os").homedir(), ".cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright"),
+    require("node:path").join(
+      require("node:os").homedir(),
+      ".cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright",
+    ),
 );
 const base = process.env.HOURLINK_TEST_URL || "http://127.0.0.1:8001";
 const dataDir = process.env.HOURLINK_TEST_DATA || "tmp/closed-loop/data";
@@ -351,7 +354,9 @@ function local(v) {
       .waitFor();
     await p.getByRole("button", { name: "關閉", exact: true }).click();
     const recResponse = p.waitForResponse(
-      (r) => r.url().endsWith("/recommend") && r.request().method() === "POST",
+      (r) =>
+        r.url().endsWith("/proposals/recommended") &&
+        r.request().method() === "POST",
     );
     await p.getByRole("button", { name: "選擇並生成方案" }).first().click();
     assert.equal((await recResponse).status(), 200);
@@ -617,6 +622,40 @@ function local(v) {
     assert.equal(candidate.quality, 86);
     assert.equal(candidate.hourly_rate, 12500);
     assert.equal(candidate.evidence_count, 2);
+    await p.getByRole("link", { name: "能力與時間", exact: true }).click();
+    const rejectedForm = p.locator("aside form");
+    await rejectedForm.getByLabel("服務類別").selectOption("english");
+    await rejectedForm
+      .getByLabel("作品或測評名稱")
+      .fill("未通過作品：不計入能力");
+    await rejectedForm
+      .getByLabel("材料與完成說明")
+      .fill("材料尚未提供可核對的對話與回饋內容，需要補充後再提交。");
+    const rejected = await action(p, "/capability-evidence", () =>
+      rejectedForm.getByRole("button", { name: "提交能力證據" }).click(),
+    );
+    await role(p, "reviewer");
+    await p.getByRole("link", { name: "演示模式", exact: true }).click();
+    await p.getByRole("button", { name: "查看並復核", exact: true }).click();
+    const rejectDialog = p.getByRole("dialog");
+    await rejectDialog
+      .getByText("材料尚未提供可核對的對話與回饋內容，需要補充後再提交。", {
+        exact: true,
+      })
+      .waitFor();
+    await rejectDialog.getByLabel("材料復核結果").selectOption("reject");
+    await rejectDialog
+      .getByLabel("復核依據")
+      .fill("缺少可核對作品，不納入相關能力評估；可補充材料後重新提交。");
+    await action(p, `/capability-evidence/${rejected.id}/review`, () =>
+      rejectDialog.getByRole("button", { name: "保存復核結果" }).click(),
+    );
+    await rejectDialog.waitFor({ state: "hidden" });
+    const afterReject = (
+      await api(c, "/listings/request-extra-1/matches")
+    ).candidates.find((x) => x.user_id === "zao");
+    assert.equal(afterReject.quality, 86);
+    assert.equal(afterReject.evidence_count, 2);
     current.feedback = {
       before_hourly: 10000,
       after_hourly: 12500,
@@ -654,6 +693,8 @@ function local(v) {
     await p.getByRole("button", { name: "記錄復核結果" }).click();
     dialog = p.getByRole("dialog");
     await dialog.getByLabel("復核處理").selectOption("REDO");
+    await dialog.locator("summary").click();
+    await dialog.getByLabel("已確認需補救的當事人").selectOption("lin");
     await dialog
       .getByLabel("復核依據")
       .fill("原交付返回重做，期間退出申請仍然有效，不能恢復下一階段。");
@@ -661,6 +702,7 @@ function local(v) {
       dialog.getByRole("button", { name: "保存復核結果" }).click(),
     );
     await dialog.waitFor({ state: "hidden" });
+    assert((await api(c, "/users/lin/credit")).policy.blocked);
     await role(p, "lin");
     await p.goto(base + "/orders/" + id);
     assert.equal((await api(c, "/agreements/" + id)).status, "CLOSING");
@@ -674,6 +716,18 @@ function local(v) {
     assert.equal(end.status, "CANCELLED");
     current.order = end;
     await balances(p, { zao: 94000, lin: 106000 });
+    await role(p, "reviewer");
+    await p.goto(base + "/orders/" + id);
+    await p.getByRole("button", { name: "記錄完成補救", exact: true }).click();
+    dialog = p.getByRole("dialog");
+    await dialog
+      .getByLabel("說明與依據")
+      .fill("原義務已按驗收標準補做並確認，剩餘事項已由雙方明確結清。");
+    await action(p, `/disputes/${dispute.id}/remedy`, () =>
+      dialog.getByRole("button", { name: "提交", exact: true }).click(),
+    );
+    await dialog.waitFor({ state: "hidden" });
+    assert.equal((await api(c, "/users/lin/credit")).policy.blocked, false);
   });
   await scenario("prepared-barter-six-rounds", "barter", async (p, c) => {
     const template = await api(c, "/listings/request-main");
@@ -712,7 +766,9 @@ function local(v) {
       .getByRole("button", { name: "時間互換", exact: true })
       .click();
     const recPromise = p.waitForResponse(
-      (r) => r.url().endsWith("/recommend") && r.request().method() === "POST",
+      (r) =>
+        r.url().endsWith("/proposals/recommended") &&
+        r.request().method() === "POST",
     );
     await p.getByRole("button", { name: "選擇並生成方案" }).first().click();
     const proposal = await (await recPromise).json();
@@ -753,17 +809,47 @@ function local(v) {
       const initial = await api(c, `/proposals/${q.id}/perspectives`);
       assert.equal(initial.views.length, 0);
       assert.equal(initial.estimates.length, 2);
-      await p.getByRole("heading", { name: "平台先估算這份時間的價值" }).waitFor();
-      await p.locator('.algorithm-estimate[data-recipient="zao"]').getByText("算法建議", { exact: true }).waitFor();
+      await p
+        .getByRole("heading", { name: "平台先估算這份時間的價值" })
+        .waitFor();
+      await p
+        .locator('.algorithm-estimate[data-recipient="zao"]')
+        .getByText("算法建議", { exact: true })
+        .waitFor();
       const adoptionForm = p.locator(".perspective-form");
       await adoptionForm.getByRole("button", { name: "採用平台估值" }).click();
-      assert.equal(await adoptionForm.getByLabel("收到的整份服務，對我值得多少（HKD）").inputValue(), "150");
-      assert((await adoptionForm.getByLabel("為什麼我這樣判斷").inputValue()).includes("平台本單估值"));
+      assert.equal(
+        await adoptionForm
+          .getByLabel("收到的整份服務，對我值得多少（HKD）")
+          .inputValue(),
+        "150",
+      );
+      assert(
+        (
+          await adoptionForm.getByLabel("為什麼我這樣判斷").inputValue()
+        ).includes("平台本單估值"),
+      );
       assert.equal(await adoptionForm.getByRole("checkbox").isChecked(), false);
-      await action(p, `/proposals/${q.id}/perspectives`, () => adoptionForm.getByRole("button", { name: "保存我的價值判斷" }).click(), 200, "PUT");
-      assert.equal((await api(c, `/proposals/${q.id}/perspectives`)).views[0].received_value, 15000);
+      await action(
+        p,
+        `/proposals/${q.id}/perspectives`,
+        () =>
+          adoptionForm
+            .getByRole("button", { name: "保存我的價值判斷" })
+            .click(),
+        200,
+        "PUT",
+      );
+      assert.equal(
+        (await api(c, `/proposals/${q.id}/perspectives`)).views[0]
+          .received_value,
+        15000,
+      );
       await role(p, "lin");
-      assert.equal((await api(c, `/proposals/${q.id}/perspectives`)).views.length, 0);
+      assert.equal(
+        (await api(c, `/proposals/${q.id}/perspectives`)).views.length,
+        0,
+      );
       for (const [user, value, reason, shared] of [
         ["lin", "80", "我只需短時口語練習，額外時長對我幫助有限。", false],
         ["zao", "200", "這次辅導能解決急需的公式問題，對我價值較高。", true],
@@ -864,34 +950,161 @@ function local(v) {
     },
     { width: 390, height: 844 },
   );
-  await scenario("goal-aware-value-plan-and-complete", "barter", async (p, c) => {
-    const q = await seededProposal(p, c);
-    await p.goto(base + "/value-model");
-    await p.getByRole("heading", { name: "把難量化的幫助，拆成可說明的價值" }).waitFor();
-    await p.getByLabel("本次目標分鐘").fill("120");
-    const experiment = await action(p, "/value-model/simulate", () => p.getByRole("button", { name: "分析時間與受益" }).click());
-    assert.equal(experiment.benefit.score, 84.6);
-    assert.equal(experiment.reference.reference_amount, 15000);
-    await p.locator(".value-model-result").waitFor();
-    assert(await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
-    await p.goto(base + "/proposal/" + q.id);
-    await role(p, "lin");
-    await p.locator(".benefit-panel").getByText("確認我的目標與偏好（僅本人可見）", { exact: true }).click();
-    await p.getByLabel("目標練習時長（分鐘）").fill("60");
-    await action(p, `/proposals/${q.id}/value-context`, () => p.getByRole("button", { name: "確認目標與偏好", exact: true }).click(), 200, "PUT");
-    assert.deepEqual((await api(c, `/proposals/${q.id}`)).data, q.data);
-    const values = await api(c, `/proposals/${q.id}/perspectives`);
-    assert.equal(values.goal_plan.amount, 5000);
-    assert.equal(values.goal_plan.reverse_minutes, 60);
-    const changed = await action(p, `/proposals/${q.id}/apply-value-plan`, () => p.getByRole("button", { name: "確認目標並帶入方案" }).click());
-    assert.equal(changed.mode, "HYBRID");
-    assert.equal(changed.data.payer_id, "zao");
-    assert(await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
-    await p.screenshot({ path: `${out}/goal-value-proposal-mobile.png`, fullPage: true });
-    const id = await createAndSign(p);
-    await finish(p, id);
-    await balances(p, { zao: 95000, lin: 105000 });
-  }, { width: 390, height: 844 });
+  await scenario(
+    "goal-aware-value-plan-and-complete",
+    "barter",
+    async (p, c) => {
+      const q = await seededProposal(p, c);
+      await p.goto(base + "/value-model");
+      await p
+        .getByRole("heading", { name: "把難量化的幫助，拆成可說明的價值" })
+        .waitFor();
+      await p.getByLabel("本次目標分鐘").fill("120");
+      const experiment = await action(p, "/value-model/simulate", () =>
+        p.getByRole("button", { name: "分析時間與受益" }).click(),
+      );
+      assert.equal(experiment.benefit.score, 84.6);
+      assert.equal(experiment.reference.reference_amount, 15000);
+      await p.locator(".value-model-result").waitFor();
+      assert(
+        await p.evaluate(
+          () => document.documentElement.scrollWidth <= window.innerWidth,
+        ),
+      );
+      await p.goto(base + "/proposal/" + q.id);
+      await role(p, "lin");
+      await p
+        .locator(".benefit-panel")
+        .getByText("確認我的目標與偏好（僅本人可見）", { exact: true })
+        .click();
+      await p.getByLabel("目標練習時長（分鐘）").fill("60");
+      await action(
+        p,
+        `/proposals/${q.id}/value-context`,
+        () =>
+          p
+            .getByRole("button", { name: "確認目標與偏好", exact: true })
+            .click(),
+        200,
+        "PUT",
+      );
+      assert.deepEqual((await api(c, `/proposals/${q.id}`)).data, q.data);
+      const values = await api(c, `/proposals/${q.id}/perspectives`);
+      assert.equal(values.goal_plan.amount, 5000);
+      assert.equal(values.goal_plan.reverse_minutes, 60);
+      const changed = await action(
+        p,
+        `/proposals/${q.id}/apply-value-plan`,
+        () => p.getByRole("button", { name: "確認目標並帶入方案" }).click(),
+      );
+      assert.equal(changed.mode, "HYBRID");
+      assert.equal(changed.data.payer_id, "zao");
+      assert(
+        await p.evaluate(
+          () => document.documentElement.scrollWidth <= window.innerWidth,
+        ),
+      );
+      await p.screenshot({
+        path: `${out}/goal-value-proposal-mobile.png`,
+        fullPage: true,
+      });
+      const id = await createAndSign(p);
+      await finish(p, id);
+      await balances(p, { zao: 95000, lin: 105000 });
+    },
+    { width: 390, height: 844 },
+  );
+  await scenario(
+    "listing-edit-close-reopen-and-complete",
+    "cash",
+    async (p, c) => {
+      await p.goto(base + "/listing/request-main");
+      await p.getByRole("checkbox", { name: "比較林知行" }).check();
+      await p.getByRole("checkbox", { name: "比較陳思維" }).check();
+      const compareButton = p.getByRole("button", {
+        name: "比較候選",
+        exact: true,
+      });
+      await compareButton.click();
+      const comparison = p.getByRole("dialog");
+      await comparison.getByRole("heading", { name: "比較本單候選" }).waitFor();
+      await p.keyboard.press("Tab");
+      assert(
+        await comparison.evaluate((el) => el.contains(document.activeElement)),
+      );
+      await p.keyboard.press("Escape");
+      await comparison.waitFor({ state: "hidden" });
+      assert(
+        await compareButton.evaluate((el) => el === document.activeElement),
+      );
+      await p.getByRole("link", { name: "編輯刊登", exact: true }).click();
+      await p.getByLabel("用一句話說明").fill("完整流程：編輯後的社群表格需求");
+      const changed = await action(
+        p,
+        "/listings/request-main",
+        () => p.getByRole("button", { name: "保存刊登" }).click(),
+        200,
+        "PATCH",
+      );
+      assert(changed.version > 1);
+      await p.waitForURL("**/listing/request-main");
+      await p.getByRole("button", { name: "撤回刊登", exact: true }).click();
+      await action(p, "/listings/request-main/close", () =>
+        p
+          .getByRole("dialog")
+          .getByRole("button", { name: "確認撤回", exact: true })
+          .click(),
+      );
+      assert(
+        !(await api(c, "/listings?status=OPEN")).some(
+          (x) => x.id === "request-main",
+        ),
+      );
+      await p.goto(base + "/orders");
+      await p.getByRole("heading", { name: "我的刊登", exact: true }).waitFor();
+      await p.locator(".order-row").filter({ hasText: changed.title }).click();
+      await action(p, "/listings/request-main/reopen", () =>
+        p.getByRole("button", { name: "重新公開" }).click(),
+      );
+      await action(p, "/proposals/recommended", () =>
+        p.getByRole("button", { name: "選擇並生成方案" }).first().click(),
+      );
+      const id = await createAndSign(p);
+      await p.getByRole("region", { name: "目前下一步" }).waitFor();
+      await finish(p, id);
+      await p.getByRole("heading", { name: "每份承諾已完成" }).waitFor();
+      await balances(p, { zao: 85000, lin: 115000 });
+    },
+  );
+  await scenario(
+    "unsigned-cancel-recreate-complete",
+    "cash",
+    async (p, c) => {
+      const q = await seededProposal(p, c);
+      const old = await action(p, "/agreements", () =>
+        p.getByRole("button", { name: "建立雙方協議" }).click(),
+      );
+      await p.waitForURL("**/orders/" + old.id);
+      await action(p, `/agreements/${old.id}/confirm`, () =>
+        p.getByRole("button", { name: "我確認此版本協議" }).click(),
+      );
+      await p.getByRole("button", { name: "撤回未生效協議" }).click();
+      await action(p, `/agreements/${old.id}/cancel-draft`, () =>
+        p
+          .getByRole("dialog")
+          .getByRole("button", { name: "提交", exact: true })
+          .click(),
+      );
+      assert.equal((await api(c, "/agreements/" + old.id)).status, "CANCELLED");
+      assert.equal((await api(c, "/me/mock-account")).reserved, 0);
+      await p.getByRole("link", { name: "返回提案重新協商" }).click();
+      assert.equal((await api(c, "/proposals/" + q.id)).agreement, null);
+      const id = await createAndSign(p);
+      await finish(p, id);
+      await balances(p, { zao: 85000, lin: 115000 });
+    },
+    { width: 390, height: 844 },
+  );
   assert.deepEqual(report.external, []);
   assert.deepEqual(report.pageErrors, []);
   report.completedAt = new Date().toISOString();

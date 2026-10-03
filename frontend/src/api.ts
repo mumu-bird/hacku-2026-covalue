@@ -4,6 +4,7 @@ export class APIError extends Error {
     public code: string,
     message: string,
     public details: Data = {},
+    public status: number = 0,
   ) {
     super(message);
   }
@@ -14,23 +15,42 @@ export async function api<T = Data>(
   method = body === undefined ? "GET" : "POST",
   key?: string,
 ): Promise<T> {
-  const r = await fetch("/api/v1" + path, {
-    method,
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-      ...(method !== "GET"
-        ? { "Idempotency-Key": key || crypto.randomUUID() }
-        : {}),
-    },
-    ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
-  });
-  const data = await r.json();
+  let r: Response;
+  try {
+    r = await fetch("/api/v1" + path, {
+      method,
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        ...(method !== "GET"
+          ? { "Idempotency-Key": key || crypto.randomUUID() }
+          : {}),
+      },
+      ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
+    });
+  } catch {
+    throw new APIError(
+      "NETWORK_ERROR",
+      "連線中斷，請檢查本機服務是否已啟動，再重新讀取。交易狀態以已儲存記錄為準。",
+    );
+  }
+  let data: any;
+  try {
+    data = await r.json();
+  } catch {
+    throw new APIError(
+      "INVALID_RESPONSE",
+      "暫時無法讀取服務回應，請重新讀取。",
+      {},
+      r.status,
+    );
+  }
   if (!r.ok)
     throw new APIError(
       data.code || "NETWORK_ERROR",
       data.message || "暫時無法完成操作",
       data.details,
+      r.status,
     );
   return data;
 }
@@ -60,6 +80,9 @@ export const labels: Record<string, string> = {
   MONEY: "付費",
   BARTER: "時間互換",
   HYBRID: "互換補差",
+  OPEN: "公開中",
+  CLOSED: "已撤回",
+  TAKEN: "已有承諾",
   AWAITING_CONFIRMATION: "等待雙方確認",
   ACTIVE: "進行中",
   CLOSING: "結清中",

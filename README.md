@@ -48,6 +48,12 @@ npm run dev
 
 本实现沿用原 CoValue 仓库历史；原赛题与模型规划文档保留供追溯，当前可执行规则以v0.3为准。
 
+## 全流程与界面
+
+市场只展示公开刊登；本人可编辑、撤回和重新开放未生效刊登。候选支持最多三人并排比较，选择后原子生成默认方案。我的交换分别显示待签、履约和历史，并根据当前身份说明下一步；未生效协议可以撤回，已生效订单继续原退出结清流程。能力作品可复核通过或驳回，确认违约可在补救后解除保护限制。时间与资金明细可回到原订单。
+
+新版采用深绿、浅灰与白色卡片的工作台界面，统一导航、按钮、五步流程和手机布局；补充加载、失败重试、空状态及键盘弹窗操作。[设计参考与验收](docs/ui-workflow-design.md)记录公开参考来源及范围；[桌面首页](artifacts/ui/market-1440.png)与[手机订单](artifacts/ui/order-390.png)可直接查看。
+
 ## 五个独立演示案例
 
 | 案例 | 操作及预期 |
@@ -82,9 +88,9 @@ npm run contract
 HOURLINK_TEST_PORT=8002 ./scripts/verify-closed-loop.sh
 ```
 
-脚本执行后端测试、生产构建、浏览器完整交易流程和独立 SQLite 资金／时间对账。需要 Playwright 及 Chromium；默认使用本机 Codex 捆绑运行时，其他环境设置 `HOURLINK_PLAYWRIGHT` 为已安装的 Playwright 模块绝对路径。GitHub Actions 自动安装浏览器并执行相同验证。
+脚本执行80项后端测试、生产构建、26项桌面／手机页面检查、19条浏览器完整交易流程和独立 SQLite 资金／时间对账。需要 Playwright 及 Chromium；默认使用本机 Codex 捆绑运行时，其他环境设置 `HOURLINK_PLAYWRIGHT` 为已安装的 Playwright 模块绝对路径。GitHub Actions 自动安装浏览器并执行相同验证。
 
-浏览器覆盖发布、匹配、协商、双签、付费／互换／补差履约、退出、争议复核、证据评估更新、刷新和手机宽度。日志、截图及 trace 位于 `artifacts/browser/closed-loop/`，本地数据库快照位于 `tmp/closed-loop/snapshots/`，均不进入仓库。结果见 [测试报告](docs/test-report.md) 和 [闭环验收记录](docs/closed-loop-report.md)。
+浏览器覆盖发布、匹配、协商、双签、付费／互换／补差履约、退出、争议复核、证据评估更新、刷新和手机宽度。日志、截图及 trace 位于 `artifacts/browser/closed-loop/`，页面检查截图位于 `artifacts/browser/ui-review/`，本地数据库快照位于 `tmp/closed-loop/snapshots/`，均不进入仓库。结果见 [测试报告](docs/test-report.md) 和 [闭环验收记录](docs/closed-loop-report.md)。
 
 ## 比赛材料
 

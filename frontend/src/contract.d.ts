@@ -210,6 +210,23 @@ export interface paths {
         patch: operations["edit_listing_api_v1_listings__id__patch"];
         trace?: never;
     };
+    "/api/v1/listings/{id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close Listing */
+        post: operations["close_listing_api_v1_listings__id__close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/listings/{id}/reopen": {
         parameters: {
             query?: never;
@@ -289,6 +306,23 @@ export interface paths {
         put?: never;
         /** Proposals */
         post: operations["proposals_api_v1_proposals_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/proposals/recommended": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Recommended Proposal */
+        post: operations["recommended_proposal_api_v1_proposals_recommended_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -512,6 +546,23 @@ export interface paths {
         put?: never;
         /** Confirm */
         post: operations["confirm_api_v1_agreements__id__confirm_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agreements/{id}/cancel-draft": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancel Draft */
+        post: operations["cancel_draft_api_v1_agreements__id__cancel_draft_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1707,6 +1758,7 @@ export interface operations {
                 category?: string | null;
                 q?: string;
                 owner_id?: string | null;
+                status?: string | null;
                 service_mode?: string | null;
                 location?: string | null;
                 time_start?: string | null;
@@ -1814,6 +1866,41 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ListingPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    close_listing_api_v1_listings__id__close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Command"];
             };
         };
         responses: {
@@ -1970,6 +2057,39 @@ export interface operations {
         };
     };
     proposals_api_v1_proposals_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProposalInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recommended_proposal_api_v1_proposals_recommended_post: {
         parameters: {
             query?: never;
             header?: never;
@@ -2471,6 +2591,41 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["Confirm"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_draft_api_v1_agreements__id__cancel_draft_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Command"];
             };
         };
         responses: {

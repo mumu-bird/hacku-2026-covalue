@@ -13,14 +13,17 @@ Cookie `hour_session` 为12小时演示会话，HttpOnly/SameSite=Strict；`hour
 | 方法／路由 | 用途／权限 |
 |---|---|
 | GET /templates | 公开模板、参数、规则版本 |
-| GET /listings | 市场；kind/category/q/owner_id/service_mode/location/time_start/time_end筛选 |
+| GET /listings | 市场；kind/category/q/owner_id/status/service_mode/location/time_start/time_end筛选 |
 | POST /listings | 会话用户发布结构化需求或能力 |
-| PATCH /listings/{id} | 发布者编辑，不能编辑激活中的需求 |
+| PATCH /listings/{id} | 发布者编辑，版本校验；生效中或已完成需求不可修改，取消相关未生效协议 |
+| POST /listings/{id}/close | 发布者撤回公开刊登，版本校验；取消相关未生效协议 |
+| POST /listings/{id}/reopen | 发布者重新开放已关闭的可用刊登，不能绕过生效承诺 |
 | POST /listings/{id}/analyze | 发布者分析缺失字段与任务要求 |
 | GET /listings/{id}/matches | 三类排序、候选依据与预计投入，脱敏 |
 | POST /capability-evidence | 本人提交作品／测评，不允许伪造交易历史 |
 | POST /capability-evidence/{id}/review | 授权复核员审核及三项结构化评分 |
 | POST /proposals | 双方之一建立提案，供给来自匹配或服务能力单 |
+| POST /proposals/recommended | 同一事务建立提案并生成默认推荐；失败不留孤立提案 |
 | POST /proposals/{id}/recommend | 双方之一生成推荐快照、默认方案 |
 | POST /proposals/{id}/revise | 协商金额、模式、反向分钟、付款方、范围 |
 | PUT/GET /proposals/{id}/preference | 只写／读自己的私人接受条件 |
@@ -34,6 +37,7 @@ Cookie `hour_session` 为12小时演示会话，HttpOnly/SameSite=Strict；`hour
 | GET /mechanism | 演示18组隔离控制实验与取舍计数 |
 | POST /mechanism/simulate | 有界参数实验，不写入现有业务案例 |
 | POST /agreements | 按当前提案创建分轮合同 |
+| POST /agreements/{id}/cancel-draft | 当事人撤回未生效协议；版本校验；不操作资金 |
 | POST /agreements/{id}/confirm | 本人双签，第二签原子激活 |
 | POST /stages/{id}/fund | 本轮付款方模拟预留 |
 | POST /obligations/{id}/submit | 原义务提供者交付及时间明细 |
@@ -73,3 +77,11 @@ Content-Type: application/json
 错误统一为 `{"code":"VERSION_CONFLICT","message":"内容已更新…","details":{"current_version":2}}`。422为输入错误，401缺会话，403权限，404不存在，409为状态／版本／业务限制。重要业务代码包含 `NO_FEASIBLE_PLAN`、`LISTING_TAKEN`、`POLICY_BLOCKED`、`RECOMMENDATION_STALE`、`INVALID_STATE`、`IDEMPOTENCY_CONFLICT`。前端以错误message展示具体拒绝依据。
 
 候选选择请求为 `{"expected_version": 2, "value": 20000}`。互换 value 使用分钟，付费／补差使用港仙。选用候选提升提案及范围版本，将同服务私人接受条件迁移到新版本，在 `data.selected_rounds` 保存可执行轮数；手工修改清除此轮数和旧条件。ASSISTED 路径在建单及每次签署时检查当前共同接受范围。DIRECT 路径以明确双签为准。
+
+## 刊登与订单状态补充
+
+公开市场传`status=OPEN`；本人刊登不传状态即可管理所有状态。`PATCH`、`close`和`reopen`均使用命令幂等与expected_version。编辑或撤回主／反向刊登，原子取消AWAITING_CONFIRMATION协议并提升其条款版本；任何一方的旧签名不再生效。ACTIVE/CLOSING/DISPUTED/UNRESOLVED承诺不能通过改刊登绕过。
+
+`GET /me/proposals`、`GET /listings/{id}/proposals`及`GET /proposals/{id}`增加`agreement`（非取消协议的id/status）、`listing_status`和`stale_listing`，不返回私人接受条件。`GET /me/orders`返回本人授权的订单聚合及阶段，以计算本人下一步；模拟账本增加`agreement_id`用于回到原订单。
+
+`cancel-draft`只允许AWAITING_CONFIRMATION，提升协议及条款版本，将尚未生效的LOCKED义务标记WAIVED、阶段标记CANCELLED，不产生资金或确认时间。生效协议必须使用withdraw及双方结清，不使用此入口。

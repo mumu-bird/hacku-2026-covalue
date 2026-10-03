@@ -1,0 +1,139 @@
+{
+  "startedAt": "2026-10-03T16:08:44.575Z",
+  "pages": [
+    {
+      "name": "market",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "publish",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "listing",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "edit",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "proposal",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "orders",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "profile",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "value-model",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "mechanism",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "study",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "demo",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "order",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "error-and-retry",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "market",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "publish",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "listing",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "edit",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "proposal",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "orders",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "profile",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "value-model",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "mechanism",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "study",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "demo",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "order",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "error-and-retry",
+      "width": 390,
+      "passed": true
+    }
+  ],
+  "pageErrors": [],
+  "external": [],
+  "passed": true,
+  "completedAt": "2026-10-03T16:08:48.313Z"
+}

@@ -456,6 +456,61 @@ def matches(s, listing):
     }
 
 
+def ensure_listing_mutable(s, listing):
+    if listing["status"] == "TAKEN" or s.one(
+        "SELECT id FROM agreements WHERE (listing_id=? OR json_extract(data,'$.reverse.listing_id')=?) AND (status IN ('ACTIVE','CLOSING','DISPUTED','UNRESOLVED') OR (status='COMPLETED' AND ?='REQUEST'))",
+        (listing["id"], listing["id"], listing["kind"]),
+    ):
+        fail("INVALID_STATE", "刊登已關聯生效或已完成的承諾，請在原訂單結清或另建刊登")
+
+
+def cancel_listing_drafts(s, listing, user):
+    for row in s.all(
+        "SELECT * FROM agreements WHERE (listing_id=? OR json_extract(data,'$.reverse.listing_id')=?) AND status='AWAITING_CONFIRMATION'",
+        (listing["id"], listing["id"]),
+    ):
+        cancel_agreement_draft(s, user, unpack(row), row["version"], check_actor=False)
+
+
+def cancel_agreement_draft(s, user, agreement, expected, check_actor=True):
+    if check_actor:
+        participant(agreement, user)
+    version(agreement, expected)
+    if agreement["status"] != "AWAITING_CONFIRMATION":
+        fail("INVALID_STATE", "只有尚未生效的協議可撤回；生效後請申請退出與結清")
+    s.execute(
+        "UPDATE agreements SET status='CANCELLED',terms_version=terms_version+1,version=version+1 WHERE id=?",
+        (agreement["id"],),
+    )
+    s.execute(
+        "UPDATE obligations SET status='WAIVED',version=version+1 WHERE agreement_id=? AND status='LOCKED'",
+        (agreement["id"],),
+    )
+    s.execute(
+        "UPDATE stages SET status='CANCELLED' WHERE agreement_id=?", (agreement["id"],)
+    )
+    emit(s, user, "agreement", agreement["id"], "DRAFT_CANCELLED")
+    return get(s, "agreements", agreement["id"])
+
+
+def proposal_view(s, p):
+    agreement = s.one(
+        "SELECT id,status FROM agreements WHERE proposal_id=? AND status!='CANCELLED' ORDER BY rowid DESC LIMIT 1",
+        (p["id"],),
+    )
+    listing = get(s, "listings", p["listing_id"])
+    stale = listing["version"] != p["data"]["listing_version"]
+    if p["data"].get("reverse"):
+        reverse = get(s, "listings", p["data"]["reverse"]["listing_id"])
+        stale = stale or reverse["version"] != p["data"]["reverse"]["listing_version"]
+    return {
+        **p,
+        "agreement": agreement,
+        "listing_status": listing["status"],
+        "stale_listing": stale and not bool(agreement),
+    }
+
+
 def create_proposal(s, user, body):
     listing = get(s, "listings", body["listing_id"])
     if listing["status"] != "OPEN":
@@ -728,6 +783,10 @@ def revise(s, user, p, body):
     )
     if body.get("scope"):
         d["scope"] = {**normalize(body["scope"]), "title": body["scope"]["title"]}
+    if mode not in d["scope"]["accepted_modes"] or (
+        mode != "MONEY" and mode not in d["reverse"]["accepted_modes"]
+    ):
+        fail("INVALID_INPUT", "本單服務未接受這種交易方式", status=422)
     if body.get("amount") is not None:
         d["amount"] = body["amount"]
     if body.get("reverse_minutes") is not None:
@@ -767,13 +826,10 @@ def revise(s, user, p, body):
     )
     s.execute("DELETE FROM preferences WHERE proposal_id=?", (p["id"],))
     for agreement in s.all(
-        "SELECT id FROM agreements WHERE proposal_id=? AND status='AWAITING_CONFIRMATION'",
+        "SELECT * FROM agreements WHERE proposal_id=? AND status='AWAITING_CONFIRMATION'",
         (p["id"],),
     ):
-        s.execute(
-            "UPDATE agreements SET status='CANCELLED',terms_version=terms_version+1,version=version+1 WHERE id=?",
-            (agreement["id"],),
-        )
+        cancel_agreement_draft(s, user, unpack(agreement), agreement["version"])
     emit(s, user, "proposal", p["id"], "REVISED")
     return get(s, "proposals", p["id"])
 

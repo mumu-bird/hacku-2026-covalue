@@ -28,5 +28,7 @@ jobs:
         if: always()
         with:
           name: closed-loop-evidence
-          path: artifacts/browser/closed-loop/
+          path: |
+            artifacts/browser/closed-loop/
+            artifacts/browser/ui-review/
           retention-days: 7
