@@ -4,7 +4,7 @@ const path = require("node:path");
 const { execFileSync } = require("node:child_process");
 const { chromium } = require(
   process.env.HOURLINK_PLAYWRIGHT ||
-    "/Users/pomelo/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright",
+    require("node:path").join(require("node:os").homedir(), ".cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright"),
 );
 const base = process.env.HOURLINK_TEST_URL || "http://127.0.0.1:8001";
 const dataDir = process.env.HOURLINK_TEST_DATA || "tmp/closed-loop/data";
@@ -740,6 +740,113 @@ function local(v) {
         "mobile order horizontal overflow",
       );
       await balances(p, { zao: 85000, lin: 115000 });
+    },
+    { width: 390, height: 844 },
+  );
+  assert.deepEqual(report.external, []);
+  await scenario(
+    "subjective-values-consent-and-completion",
+    "barter",
+    async (p, c) => {
+      const q = await seededProposal(p, c);
+      const original = await api(c, `/proposals/${q.id}`);
+      for (const [user, value, reason, shared] of [
+        ["lin", "80", "我只需短時口語練習，額外時長對我幫助有限。", false],
+        ["zao", "200", "這次辅導能解決急需的公式問題，對我價值較高。", true],
+      ]) {
+        await role(p, user);
+        const form = p.locator(".perspective-form");
+        await form
+          .getByLabel("收到的整份服務，對我值得多少（HKD）")
+          .fill(value);
+        await form.getByLabel("為什麼我這樣判斷").fill(reason);
+        if (shared) await form.getByRole("checkbox").check();
+        await action(
+          p,
+          `/proposals/${q.id}/perspectives`,
+          () => form.getByRole("button", { name: "保存我的價值判斷" }).click(),
+          200,
+          "PUT",
+        );
+      }
+      let views = (await api(c, `/proposals/${q.id}/perspectives`)).views;
+      assert.equal(views.length, 1);
+      assert.equal(views[0].received_value, 20000);
+      await role(p, "lin");
+      assert.equal(
+        (await api(c, `/proposals/${q.id}/perspectives`)).views.length,
+        2,
+      );
+      const form = p.locator(".perspective-form");
+      await form.getByLabel("收到的整份服務，對我值得多少（HKD）").fill("80");
+      await form
+        .getByLabel("為什麼我這樣判斷")
+        .fill("我只需短時口語練習，願意分享與平台參考的差異。");
+      await form.getByRole("checkbox").check();
+      await action(
+        p,
+        `/proposals/${q.id}/perspectives`,
+        () => form.getByRole("button", { name: "保存我的價值判斷" }).click(),
+        200,
+        "PUT",
+      );
+      await role(p, "zao");
+      views = (await api(c, `/proposals/${q.id}/perspectives`)).views;
+      assert.equal(views.length, 2);
+      assert.equal(
+        (await api(c, `/proposals/${q.id}`)).data.amount,
+        original.data.amount,
+      );
+      const id = await createAndSign(p);
+      await finish(p, id);
+      await balances(p, { zao: 100000, lin: 100000 });
+    },
+  );
+  await scenario(
+    "mechanism-failures-and-mobile-study",
+    "barter",
+    async (p, c) => {
+      await p.goto(base + "/mechanism");
+      await p
+        .getByRole("heading", { name: "一小時的價值，如何改變？" })
+        .waitFor();
+      for (const [button, code] of [
+        ["證據不足", "INSUFFICIENT_EVIDENCE"],
+        ["雙方價值無交集", "NO_FEASIBLE_PLAN"],
+        ["不可合法分輪", "NO_FEASIBLE_PLAN"],
+      ]) {
+        const result = await action(p, "/mechanism/simulate", () =>
+          p.getByRole("button", { name: button, exact: true }).click(),
+        );
+        assert.equal(result.failure.code, code);
+        await p
+          .locator(".mechanism-result")
+          .getByText(code, { exact: true })
+          .waitFor();
+      }
+      assert.deepEqual(await api(c, "/me/orders"), []);
+      const report = await api(c, "/mechanism");
+      assert.equal(report.experiments.length, 18);
+      assert(
+        report.tradeoffs[0].workflow_commands >
+          report.tradeoffs[1].workflow_commands,
+      );
+      assert(
+        await p.evaluate(
+          () => document.documentElement.scrollWidth <= window.innerWidth,
+        ),
+      );
+      await p.getByRole("link", { name: "進入匿名試用與回饋 →" }).click();
+      await p
+        .getByRole("heading", { name: "用一次，再告訴我們是否值得" })
+        .waitFor();
+      assert(
+        await p.evaluate(
+          () => document.documentElement.scrollWidth <= window.innerWidth,
+        ),
+      );
+      current.note =
+        "Study page inspection only; automation is not a real participant and submits no feedback.";
     },
     { width: 390, height: 844 },
   );

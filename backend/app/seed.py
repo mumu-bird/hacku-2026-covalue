@@ -259,6 +259,7 @@ def reset(s, case):
         "stages",
         "agreements",
         "preferences",
+        "perspectives",
         "proposals",
         "listings",
         "accounts",

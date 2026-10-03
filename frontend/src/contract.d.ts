@@ -55,6 +55,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/mechanism": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Mechanism Report */
+        get: operations["mechanism_report_api_v1_mechanism_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mechanism/simulate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mechanism Simulate */
+        post: operations["mechanism_simulate_api_v1_mechanism_simulate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/demo/users": {
         parameters: {
             query?: never;
@@ -324,6 +358,24 @@ export interface paths {
         put?: never;
         /** Calculate */
         post: operations["calculate_api_v1_proposals__id__calculate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/proposals/{id}/perspectives": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Perspectives */
+        get: operations["perspectives_api_v1_proposals__id__perspectives_get"];
+        /** Save Perspective */
+        put: operations["save_perspective_api_v1_proposals__id__perspectives_put"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -1098,6 +1150,61 @@ export interface components {
              */
             case: string;
         };
+        /** MechanismInput */
+        MechanismInput: {
+            /**
+             * Quality
+             * @default 90
+             */
+            quality: number;
+            /**
+             * Main Minutes
+             * @default 60
+             */
+            main_minutes: number;
+            /**
+             * Preparation
+             * @default 0
+             */
+            preparation: number;
+            /**
+             * Window Minutes
+             * @default 240
+             */
+            window_minutes: number;
+            /**
+             * Lower
+             * @default 60
+             */
+            lower: number;
+            /**
+             * Upper
+             * @default 120
+             */
+            upper: number;
+            /**
+             * Evidence Mode
+             * @default VERIFIED
+             * @enum {string}
+             */
+            evidence_mode: "VERIFIED" | "MISSING";
+        };
+        /** Perspective */
+        Perspective: {
+            /** Expected Version */
+            expected_version: number;
+            /** Scope Version */
+            scope_version: number;
+            /** Received Value */
+            received_value: number;
+            /** Reason */
+            reason: string;
+            /**
+             * Shared
+             * @default false
+             */
+            shared: boolean;
+        };
         /** Preference */
         Preference: {
             /** Expected Version */
@@ -1282,6 +1389,59 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+        };
+    };
+    mechanism_report_api_v1_mechanism_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    mechanism_simulate_api_v1_mechanism_simulate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MechanismInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -1860,6 +2020,72 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["Command"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    perspectives_api_v1_proposals__id__perspectives_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_perspective_api_v1_proposals__id__perspectives_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Perspective"];
             };
         };
         responses: {

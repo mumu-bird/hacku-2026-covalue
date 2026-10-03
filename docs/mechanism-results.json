@@ -1,0 +1,3947 @@
+{
+  "is_demo": true,
+  "rule_version": "time-value-v0.3",
+  "experiments": [
+    {
+      "group": "quality",
+      "label": "quality=59",
+      "inputs": {
+        "quality": 59,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 240,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 59.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 83.7,
+        "eligible": false,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.0,
+        "hourly_rate": 10000,
+        "hourly_range": [
+          8000,
+          12000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 10000,
+        "time_amount": 10000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "fbd45a913950b549cdce87ea65e6d97ddd8df968f3ca4956311339db5e7bdd14",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 59.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 59.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 59.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 0,
+      "recommendation": null,
+      "negotiation": null,
+      "status": "REVIEW_REQUIRED",
+      "failure": {
+        "code": "POLICY_BLOCKED",
+        "message": "供給方未符合本單技能或能力門檻",
+        "details": {}
+      }
+    },
+    {
+      "group": "quality",
+      "label": "quality=60",
+      "inputs": {
+        "quality": 60,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 240,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 60.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 84.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.0,
+        "hourly_rate": 10000,
+        "hourly_range": [
+          8000,
+          12000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 10000,
+        "time_amount": 10000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "159b4d52c2ae2a57592eee5aa44f4816bb1bc8625d343b15f691e333920e881f",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 60.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 60.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 60.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 0,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 60.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 84.0,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            8000,
+            12000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            48,
+            72
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 10000,
+          "time_amount": 10000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "159b4d52c2ae2a57592eee5aa44f4816bb1bc8625d343b15f691e333920e881f",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 60.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 60.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 60.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            36,
+            84
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 10000,
+          "time_amount": 10000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 60,
+        "rounds": 2,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          60
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.518602+00:00",
+        "is_demo": true
+      },
+      "negotiation": {
+        "candidates": [
+          90
+        ],
+        "unit": "分鐘",
+        "scope_version": 1,
+        "rule_version": "time-value-v0.3",
+        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+      },
+      "status": "ACCEPTABLE_CANDIDATE",
+      "failure": null,
+      "reference_gap": 0,
+      "service_acceptances": 4,
+      "workflow_commands": 10
+    },
+    {
+      "group": "quality",
+      "label": "quality=79",
+      "inputs": {
+        "quality": 79,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 240,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 79.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 89.7,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.0,
+        "hourly_rate": 10000,
+        "hourly_range": [
+          8000,
+          12000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 10000,
+        "time_amount": 10000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "58f7e4aafa7ead6b5ca662a4fedbb70276446ba59ee9f71d3348744f9c8c1402",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 79.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 79.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 79.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 0,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 79.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 89.7,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            8000,
+            12000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            48,
+            72
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 10000,
+          "time_amount": 10000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "58f7e4aafa7ead6b5ca662a4fedbb70276446ba59ee9f71d3348744f9c8c1402",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 79.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 79.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 79.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            36,
+            84
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 10000,
+          "time_amount": 10000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 60,
+        "rounds": 2,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          60
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.526199+00:00",
+        "is_demo": true
+      },
+      "negotiation": {
+        "candidates": [
+          90
+        ],
+        "unit": "分鐘",
+        "scope_version": 1,
+        "rule_version": "time-value-v0.3",
+        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+      },
+      "status": "ACCEPTABLE_CANDIDATE",
+      "failure": null,
+      "reference_gap": 0,
+      "service_acceptances": 4,
+      "workflow_commands": 10
+    },
+    {
+      "group": "quality",
+      "label": "quality=80",
+      "inputs": {
+        "quality": 80,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 240,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 80.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 90.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.25,
+        "hourly_rate": 12500,
+        "hourly_range": [
+          10000,
+          15000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 12500,
+        "time_amount": 12500,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "18db6caeafcca04ac37f1e33dea15feab449ee3284d880010641aa395f130ec9",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 80.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 80.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 80.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 2500,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 80.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 90.0,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.25,
+          "hourly_rate": 12500,
+          "hourly_range": [
+            10000,
+            15000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            48,
+            72
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 12500,
+          "time_amount": 12500,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "18db6caeafcca04ac37f1e33dea15feab449ee3284d880010641aa395f130ec9",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 80.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 80.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 80.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 75,
+          "execution_minutes": 75,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            45,
+            105
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 12500,
+          "time_amount": 12500,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 75,
+        "rounds": 2,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          75
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.533662+00:00",
+        "is_demo": true
+      },
+      "negotiation": {
+        "candidates": [
+          90
+        ],
+        "unit": "分鐘",
+        "scope_version": 1,
+        "rule_version": "time-value-v0.3",
+        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+      },
+      "status": "ACCEPTABLE_CANDIDATE",
+      "failure": null,
+      "reference_gap": 0,
+      "service_acceptances": 4,
+      "workflow_commands": 10
+    },
+    {
+      "group": "quality",
+      "label": "quality=89",
+      "inputs": {
+        "quality": 89,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 240,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 89.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 92.7,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.25,
+        "hourly_rate": 12500,
+        "hourly_range": [
+          10000,
+          15000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 12500,
+        "time_amount": 12500,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "4bcc24678c8a2f70235ac5146d1217642d07e7bc17c0c8b59ca2e6bc9ad5112f",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 89.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 89.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 89.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 2500,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 89.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 92.7,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.25,
+          "hourly_rate": 12500,
+          "hourly_range": [
+            10000,
+            15000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            48,
+            72
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 12500,
+          "time_amount": 12500,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4bcc24678c8a2f70235ac5146d1217642d07e7bc17c0c8b59ca2e6bc9ad5112f",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 89.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 89.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 89.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 75,
+          "execution_minutes": 75,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            45,
+            105
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 12500,
+          "time_amount": 12500,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 75,
+        "rounds": 2,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          75
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.541747+00:00",
+        "is_demo": true
+      },
+      "negotiation": {
+        "candidates": [
+          90
+        ],
+        "unit": "分鐘",
+        "scope_version": 1,
+        "rule_version": "time-value-v0.3",
+        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+      },
+      "status": "ACCEPTABLE_CANDIDATE",
+      "failure": null,
+      "reference_gap": 0,
+      "service_acceptances": 4,
+      "workflow_commands": 10
+    },
+    {
+      "group": "quality",
+      "label": "quality=90",
+      "inputs": {
+        "quality": 90,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 240,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 90.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 93.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.5,
+        "hourly_rate": 15000,
+        "hourly_range": [
+          12000,
+          18000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 15000,
+        "time_amount": 15000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 5000,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 90.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 93.0,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            48,
+            72
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 90,
+          "execution_minutes": 90,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            54,
+            126
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 90,
+        "rounds": 2,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          90
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.549284+00:00",
+        "is_demo": true
+      },
+      "negotiation": {
+        "candidates": [
+          90
+        ],
+        "unit": "分鐘",
+        "scope_version": 1,
+        "rule_version": "time-value-v0.3",
+        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+      },
+      "status": "ACCEPTABLE_CANDIDATE",
+      "failure": null,
+      "reference_gap": 0,
+      "service_acceptances": 4,
+      "workflow_commands": 10
+    },
+    {
+      "group": "preparation",
+      "label": "preparation=0",
+      "inputs": {
+        "quality": 90,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 240,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 90.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 93.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.5,
+        "hourly_rate": 15000,
+        "hourly_range": [
+          12000,
+          18000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 15000,
+        "time_amount": 15000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 5000,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 90.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 93.0,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            48,
+            72
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 90,
+          "execution_minutes": 90,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            54,
+            126
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 90,
+        "rounds": 2,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          90
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.556778+00:00",
+        "is_demo": true
+      },
+      "negotiation": {
+        "candidates": [
+          90
+        ],
+        "unit": "分鐘",
+        "scope_version": 1,
+        "rule_version": "time-value-v0.3",
+        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+      },
+      "status": "ACCEPTABLE_CANDIDATE",
+      "failure": null,
+      "reference_gap": 0,
+      "service_acceptances": 4,
+      "workflow_commands": 10
+    },
+    {
+      "group": "preparation",
+      "label": "preparation=10",
+      "inputs": {
+        "quality": 90,
+        "main_minutes": 60,
+        "preparation": 10,
+        "window_minutes": 240,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 90.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 93.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.5,
+        "hourly_rate": 15000,
+        "hourly_range": [
+          12000,
+          18000
+        ],
+        "estimated_minutes": 70,
+        "execution_minutes": 60,
+        "preparation_minutes": 10,
+        "travel_minutes": 0,
+        "minutes_range": [
+          56,
+          84
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 17500,
+        "time_amount": 17500,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 7500,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 90.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 93.0,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "estimated_minutes": 70,
+          "execution_minutes": 60,
+          "preparation_minutes": 10,
+          "travel_minutes": 0,
+          "minutes_range": [
+            56,
+            84
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 17500,
+          "time_amount": 17500,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 105,
+          "execution_minutes": 105,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            63,
+            147
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 17500,
+          "time_amount": 17500,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 105,
+        "rounds": 3,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          105
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.564624+00:00",
+        "is_demo": true
+      },
+      "negotiation": {
+        "candidates": [
+          90
+        ],
+        "unit": "分鐘",
+        "scope_version": 1,
+        "rule_version": "time-value-v0.3",
+        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+      },
+      "status": "ACCEPTABLE_CANDIDATE",
+      "failure": null,
+      "reference_gap": 0,
+      "service_acceptances": 6,
+      "workflow_commands": 14
+    },
+    {
+      "group": "preparation",
+      "label": "preparation=20",
+      "inputs": {
+        "quality": 90,
+        "main_minutes": 60,
+        "preparation": 20,
+        "window_minutes": 240,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 90.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 93.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.5,
+        "hourly_rate": 15000,
+        "hourly_range": [
+          12000,
+          18000
+        ],
+        "estimated_minutes": 80,
+        "execution_minutes": 60,
+        "preparation_minutes": 20,
+        "travel_minutes": 0,
+        "minutes_range": [
+          64,
+          96
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 20000,
+        "time_amount": 20000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 10000,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 90.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 93.0,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "estimated_minutes": 80,
+          "execution_minutes": 60,
+          "preparation_minutes": 20,
+          "travel_minutes": 0,
+          "minutes_range": [
+            64,
+            96
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 20000,
+          "time_amount": 20000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 120,
+          "execution_minutes": 120,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            72,
+            168
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 20000,
+          "time_amount": 20000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 120,
+        "rounds": 6,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          120
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.572182+00:00",
+        "is_demo": true
+      },
+      "negotiation": {
+        "candidates": [
+          90
+        ],
+        "unit": "分鐘",
+        "scope_version": 1,
+        "rule_version": "time-value-v0.3",
+        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+      },
+      "status": "ACCEPTABLE_CANDIDATE",
+      "failure": null,
+      "reference_gap": 0,
+      "service_acceptances": 12,
+      "workflow_commands": 26
+    },
+    {
+      "group": "preparation",
+      "label": "preparation=31",
+      "inputs": {
+        "quality": 90,
+        "main_minutes": 60,
+        "preparation": 31,
+        "window_minutes": 240,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 90.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 93.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.5,
+        "hourly_rate": 15000,
+        "hourly_range": [
+          12000,
+          18000
+        ],
+        "estimated_minutes": 91,
+        "execution_minutes": 60,
+        "preparation_minutes": 31,
+        "travel_minutes": 0,
+        "minutes_range": [
+          72,
+          109
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 22800,
+        "time_amount": 22800,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 12800,
+      "recommendation": null,
+      "negotiation": null,
+      "status": "NO_DEAL",
+      "failure": {
+        "code": "NO_FEASIBLE_PLAN",
+        "message": "時段內沒有合法的交換方案",
+        "details": {}
+      }
+    },
+    {
+      "group": "window_minutes",
+      "label": "window_minutes=60",
+      "inputs": {
+        "quality": 90,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 60,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 90.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 93.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.5,
+        "hourly_rate": 15000,
+        "hourly_range": [
+          12000,
+          18000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 15000,
+        "time_amount": 15000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 5000,
+      "recommendation": null,
+      "negotiation": null,
+      "status": "NO_DEAL",
+      "failure": {
+        "code": "NO_FEASIBLE_PLAN",
+        "message": "時段內沒有合法的交換方案",
+        "details": {}
+      }
+    },
+    {
+      "group": "window_minutes",
+      "label": "window_minutes=90",
+      "inputs": {
+        "quality": 90,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 90,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 90.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 93.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.5,
+        "hourly_rate": 15000,
+        "hourly_range": [
+          12000,
+          18000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 15000,
+        "time_amount": 15000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 5000,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 90.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 93.0,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            48,
+            72
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 30,
+          "execution_minutes": 30,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            18,
+            42
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 5000,
+          "time_amount": 5000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 30,
+        "rounds": 2,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          30
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.593405+00:00",
+        "is_demo": true
+      },
+      "negotiation": null,
+      "status": "NO_DEAL",
+      "failure": {
+        "code": "NO_FEASIBLE_PLAN",
+        "message": "時段或數量限制內沒有方案",
+        "details": {}
+      },
+      "reference_gap": 10000,
+      "service_acceptances": 4,
+      "workflow_commands": 10
+    },
+    {
+      "group": "window_minutes",
+      "label": "window_minutes=120",
+      "inputs": {
+        "quality": 90,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 120,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 90.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 93.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.5,
+        "hourly_rate": 15000,
+        "hourly_range": [
+          12000,
+          18000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 15000,
+        "time_amount": 15000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 5000,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 90.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 93.0,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            48,
+            72
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            36,
+            84
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 10000,
+          "time_amount": 10000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 60,
+        "rounds": 2,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          60
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.601423+00:00",
+        "is_demo": true
+      },
+      "negotiation": {
+        "candidates": [
+          60
+        ],
+        "unit": "分鐘",
+        "scope_version": 1,
+        "rule_version": "time-value-v0.3",
+        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+      },
+      "status": "ACCEPTABLE_CANDIDATE",
+      "failure": null,
+      "reference_gap": 5000,
+      "service_acceptances": 4,
+      "workflow_commands": 10
+    },
+    {
+      "group": "window_minutes",
+      "label": "window_minutes=150",
+      "inputs": {
+        "quality": 90,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 150,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 90.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 93.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.5,
+        "hourly_rate": 15000,
+        "hourly_range": [
+          12000,
+          18000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 15000,
+        "time_amount": 15000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 5000,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 90.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 93.0,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            48,
+            72
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 90,
+          "execution_minutes": 90,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            54,
+            126
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 90,
+        "rounds": 2,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          90
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.609192+00:00",
+        "is_demo": true
+      },
+      "negotiation": {
+        "candidates": [
+          90
+        ],
+        "unit": "分鐘",
+        "scope_version": 1,
+        "rule_version": "time-value-v0.3",
+        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+      },
+      "status": "ACCEPTABLE_CANDIDATE",
+      "failure": null,
+      "reference_gap": 0,
+      "service_acceptances": 4,
+      "workflow_commands": 10
+    },
+    {
+      "group": "acceptance",
+      "label": "90..60",
+      "inputs": {
+        "quality": 90,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 240,
+        "lower": 90,
+        "upper": 60,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 90.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 93.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.5,
+        "hourly_rate": 15000,
+        "hourly_range": [
+          12000,
+          18000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 15000,
+        "time_amount": 15000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 5000,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 90.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 93.0,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            48,
+            72
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 90,
+          "execution_minutes": 90,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            54,
+            126
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 90,
+        "rounds": 2,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          90
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.616764+00:00",
+        "is_demo": true
+      },
+      "negotiation": null,
+      "status": "NO_DEAL",
+      "failure": {
+        "code": "NO_FEASIBLE_PLAN",
+        "message": "雙方接受條件內沒有合法方案",
+        "details": {}
+      },
+      "reference_gap": 0,
+      "service_acceptances": 4,
+      "workflow_commands": 10
+    },
+    {
+      "group": "acceptance",
+      "label": "60..60",
+      "inputs": {
+        "quality": 90,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 240,
+        "lower": 60,
+        "upper": 60,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 90.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 93.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.5,
+        "hourly_rate": 15000,
+        "hourly_range": [
+          12000,
+          18000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 15000,
+        "time_amount": 15000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 5000,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 90.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 93.0,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            48,
+            72
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 90,
+          "execution_minutes": 90,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            54,
+            126
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 90,
+        "rounds": 2,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          90
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.624256+00:00",
+        "is_demo": true
+      },
+      "negotiation": {
+        "candidates": [
+          60
+        ],
+        "unit": "分鐘",
+        "scope_version": 1,
+        "rule_version": "time-value-v0.3",
+        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+      },
+      "status": "ACCEPTABLE_CANDIDATE",
+      "failure": null,
+      "reference_gap": 0,
+      "service_acceptances": 4,
+      "workflow_commands": 10
+    },
+    {
+      "group": "acceptance",
+      "label": "75..120",
+      "inputs": {
+        "quality": 90,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 240,
+        "lower": 75,
+        "upper": 120,
+        "evidence_mode": "VERIFIED"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": 90.0,
+        "fit": 100.0,
+        "evidence_score": 60,
+        "recommendation_score": 93.0,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [
+          "公式",
+          "教學",
+          "資料清理"
+        ],
+        "evidence_count": 3,
+        "independent_peers": 3,
+        "confidence": "充足",
+        "coefficient": 1.5,
+        "hourly_rate": 15000,
+        "hourly_range": [
+          12000,
+          18000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          48,
+          72
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 15000,
+        "time_amount": 15000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+        "evidence_summary": [
+          {
+            "id": "ev-lin-tutoring-2",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 3",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-1",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 2",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          },
+          {
+            "id": "ev-lin-tutoring-0",
+            "kind": "HISTORY",
+            "quality": 90.0,
+            "title": "表格輔導 · 已確認履約 1",
+            "difficulty": "basic",
+            "skills": [
+              "公式",
+              "教學",
+              "資料清理"
+            ]
+          }
+        ],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 5000,
+      "recommendation": {
+        "main": {
+          "user_id": "lin",
+          "category": "tutoring",
+          "quality": 90.0,
+          "fit": 100.0,
+          "evidence_score": 60,
+          "recommendation_score": 93.0,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "公式",
+            "教學",
+            "資料清理"
+          ],
+          "evidence_count": 3,
+          "independent_peers": 3,
+          "confidence": "充足",
+          "coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "estimated_minutes": 60,
+          "execution_minutes": 60,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            48,
+            72
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "evidence_summary": [
+            {
+              "id": "ev-lin-tutoring-2",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 3",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-1",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 2",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            },
+            {
+              "id": "ev-lin-tutoring-0",
+              "kind": "HISTORY",
+              "quality": 90.0,
+              "title": "表格輔導 · 已確認履約 1",
+              "difficulty": "basic",
+              "skills": [
+                "公式",
+                "教學",
+                "資料清理"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "reverse": {
+          "user_id": "zao",
+          "category": "english",
+          "quality": 74.0,
+          "fit": 100,
+          "evidence_score": 10,
+          "recommendation_score": 83.2,
+          "eligible": true,
+          "missing_skills": [],
+          "verified_skills": [
+            "口語回饋",
+            "教學",
+            "英語交流"
+          ],
+          "evidence_count": 1,
+          "independent_peers": 0,
+          "confidence": "有限",
+          "coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "estimated_minutes": 90,
+          "execution_minutes": 90,
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "minutes_range": [
+            54,
+            126
+          ],
+          "estimate_source": "約定服務時長",
+          "total_amount": 15000,
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+          "evidence_summary": [
+            {
+              "id": "ev-zao-english",
+              "kind": "ASSESSMENT",
+              "quality": 74.0,
+              "title": "英語交流結構化測評",
+              "difficulty": "basic",
+              "skills": [
+                "英語交流",
+                "口語回饋",
+                "教學"
+              ]
+            }
+          ],
+          "rule_version": "time-value-v0.3",
+          "is_demo": true
+        },
+        "amount": 0,
+        "reverse_minutes": 90,
+        "rounds": 2,
+        "payer_id": "zao",
+        "payee_id": "lin",
+        "candidates": [
+          90
+        ],
+        "rule_version": "time-value-v0.3",
+        "scope_version": 1,
+        "created": "2026-10-03T05:00:01.632105+00:00",
+        "is_demo": true
+      },
+      "negotiation": {
+        "candidates": [
+          90,
+          105
+        ],
+        "unit": "分鐘",
+        "scope_version": 1,
+        "rule_version": "time-value-v0.3",
+        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+      },
+      "status": "ACCEPTABLE_CANDIDATE",
+      "failure": null,
+      "reference_gap": 0,
+      "service_acceptances": 4,
+      "workflow_commands": 10
+    },
+    {
+      "group": "evidence",
+      "label": "No verified evidence",
+      "inputs": {
+        "quality": 90,
+        "main_minutes": 60,
+        "preparation": 0,
+        "window_minutes": 240,
+        "lower": 60,
+        "upper": 120,
+        "evidence_mode": "MISSING"
+      },
+      "is_demo": true,
+      "rule_version": "time-value-v0.3",
+      "main": {
+        "user_id": "lin",
+        "category": "tutoring",
+        "quality": null,
+        "fit": 100,
+        "evidence_score": 0,
+        "recommendation_score": null,
+        "eligible": true,
+        "missing_skills": [],
+        "verified_skills": [],
+        "evidence_count": 0,
+        "independent_peers": 0,
+        "confidence": "待驗證",
+        "coefficient": 1.0,
+        "hourly_rate": 10000,
+        "hourly_range": [
+          6000,
+          14000
+        ],
+        "estimated_minutes": 60,
+        "execution_minutes": 60,
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "minutes_range": [
+          36,
+          84
+        ],
+        "estimate_source": "約定服務時長",
+        "total_amount": 10000,
+        "time_amount": 10000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "evidence_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "evidence_summary": [],
+        "rule_version": "time-value-v0.3",
+        "is_demo": true
+      },
+      "equal_time_gap": 0,
+      "recommendation": null,
+      "negotiation": null,
+      "status": "REVIEW_REQUIRED",
+      "failure": {
+        "code": "INSUFFICIENT_EVIDENCE",
+        "message": "缺少已確認能力證據，只能展示模板參考；請先復核作品或測評，再生成平台方案",
+        "details": {}
+      }
+    }
+  ],
+  "tradeoffs": [
+    {
+      "first_investment_limit": 30,
+      "rounds": 4,
+      "first_unreturned_minutes": 30,
+      "service_acceptances": 8,
+      "workflow_commands": 18
+    },
+    {
+      "first_investment_limit": 60,
+      "rounds": 2,
+      "first_unreturned_minutes": 60,
+      "service_acceptances": 4,
+      "workflow_commands": 10
+    }
+  ],
+  "method": "Production rules, isolated seeded SQLite; controlled synthetic inputs; no real-user success or economic fairness claim.",
+  "command_count_basis": "Barter: 2 signatures + 2 services per round × (submission + acceptance). Excludes setup, scheduling, exit and review; not elapsed time.",
+  "limitations": [
+    "Quality coefficients jump at 80 and 90; these boundaries require calibration.",
+    "A smaller reference gap does not imply both parties want the deal.",
+    "More rounds reduce first unreturned service but add acceptance actions.",
+    "No verified capability pauses definite platform advice; newcomers need a reviewed work or assessment.",
+    "Indivisible work or preparation exceeding the first-investment limit cannot use the current staged barter rule."
+  ]
+}

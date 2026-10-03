@@ -1,4 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
+import { ValuePerspectives } from "./ValuePerspectives";
+import { MechanismLab } from "./MechanismLab";
+import { UserStudy } from "./UserStudy";
 import { createRoot } from "react-dom/client";
 import {
   BrowserRouter,
@@ -321,6 +324,8 @@ function App() {
           <Route path="/orders/:id" element={<Order />} />
           <Route path="/me" element={<Profile />} />
           <Route path="/demo" element={<Demo />} />
+          <Route path="/mechanism" element={<MechanismLab />} />
+          <Route path="/study" element={<UserStudy />} />
           <Route path="*" element={<Empty title="找不到這個頁面" />} />
         </Routes>
       </main>
@@ -1519,6 +1524,15 @@ function Proposal() {
           </button>
         </div>
       </div>
+      {p.mode !== "MONEY" && (
+        <ValuePerspectives
+          key={`${p.id}-${p.scope_version}-${me.user.id}`}
+          proposal={p}
+          userId={me.user.id}
+          names={users}
+          act={act}
+        />
+      )}
       <details className="panel negotiation-panel">
         <summary>
           想調整條件？直接協商或填寫私人接受條件 <ChevronDown size={17} />
@@ -2675,6 +2689,15 @@ function Demo() {
         <div className="eyebrow muted">DEMO & REVIEW STUDIO</div>
         <h1>把規則，展示得清清楚楚</h1>
         <p>每個案例使用獨立資料庫。切換身份不等於實名驗證。</p>
+        <p>
+          <Link className="text-button" to="/mechanism">
+            運行機制實驗、取捨與失效案例 →
+          </Link>
+          　
+          <Link className="text-button" to="/study">
+            匿名真實試用回饋 →
+          </Link>
+        </p>
       </div>
       <div className="demo-cases">
         {cases?.cases.map((c: Data) => (

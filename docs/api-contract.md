@@ -24,6 +24,9 @@ Cookie `hour_session` 为12小时演示会话，HttpOnly/SameSite=Strict；`hour
 | PUT/GET /proposals/{id}/preference | 只写／读自己的私人接受条件 |
 | POST /proposals/{id}/calculate | 辅助协商，可返回NO_FEASIBLE_PLAN |
 | POST /proposals/{id}/select | 原子选用当前候选，保留同服务接受条件并记录可执行轮数 |
+| GET/PUT /proposals/{id}/perspectives | 当事人的价值判断；本人可见或自愿向对方分享，不改成交条款 |
+| GET /mechanism | 演示18组隔离控制实验与取舍计数 |
+| POST /mechanism/simulate | 有界参数实验，不写入现有业务案例 |
 | POST /agreements | 按当前提案创建分轮合同 |
 | POST /agreements/{id}/confirm | 本人双签，第二签原子激活 |
 | POST /stages/{id}/fund | 本轮付款方模拟预留 |

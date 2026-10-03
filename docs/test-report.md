@@ -4,13 +4,14 @@
 
 | 检查 | 实测结果 |
 |---|---|
-| `uv run pytest -q` | 49 passed，2.08秒 |
+| `uv run pytest -q` | 55 passed；完整复测通过 |
 | `uv run ruff check backend scripts/reset.py scripts/audit_closed_loop.py` | All checks passed |
 | `cd frontend && npm run build` | TypeScript及Vite生产构建通过 |
-| `scripts/verify-closed-loop.sh` | 14条真实浏览器完整流程通过，含桌面1440×1000、手机390×844 |
-| 独立SQLite快照对账 | 14个快照全部通过11类检查；每个案例总资金HK$11,000，终态预留余额、未结义务和占用时段均为0 |
-| Pitch Deck | 8页PDF，逐页实际渲染检查；HTML源可编辑 |
-| 操作视频 | 1280×800、25fps、180秒WebM，字幕讲解、无语音 |
+| `scripts/verify-closed-loop.sh` | 16条真实浏览器完整流程通过，含桌面1440×1000、手机390×844 |
+| 独立SQLite快照对账 | 16个快照全部通过11类检查；每个案例总资金HK$11,000，终态预留余额、未结义务和占用时段均为0 |
+| 机制控制实验 | 18组、2组取舍对照；直接调用生产规则并隔离业务数据 |
+| Pitch Deck | 12页PDF，逐页渲染检查；HTML源与数据生成脚本可编辑 |
+| 操作视频 | 1280×800、25fps、约180秒WebM，实际互换→分歧→退出→原回报完成，字幕、无语音 |
 
 ## 已覆盖的业务风险
 
@@ -34,4 +35,6 @@
 
 报告不声称经过真实用户研究、性能压力测试或实际支付验证。本表记录本机执行结果；GitHub Actions执行相同完整验证，远端状态见 [Checks运行记录](https://github.com/mumu-bird/hacku-2026-covalue/actions/workflows/check.yml)。
 
-pytest的唯一警告来自当前Starlette测试客户端对httpx的弃用提示；没有业务测试失败。视频已裁去起始空白并轻微统一播放速度为180秒，未改变业务操作或结果。录制时界面在最终费用拆分、估计范围和轮数控件补充之前；当前代码包含这些更新，并另经上述测试。
+新增验证：价值判断只在本人授权后向对方可见，不改成交；范围／重新推荐数量变化后旧判断失效；未知能力暂停确定建议；机制页面三个失败按钮实际运行；手机试用页不上传反馈，自动化不计为真实参与者。
+
+pytest唯一警告来自Starlette测试客户端对httpx的弃用提示，没有业务失败。新版视频使用独立数据库录制，裁去准备画面；不伪造动作或业务结果。真实用户反馈仍未收集，不将工程验收或控制实验当作真实用户效果研究。

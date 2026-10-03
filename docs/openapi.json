@@ -53,6 +53,58 @@
         }
       }
     },
+    "/api/v1/mechanism": {
+      "get": {
+        "summary": "Mechanism Report",
+        "operationId": "mechanism_report_api_v1_mechanism_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/mechanism/simulate": {
+      "post": {
+        "summary": "Mechanism Simulate",
+        "operationId": "mechanism_simulate_api_v1_mechanism_simulate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MechanismInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/demo/users": {
       "get": {
         "summary": "Users",
@@ -843,6 +895,88 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Command"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/proposals/{id}/perspectives": {
+      "get": {
+        "summary": "Perspectives",
+        "operationId": "perspectives_api_v1_proposals__id__perspectives_get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Save Perspective",
+        "operationId": "save_perspective_api_v1_proposals__id__perspectives_put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Perspective"
               }
             }
           }
@@ -2497,6 +2631,104 @@
           "username"
         ],
         "title": "Login"
+      },
+      "MechanismInput": {
+        "properties": {
+          "quality": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Quality",
+            "default": 90
+          },
+          "main_minutes": {
+            "type": "integer",
+            "maximum": 240.0,
+            "minimum": 15.0,
+            "title": "Main Minutes",
+            "default": 60
+          },
+          "preparation": {
+            "type": "integer",
+            "maximum": 60.0,
+            "minimum": 0.0,
+            "title": "Preparation",
+            "default": 0
+          },
+          "window_minutes": {
+            "type": "integer",
+            "maximum": 1440.0,
+            "minimum": 30.0,
+            "title": "Window Minutes",
+            "default": 240
+          },
+          "lower": {
+            "type": "integer",
+            "maximum": 1440.0,
+            "minimum": 0.0,
+            "title": "Lower",
+            "default": 60
+          },
+          "upper": {
+            "type": "integer",
+            "maximum": 1440.0,
+            "minimum": 0.0,
+            "title": "Upper",
+            "default": 120
+          },
+          "evidence_mode": {
+            "type": "string",
+            "enum": [
+              "VERIFIED",
+              "MISSING"
+            ],
+            "title": "Evidence Mode",
+            "default": "VERIFIED"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "MechanismInput"
+      },
+      "Perspective": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "scope_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Scope Version"
+          },
+          "received_value": {
+            "type": "integer",
+            "maximum": 10000000.0,
+            "minimum": 0.0,
+            "title": "Received Value"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 5,
+            "title": "Reason"
+          },
+          "shared": {
+            "type": "boolean",
+            "title": "Shared",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "scope_version",
+          "received_value",
+          "reason"
+        ],
+        "title": "Perspective"
       },
       "Preference": {
         "properties": {

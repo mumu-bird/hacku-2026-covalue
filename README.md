@@ -36,6 +36,14 @@ npm run dev
 
 完整规则见 [规则 v0.3](docs/rules-v0.3.md)；API 见 [接口契约](docs/api-contract.md) 和 [本机 OpenAPI](http://127.0.0.1:8000/docs)。
 
+## 时间价值、分歧与机制证据
+
+含双向服务的提案提供“这份服务，对你值多少”：本人判断收到的整份服务价值，与平台参考并列。只有本人勾选分享才对方可见，私人底线始终不公开；差异不自动改价，数量或范围变更后旧判断失效。
+
+[本地机制实验](http://127.0.0.1:8000/mechanism)实际运行18组隔离控制案例，可调整能力、准备、时段和接受条件，展示无证据、无交集和无法合法分轮。使用生产规则，不改现有订单。另比较30／60分钟先行限制保护的投入与增加的验收操作。详见 [机制证据](docs/mechanism-evidence.md) 和 [官方资料支持的替代方案对照](docs/competitive-comparison.md)。
+
+[匿名试用页](http://127.0.0.1:8000/study)提供十分钟任务及仅下载到本人装置的反馈表。真实试用证据尚待收集，不能将演示角色或自动化测试计为用户研究；[研究记录](research/README.md)明确区分发起人需求、合成实验和实际反馈。
+
 本实现沿用原 CoValue 仓库历史；原赛题与模型规划文档保留供追溯，当前可执行规则以v0.3为准。
 
 ## 五个独立演示案例
@@ -81,8 +89,11 @@ HOURLINK_TEST_PORT=8002 ./scripts/verify-closed-loop.sh
 - [Pitch Deck 源文件](artifacts/pitch-deck.html) 与 [PDF](output/pdf/hourlink-pitch.pdf)
 - [约三分钟操作演示](artifacts/hourlink-demo.webm)，包含讲解字幕，无语音
 - [演示脚本](docs/demo-script.md)
+- [六项补足状态与交付核对](docs/six-point-progress.md)
 
 仓库只包含应用、模拟数据与生成的演示材料。原始赛事文件和运行中的会话数据库不进入提交包。
+
+重新生成机制及Deck：`uv run python -m scripts.mechanism_experiments`、`uv run python -m scripts.build_deck`、`node scripts/render-deck.cjs`。后两步使用当前完整验收日志与录制截图，须先执行闭环验收。录制脚本使用独立8003端口与`tmp/recording/data`，按 [演示脚本](docs/demo-script.md)启动；不要将其指向正在浏览的演示数据库。
 
 ## 技术边界
 

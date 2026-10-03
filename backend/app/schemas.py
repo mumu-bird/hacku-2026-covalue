@@ -80,6 +80,23 @@ class SelectCandidate(Command):
     value: int = Field(ge=0, le=10000000)
 
 
+class Perspective(Command):
+    scope_version: int = Field(ge=1)
+    received_value: int = Field(ge=0, le=10000000)
+    reason: str = Field(min_length=5, max_length=1000)
+    shared: bool = False
+
+
+class MechanismInput(Input):
+    quality: int = Field(default=90, ge=0, le=100)
+    main_minutes: int = Field(default=60, ge=15, le=240)
+    preparation: int = Field(default=0, ge=0, le=60)
+    window_minutes: int = Field(default=240, ge=30, le=1440)
+    lower: int = Field(default=60, ge=0, le=1440)
+    upper: int = Field(default=120, ge=0, le=1440)
+    evidence_mode: Literal["VERIFIED", "MISSING"] = "VERIFIED"
+
+
 class AgreementInput(Input):
     proposal_id: str
     expected_version: int = Field(ge=1)

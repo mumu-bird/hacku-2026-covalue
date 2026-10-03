@@ -12,6 +12,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from . import domain as d
+from . import mechanism
 from . import schemas as sc
 from .config import CASES, DATA_DIR, DEMO_MODE, POLICY, RULE_VERSION, TEMPLATES
 from .db import DB, dump, unpack
@@ -164,6 +165,18 @@ def create_app(data_dir=None, demo_mode=None):
         if not demo:
             d.fail("UNAUTHORIZED_ACTION", "演示模式未開啟", status=403)
         return {"cases": [{"id": id, "name": name} for id, name in CASES.items()]}
+
+    @app.get("/api/v1/mechanism")
+    def mechanism_report():
+        if not demo:
+            d.fail("UNAUTHORIZED_ACTION", "機制實驗僅供演示", status=403)
+        return mechanism.report()
+
+    @app.post("/api/v1/mechanism/simulate")
+    def mechanism_simulate(body: sc.MechanismInput):
+        if not demo:
+            d.fail("UNAUTHORIZED_ACTION", "機制實驗僅供演示", status=403)
+        return mechanism.simulate(body.model_dump())
 
     @app.get("/api/v1/demo/users")
     def users():
@@ -427,6 +440,20 @@ def create_app(data_dir=None, demo_mode=None):
             lambda s, u, b: d.calculate(
                 s, u, d.get(s, "proposals", id), b["expected_version"]
             ),
+        )
+
+    @app.get("/api/v1/proposals/{id}/perspectives")
+    def perspectives(request: Request, id: str):
+        return read(
+            request, lambda s, u: d.perspectives(s, u, d.get(s, "proposals", id))
+        )
+
+    @app.put("/api/v1/proposals/{id}/perspectives")
+    def save_perspective(request: Request, id: str, body: sc.Perspective):
+        return command(
+            request,
+            body,
+            lambda s, u, b: d.save_perspective(s, u, d.get(s, "proposals", id), b),
         )
 
     @app.post("/api/v1/proposals/{id}/select")

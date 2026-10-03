@@ -12,7 +12,7 @@ if curl --silent --fail --max-time 1 "$HOURLINK_TEST_URL/api/v1/health" >/dev/nu
 fi
 uv sync --locked
 if [[ ! -d frontend/node_modules ]]; then (cd frontend && npm ci); fi
-uv run ruff check backend scripts/reset.py scripts/audit_closed_loop.py
+uv run ruff check backend scripts/reset.py scripts/audit_closed_loop.py scripts/mechanism_experiments.py
 uv run pytest -q | tee artifacts/browser/closed-loop/pytest.log
 (cd frontend && npm run build) | tee artifacts/browser/closed-loop/build.log
 HOURLINK_DATA_DIR="$HOURLINK_TEST_DATA" DEMO_MODE=true uv run uvicorn backend.app.main:app --host 127.0.0.1 --port "$test_port" --log-level warning > "$run_dir/server.log" 2>&1 &
@@ -28,3 +28,4 @@ if [[ "$ready" != true ]]; then cat "$run_dir/server.log" >&2; exit 1; fi
 unset HOURLINK_SCENARIO
 node scripts/closed-loop-check.cjs | tee artifacts/browser/closed-loop/browser.log
 uv run python -m scripts.audit_closed_loop | tee artifacts/browser/closed-loop/audit.log
+uv run python -m scripts.mechanism_experiments | tee artifacts/browser/closed-loop/mechanism.log

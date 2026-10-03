@@ -470,6 +470,12 @@ def recommendation(s, p):
     a = evaluate(s, p["provider_id"], d["scope"])
     if not a["eligible"]:
         fail("POLICY_BLOCKED", "供給方未符合本單技能或能力門檻")
+    if a["quality"] is None:
+        fail(
+            "INSUFFICIENT_EVIDENCE",
+            "缺少已確認能力證據，只能展示模板參考；請先復核作品或測評，再生成平台方案",
+            status=422,
+        )
     b = None
     cash = 0
     payer = p["requester_id"]
@@ -484,6 +490,12 @@ def recommendation(s, p):
         b = evaluate(s, p["requester_id"], d["reverse"] | {"duration": chosen})
         if not b["eligible"]:
             fail("POLICY_BLOCKED", "反向服務未符合能力門檻")
+        if b["quality"] is None:
+            fail(
+                "INSUFFICIENT_EVIDENCE",
+                "反向服務缺少已確認能力證據，平台暫停生成確定交換方案；請先復核或明確協商",
+                status=422,
+            )
         rs, scope = d["reverse"], d["scope"]
         if (
             instant(rs["start"]) > instant(scope["start"])
@@ -586,6 +598,8 @@ def recommend(s, user, p, expected):
     ):
         fail("INVALID_STATE", "已有協議，請透過結清或新單處理")
     rec = recommendation(s, p)
+    if rec["reverse_minutes"] != p["data"].get("reverse_minutes"):
+        s.execute("DELETE FROM perspectives WHERE proposal_id=?", (p["id"],))
     d = {
         **p["data"],
         "recommendation": rec,
@@ -699,6 +713,67 @@ def acceptance_bounds(s, p):
     low = next(r["value"] for r in rows if r["kind"] == "LOW")
     high = next(r["value"] for r in rows if r["kind"] == "HIGH")
     return low, high
+
+
+def save_perspective(s, user, p, body):
+    participant(p, user)
+    version(p, body["expected_version"])
+    if p["mode"] == "MONEY":
+        fail("INVALID_INPUT", "價值分歧比較使用含雙向服務的提案", status=422)
+    if body["scope_version"] != p["scope_version"]:
+        fail("VERSION_CONFLICT", "服務範圍已變更，請重新表達本單價值")
+    s.execute(
+        "INSERT INTO perspectives(proposal_id,user_id,scope_version,received_value,reason,shared,updated) VALUES(?,?,?,?,?,?,?) ON CONFLICT(proposal_id,user_id) DO UPDATE SET scope_version=excluded.scope_version,received_value=excluded.received_value,reason=excluded.reason,shared=excluded.shared,updated=excluded.updated",
+        (
+            p["id"],
+            user,
+            p["scope_version"],
+            body["received_value"],
+            body["reason"],
+            int(body["shared"]),
+            now(),
+        ),
+    )
+    emit(
+        s, user, "proposal", p["id"], "PERSPECTIVE_UPDATED", {"shared": body["shared"]}
+    )
+    return perspectives(s, user, p)
+
+
+def perspectives(s, user, p):
+    participant(p, user)
+    rows = s.all(
+        "SELECT * FROM perspectives WHERE proposal_id=? AND scope_version=? AND (user_id=? OR shared=1)",
+        (p["id"], p["scope_version"], user),
+    )
+    result = []
+    for row in rows:
+        received = (
+            p["data"]["reverse"] | {"duration": p["data"]["reverse_minutes"]}
+            if row["user_id"] == p["provider_id"]
+            else p["data"]["scope"]
+        )
+        service_provider = (
+            p["requester_id"]
+            if row["user_id"] == p["provider_id"]
+            else p["provider_id"]
+        )
+        reference = evaluate(s, service_provider, received)
+        result.append(
+            {
+                **row,
+                "received_title": received["title"],
+                "platform_value": reference["total_amount"],
+                "platform_minutes": reference["estimated_minutes"],
+                "difference": row["received_value"] - reference["total_amount"],
+                "reference_basis": reference["estimate_source"],
+            }
+        )
+    return {
+        "scope_version": p["scope_version"],
+        "views": result,
+        "explanation": "個人對收到服務的價值判斷與平台參考並列；不是成交價、不自動改價。私人接受底線始終不公開。",
+    }
 
 
 def validate_assisted_terms(s, p, value):

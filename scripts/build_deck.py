@@ -1,0 +1,119 @@
+"""Build the competition deck from measured mechanism and verification evidence."""
+
+import json
+import re
+from pathlib import Path
+
+mechanism = json.loads(Path("docs/mechanism-results.json").read_text())
+browser = json.loads(Path("artifacts/browser/closed-loop/result.json").read_text())
+tests = re.search(
+    r"(\d+) passed", Path("artifacts/browser/closed-loop/pytest.log").read_text()
+).group(1)
+loops = len(browser["scenarios"])
+css = """
+*{box-sizing:border-box}html{background:#ddd}body{margin:0;font-family:-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;color:#172820}.slide{width:1280px;height:720px;background:#fafaf8;padding:58px 72px;position:relative;margin:20px auto;overflow:hidden;page-break-after:always}.slide:last-child{page-break-after:auto}.dark{background:#164e43;color:#fafaf8}.kicker{font-size:14px;letter-spacing:2px;color:#718675;margin-bottom:28px}.dark .kicker,.dark .foot{color:#b8ccc2}h1{font-size:67px;line-height:1.22;margin:50px 0 30px;font-weight:600;letter-spacing:-2px}h2{font-size:42px;line-height:1.3;font-weight:600;margin:0 0 32px}h3{font-size:26px;font-weight:500;margin:0 0 16px}p{font-size:25px;line-height:1.75;margin:0 0 22px}.muted{color:#718675}.small{font-size:18px;line-height:1.8}.foot{position:absolute;bottom:26px;left:72px;right:72px;font-size:13px;color:#718675;display:flex;justify-content:space-between}.two{display:grid;grid-template-columns:1fr 1fr;gap:55px}.number{font-size:88px;font-weight:600;color:#164e43;line-height:1.1;margin:28px 0 16px}.rule{border-top:1px solid #bfcac2;padding-top:25px}.screenshot{width:100%;height:440px;object-fit:contain;object-position:top;border:1px solid #dce3dd;background:#fff}.exchange{display:flex;align-items:baseline;gap:30px;margin:38px 0}.exchange strong{font-size:100px;font-weight:600;color:#164e43}.exchange span{font-size:29px}table{width:100%;border-collapse:collapse;margin:25px 0;font-size:23px}th,td{text-align:left;padding:20px 16px;border-bottom:1px solid #dce3dd}th{font-size:17px;font-weight:400;color:#718675}.metric-row{display:flex;gap:60px;margin-top:35px}.metric-row b{font-size:70px;display:block;color:#164e43}.metric-row span{font-size:20px;color:#718675}a{color:inherit}.source{font-size:14px;line-height:1.7;color:#718675}@media print{@page{size:1280px 720px;margin:0}html{background:white}.slide{margin:0}}
+"""
+slides = [
+    (
+        "TIME, AND WHAT AN HOUR IS WORTH",
+        "一小時如何交換，<br>取決於這一次需要什麼。",
+        "<p>Hourlink：把能力依據、雙方價值與原回報義務，<br>放進一份可以履行和結清的約定。</p>",
+        "演示價格、人物與模擬資金",
+        True,
+    ),
+    (
+        "USER NEED",
+        "能提供英語練習，也需要別人幫我學表格。",
+        "<div class='two'><p>該找誰？<br>一小時換一小時合理嗎？<br>我先幫忙，對方退出怎麼辦？</p><div class='rule'><h3>首個場景：學習互助社群</h3><p>選人、比例和回報，<br>需要逐筆協商。</p><p class='small muted'>來自發起人的需求與產品假設；未當作獨立試用者驗證。</p></div></div>",
+        "目標：具體時間付出得到辨認與協調",
+        False,
+    ),
+    (
+        "TWO VIEWS OF VALUE",
+        "平台的參考，不會替雙方決定是否值得。",
+        "<img class='screenshot' src='pitch-assets/perspectives.png' alt='本人自願分享的價值判斷與平台參考'/>",
+        "實際產品畫面，合成判斷；勾選才分享，私人底線不公開",
+        False,
+    ),
+    (
+        "CONTEXTUAL TIME",
+        "60↔60第一次失衡，60↔90只是本單建議。",
+        "<div class='exchange'><strong>60</strong><span>分鐘輔導</span><span>↔</span><strong>90</strong><span>分鐘英語</span></div><div class='two rule'><p>輔導 HK$150／小時<br>英語 HK$100／小時</p><p>相關能力影響時薪。<br>約定投入影響總額。</p></div><p class='small muted'>沒有通用積分或永久匯率。準備須事前納入；實際耗時不自動改價。</p>",
+        "三類模板與演示基準；不宣稱客觀人身價值",
+        False,
+    ),
+    (
+        "ACCEPTANCE IS SEPARATE",
+        "同樣的90分鐘建議，可以接受，也可以拒絕。",
+        "<table><tr><th>控制案例</th><th>平台建議</th><th>共同接受範圍</th><th>結果</th></tr><tr><td>至少90／最多60</td><td>90分鐘</td><td>無交集</td><td>不成單</td></tr><tr><td>雙方只接受60</td><td>90分鐘</td><td>60分鐘</td><td>可協商60</td></tr></table><p>參考價接近，不等於雙方願意交換。<br>自願方案也可能保留參考價差。</p>",
+        "正式規則在隔離SQLite中運行；合成實驗，不是用戶成交率",
+        False,
+    ),
+    (
+        "THE FAIRNESS RULE",
+        "我先付出的30分鐘，不會因退出失去原回報。",
+        "<div class='two'><div><div class='number'>30 → 45</div><p>輔導已驗收。<br>原45分鐘英語仍須履行，<br>或由雙方明確豁免。</p></div><div class='rule'><h3>公平規則</h3><p>按輪限制先行投入。<br>保留已確認貢獻。<br>原義務未結清前不關單。</p></div></div>",
+        "不同服務分鐘不相減；補完原回報後才關閉",
+        False,
+    ),
+    (
+        "WHO IT PROTECTS, WHO IT COSTS",
+        "較少未回報付出，換來更多驗收操作。",
+        "<table><tr><th>120↔180交換</th><th>先行限制</th><th>輪數</th><th>首輪未回報投入</th><th>流程命令</th></tr>"
+        + "".join(
+            f"<tr><td>{'較細保護' if i == 0 else '較少操作'}</td><td>{x['first_investment_limit']}分鐘</td><td>{x['rounds']}</td><td>{x['first_unreturned_minutes']}分鐘</td><td>{x['workflow_commands']}</td></tr>"
+            for i, x in enumerate(mechanism["tradeoffs"])
+        )
+        + "</table><p class='small'>命令=2次簽署＋每輪2項服務各提交與驗收。<br>不含協商、排期、爭議，不代表耗時或保證追回損失。</p>",
+        "同一分輪函數；其他條件保持不變",
+        False,
+    ),
+    (
+        "SENSITIVITY & FAILURE",
+        "79→80分，參考時薪上升25%；邊界需校準。",
+        "<div class='two'><div><div class='number'>100 → 125</div><p>每小時港幣參考值。<br>18組控制實驗公開參數影響。</p></div><div class='rule'><h3>實際停止的三種情況</h3><p>沒有復核能力證據。<br>接受條件沒有交集。<br>準備超過合法先行限制。</p></div></div>",
+        "未知能力不等於能力低；規則行為不代表市場價格準確性",
+        False,
+    ),
+    (
+        "ALTERNATIVES",
+        "我們補上具體服務回報的協商與退出記錄。",
+        "<table><tr><th>對照方式</th><th>公開描述的做法</th><th>Hourlink取捨</th></tr><tr><td>Timebanking UK</td><td>每小時等值；跨成員互助</td><td>本單比例不同；失去通用性</td></tr><tr><td>Upwork付費合同</td><td>時薪或固定里程碑付款</td><td>服務互換；無真實支付保護</td></tr><tr><td>群聊人工協商</td><td>待驗證的流程假設</td><td>結構化原義務；增加操作</td></tr></table><p class='source'>官方：<a href='https://timebanking.org/overview/'>Timebanking UK Overview</a>；<a href='https://support.upwork.com/hc/en-us/articles/17931377993107--Decide-between-hourly-and-fixed-price-contract'>Upwork Help：Hourly and Fixed-Price</a>。2026-10-03查閱，只比較列明機制。</p>",
+        "平等參與社群可明確選擇1:1；不宣稱取代時間銀行",
+        False,
+    ),
+    (
+        "REAL-USER EVIDENCE",
+        "先讓真實使用者操作，再判斷是否值得採用。",
+        "<div class='two'><div><div class='number'>待收集</div><p>目前沒有可核驗的獨立試用回饋。<br>不把身份切換算作參與人數。</p></div><div class='rule'><h3>已準備的试用流程</h3><p>回想真實求助。<br>選人、比較比例、嘗試拒絕。<br>先履約後退出、填匿名回饋。</p><p class='small muted'>回饋由本人下載；同意匿名公開後才進入比賽材料。</p></div></div>",
+        "目標使用者與團隊成員分開記錄；保留未完成的驗證",
+        False,
+    ),
+    (
+        "WORKING PROTOTYPE",
+        "交換、退出與失效案例，已通過完整流程驗證。",
+        f"<div class='metric-row'><div><b>{tests}</b><span>後端測試</span></div><div><b>{loops}</b><span>瀏覽器完整流程</span></div><div><b>{len(mechanism['experiments'])}</b><span>控制機制實驗</span></div></div><div class='rule' style='margin-top:48px'><p>逐案例對賬資金、時間、原義務與預訂。<br>React／TypeScript + FastAPI + SQLite。<br>核心流程不依賴AI或外部API。</p></div>",
+        "測試命令、結果與CI可復現；模擬资金，不提供真實支付",
+        False,
+    ),
+    (
+        "NEXT STEP",
+        "讓被忽略的付出有依據，也讓拒絕有理由。",
+        "<p>社群小規模試用，<br>核對條款理解、協商與新用戶進入成本，<br>再校準能力係數、工時及價格基準。</p><p class='small'><a href='https://github.com/mumu-bird/hacku-2026-covalue'>github.com/mumu-bird/hacku-2026-covalue</a></p>",
+        "不承諾真實市場價格、線下真實性或追回損失",
+        True,
+    ),
+]
+html = (
+    "<!doctype html><html lang='zh-Hant'><meta charset='utf-8'><title>Hourlink · HacKU 2026</title><style>"
+    + css
+    + "</style><body>"
+)
+for i, (kicker, title, body, foot, dark) in enumerate(slides):
+    heading = "h1" if i == 0 else "h2"
+    html += f"<section class='slide {'dark' if dark else ''}'><div class='kicker'>{kicker}</div><{heading}>{title}</{heading}>{body}<div class='foot'><span>{foot}</span><span>{i + 1:02d} / {len(slides)}</span></div></section>"
+html += "</body></html>"
+Path("artifacts/pitch-deck.html").write_text(html)
+print(
+    f"Built {len(slides)} slides with {tests} measured backend tests, {loops} browser scenarios."
+)
