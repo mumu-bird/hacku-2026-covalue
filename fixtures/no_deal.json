@@ -1,0 +1,16 @@
+{
+  "case": "no_deal",
+  "category": "spreadsheet",
+  "mode": "MONEY",
+  "setup": "no_deal",
+  "is_demo": true,
+  "initial_balance": 100000,
+  "stage_amounts": [
+    6000,
+    9000
+  ],
+  "bounds": {
+    "lin": 18000,
+    "zao": 12000
+  }
+}

@@ -1,223 +1,99 @@
-# CoValue 互值
+# Hourlink 时间有价
 
-**HacKU 2026 · FinTech · Problem 2**
+面向学习互助社区的需求与能力交易原型。平台根据本单需求及相关能力证据推荐人选，估计工时和小时参考价，并生成付费、时间互换或互换补差方案。用户确认完整协议后，分阶段交付、验收和结清。
 
-CoValue is a prototype for evaluating and structuring exchanges whose value is difficult to express with a single market price — such as time, skills, equipment access, space, trust, urgency, and service quality.
+界面使用繁体中文。全部账户、能力历史、基准、评分参数和资金均为演示数据，无真实支付或提现。核心流程不依赖 AI 或外部 API。
 
-The project explores a simple question:
+## 本地启动
 
-> When two parties both have something valuable to exchange, but conventional pricing does not describe the trade well, how can a platform make the exchange understandable, negotiable, and fair?
+需要 Node.js 22 或更新版本、Python 3.12 和 uv。依赖安装阶段需要网络；安装完成后应用只访问本机。
 
-## Problem
-
-Many legitimate economic activities are under-served by conventional marketplaces because:
-
-- the exchanged value is heterogeneous;
-- market prices are sparse or unavailable;
-- perceived value differs between parties;
-- trust, urgency, scarcity, and execution risk matter;
-- one side may need a cash top-up instead of a pure barter;
-- disputes and early exits are difficult to settle consistently.
-
-CoValue focuses on turning these ambiguous exchanges into structured agreements.
-
-## Our Solution
-
-A user describes what they **offer** and what they **need**. CoValue then:
-
-1. structures both sides of the exchange;
-2. estimates an interpretable value range;
-3. identifies the major sources of value and risk;
-4. checks whether the exchange is balanced;
-5. suggests a cash top-up or revised terms when necessary;
-6. generates an agreement with milestones and exit rules;
-7. supports review when delivery, expectations, or circumstances change.
-
-The goal is not to claim that every activity has one objectively correct price. The goal is to make the assumptions and trade-offs explicit enough for both parties to negotiate.
-
-## How It Works
-
-```text
-Offer + Need
-    ↓
-Structured attributes
-    ↓
-Value estimation
-    ↓
-Fairness / feasibility checks
-    ↓
-Matching & optional cash adjustment
-    ↓
-Agreement
-    ↓
-Milestone verification
-    ↓
-Completion / exit / dispute review
+```bash
+cp .env.example .env
+./scripts/start.sh
 ```
 
-## Core Mechanism
+打开 [本地应用](http://127.0.0.1:8000)。第一次访问自动进入周予安的演示会话。右上角切换需求者、服务者或复核员身份；演示登录不代表实名认证。
 
-The first implementation will use a modular scoring framework rather than a hard-coded universal price.
+前后端分开开发：
 
-A candidate value function may include:
-
-```text
-V = f(
-    time_cost,
-    skill_level,
-    scarcity,
-    urgency,
-    resource_cost,
-    trust,
-    execution_risk,
-    quality_requirement,
-    outside_option
-)
+```bash
+uv sync --locked
+uv run uvicorn backend.app.main:app --reload --host 127.0.0.1 --port 8000
+# 另一个终端
+cd frontend
+npm ci
+npm run dev
 ```
 
-The mechanism is intentionally replaceable. During the hackathon we will compare several approaches, including:
+## 推荐规则
 
-- weighted interpretable scoring;
-- constrained optimization;
-- Nash-product-style bargaining;
-- rule-based adjustment for cash top-ups;
-- scenario-specific calibration.
+- 先过滤必需技能、任务难度、服务方式、地点、时间冲突与在途限制。
+- 质量按正确性 50%、完整性 30%、自主完成 20%评分。相关证据取最近最多 20 项的中位数，同一对手限最近一笔，作品及测评合计最多两项。
+- 推荐分为适配度 60%、质量 30%、证据充足度 10%。无有效证据的候选进入待验证组，不生成质量分或能力溢价。
+- 小时参考价为类目演示基准乘能力系数。成果型工时在至少三名独立对手的同子类、难度、工作量样本足够时取中位数，否则采用模板估计。
+- 本单建议、私人接受条件、实际成交条款和实际耗时分别保存。实际耗时不自动改价。
 
-The model must expose *why* it produces a result, not only a final score.
+完整规则见 [规则 v0.3](docs/rules-v0.3.md)；API 见 [接口契约](docs/api-contract.md) 和 [本机 OpenAPI](http://127.0.0.1:8000/docs)。
 
-## Fairness Rules
+本实现沿用原 CoValue 仓库历史；原赛题与模型规划文档保留供追溯，当前可执行规则以v0.3为准。
 
-Initial fairness principles:
+## 五个独立演示案例
 
-1. **Symmetry of explanation** — both parties can see how their side is evaluated.
-2. **No forced equivalence** — a trade may be labelled imbalanced instead of being forced into a 1:1 exchange.
-3. **Explicit compensation** — material imbalance can be corrected with cash, scope, duration, or milestone adjustments.
-4. **Outside-option awareness** — the platform should not recommend a deal clearly worse than a reasonable alternative.
-5. **Consistent exit logic** — partial completion should be settled using the same rules regardless of which party exits.
-6. **Reviewability** — users can inspect the inputs and assumptions that drove the recommendation.
+| 案例 | 操作及预期 |
+|---|---|
+| 付费成功 | 比较三名候选。时薪 HK$300、250、200，工时 30、60、90 分钟，总价 HK$150、250、300。选择林知行，双签后逐阶段模拟预留、交付、验收。 |
+| 没有可行方案 | 打开预置提案，计算辅助接受区间。结果为 NO_FEASIBLE_PLAN，不激活订单、不扣信用。 |
+| 部分履约后退出 | 首阶段 HK$60 已验收释放，第二阶段 HK$90 已预留。申请退出，双方确认取消第二阶段、退回 HK$90。 |
+| 时间互换 | 60 分钟表格辅导换 90 分钟英语交流，两轮 30↔45。先履约后退出，原 45 分钟回报义务仍保留。 |
+| 互换补差 | 固定 60↔60 的服务组合，周予安模拟补差 HK$50。每轮双方服务均验收后才释放补差。 |
 
-These rules are hypotheses to be tested during the hackathon, not claims of universal fairness.
+切换案例不会污染其他案例。重置和脱敏事件导出需要复核员身份。也可用 CLI 重置：
 
-## Edge Cases & Failure Conditions
-
-The prototype must demonstrate how it behaves when:
-
-- one side exaggerates effort or scarcity;
-- the parties value the same service very differently;
-- no comparable market reference exists;
-- a participant exits after partial delivery;
-- quality is disputed;
-- a cash top-up becomes too large;
-- trust or execution risk changes after agreement;
-- a powerful participant can systematically impose worse terms;
-- the model has insufficient evidence to estimate value confidently.
-
-When confidence is too low, the system should say so rather than fabricate precision.
-
-## System Architecture
-
-Planned stack:
-
-- **Backend:** Python + FastAPI
-- **Database:** SQLite / SQLAlchemy
-- **Model layer:** NumPy / Pandas, with replaceable valuation and bargaining modules
-- **Frontend:** lightweight web prototype
-- **API:** REST endpoints for offers, needs, valuation, matching, agreements, and disputes
-
-Planned structure:
-
-```text
-backend/app/
-├── api/
-├── core/
-├── models/
-├── schemas/
-├── services/
-└── main.py
-
-frontend/
-data/
-docs/
+```bash
+uv run python -m scripts.reset cash
 ```
 
-## Demo Flow
+数据库位于 `backend/data/`，不进入 Git。刷新页面保留状态。关闭演示模式会禁用演示登录、案例管理及事件导出；本原型未提供生产账号系统。
 
-The hackathon demo should show one complete transaction:
+## 检查
 
-1. User A enters an offer.
-2. User B enters a need / counter-offer.
-3. CoValue structures both sides.
-4. The model produces an explainable valuation.
-5. The platform identifies imbalance.
-6. It proposes revised terms or a cash top-up.
-7. Both sides accept an agreement.
-8. A milestone is completed.
-9. An abnormal case is triggered — exit or dispute.
-10. CoValue applies the same settlement rules and shows the reasoning.
+```bash
+uv run pytest -q
+uv run ruff check backend scripts/reset.py scripts/audit_closed_loop.py
+cd frontend && npm run build
+# 服务运行时重新生成 API 类型
+npm run contract
+```
 
-## Evaluation Plan
+完整闭环验证使用独立临时数据库和服务，不会重置正在浏览的演示数据：
 
-We will test the mechanism on multiple synthetic and manually constructed scenarios.
+```bash
+HOURLINK_TEST_PORT=8002 ./scripts/verify-closed-loop.sh
+```
 
-Key questions:
+脚本执行后端测试、生产构建、浏览器完整交易流程和独立 SQLite 资金／时间对账。需要 Playwright 及 Chromium；默认使用本机 Codex 捆绑运行时，其他环境设置 `HOURLINK_PLAYWRIGHT` 为已安装的 Playwright 模块绝对路径。GitHub Actions 自动安装浏览器并执行相同验证。
 
-- Does the same rule behave consistently across cases?
-- How sensitive is the result to each variable?
-- Can users understand why the value changed?
-- Can the mechanism detect obviously unbalanced exchanges?
-- Does it avoid extreme recommendations when inputs are noisy?
-- What happens when confidence is low?
-- Which fairness rule creates the largest trade-off with market efficiency?
+浏览器覆盖发布、匹配、协商、双签、付费／互换／补差履约、退出、争议复核、证据评估更新、刷新和手机宽度。日志、截图及 trace 位于 `artifacts/browser/closed-loop/`，本地数据库快照位于 `tmp/closed-loop/snapshots/`，均不进入仓库。结果见 [测试报告](docs/test-report.md) 和 [闭环验收记录](docs/closed-loop-report.md)。
 
-Potential metrics include:
+## 比赛材料
 
-- value-gap reduction;
-- agreement feasibility;
-- minimum participant utility;
-- fairness constraint violations;
-- sensitivity / robustness;
-- explanation consistency;
-- dispute settlement consistency.
+- [Pitch Deck 源文件](artifacts/pitch-deck.html) 与 [PDF](output/pdf/hourlink-pitch.pdf)
+- [约三分钟操作演示](artifacts/hourlink-demo.webm)，包含讲解字幕，无语音
+- [演示脚本](docs/demo-script.md)
 
-## Business Model
+仓库只包含应用、模拟数据与生成的演示材料。原始赛事文件和运行中的会话数据库不进入提交包。
 
-Possible deployment paths:
+## 技术边界
 
-- transaction service fee;
-- premium verification / trust services;
-- institutional SaaS for universities, communities, incubators, and member networks;
-- API access for platforms that need value assessment or negotiation support.
+后台是权限、金额和状态的唯一执行方。SQLite 开启外键，关键命令使用 BEGIN IMMEDIATE，并将状态、资金、事件与幂等结果放在同一事务内。重复请求不会重复记账，第二次签约原子检查需求锁、容量及时间。
 
-The hackathon prototype will prioritize mechanism validity and a working transaction flow over monetization depth.
+公共候选响应不返回私人接受条件或证据正文。订单证据只供当事人与授权复核员读取。争议不自动形成全局违约；超时不自动验收、释放资金或豁免义务。
 
-## Hackathon Deliverables
+能力评分、预测区间和参考价尚未通过真实市场研究校准。分阶段规则增加验收次数，不能证明线下服务真实发生，不能保证追回损失。实际支付、身份核验、反欺诈和生产部署需后续设计。
 
-Target deliverables:
+## 项目结构
 
-- [ ] Working prototype
-- [ ] Publicly accessible demo or demo recording
-- [ ] GitHub repository with setup instructions
-- [ ] Mathematical / mechanism design explanation
-- [ ] Multiple validation scenarios
-- [ ] Edge-case demonstration
-- [ ] Pitch deck
-- [ ] Final submission links
+`backend/app/` 为 API、数据库、规则与种子模块；`backend/tests/` 为规则、交易和结清测试；`frontend/src/` 为 React 界面和生成契约；`fixtures/` 为案例定义；`docs/` 为规则、接口与演示说明。
 
-## Team / TODO
-
-Immediate priorities:
-
-- [ ] Lock the exact value dimensions and definitions
-- [ ] Implement the baseline valuation function
-- [ ] Implement matching / cash-adjustment logic
-- [ ] Define fairness constraints
-- [ ] Build 5–10 validation scenarios
-- [ ] Implement agreement and milestone state machine
-- [ ] Implement one dispute / exit flow
-- [ ] Build the web demo
-- [ ] Prepare evaluation charts
-- [ ] Prepare pitch deck
-
----
-
-Built for **HacKU 2026**.
+开源框架依赖包括 React、Vite、TanStack Query、React Router、Lucide、FastAPI、Pydantic、SQLAlchemy 和 pytest；版本锁定于 npm 与 uv 锁文件。原创应用代码在本次工作区从零实现。

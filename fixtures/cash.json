@@ -1,0 +1,13 @@
+{
+  "case": "cash",
+  "category": "spreadsheet",
+  "mode": "MONEY",
+  "setup": null,
+  "is_demo": true,
+  "initial_balance": 100000,
+  "stage_amounts": [
+    6000,
+    9000
+  ],
+  "bounds": null
+}

@@ -1,0 +1,32 @@
+name: Checks
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.12'
+      - run: uv sync --locked
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+        working-directory: frontend
+      - name: Install browser test runtime
+        run: |
+          npm install --prefix "$RUNNER_TEMP/hourlink-browser" --no-package-lock --no-save playwright@1.62.1
+          "$RUNNER_TEMP/hourlink-browser/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Verify full closed loops
+        run: |
+          export HOURLINK_PLAYWRIGHT="$RUNNER_TEMP/hourlink-browser/node_modules/playwright"
+          HOURLINK_TEST_PORT=8002 ./scripts/verify-closed-loop.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: closed-loop-evidence
+          path: artifacts/browser/closed-loop/
+          retention-days: 7

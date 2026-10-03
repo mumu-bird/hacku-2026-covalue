@@ -1,0 +1,15 @@
+[project]
+name = "hourlink"
+version = "0.3.0"
+description = "Explainable capability and time-value exchange demo"
+requires-python = ">=3.12"
+dependencies = ["fastapi>=0.115,<1", "uvicorn>=0.30,<1", "sqlalchemy>=2.0,<3", "pydantic>=2.9,<3"]
+[dependency-groups]
+dev = [
+    "pytest>=8,<10",
+    "httpx>=0.27,<1",
+    "ruff>=0.16.10",
+]
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+pythonpath = ["."]

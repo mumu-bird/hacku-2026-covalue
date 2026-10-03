@@ -1,0 +1,10 @@
+{
+  "case": "barter",
+  "category": "tutoring",
+  "mode": "BARTER",
+  "setup": null,
+  "is_demo": true,
+  "initial_balance": 100000,
+  "stage_amounts": null,
+  "bounds": null
+}

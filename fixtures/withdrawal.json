@@ -1,0 +1,13 @@
+{
+  "case": "withdrawal",
+  "category": "spreadsheet",
+  "mode": "MONEY",
+  "setup": "partial",
+  "is_demo": true,
+  "initial_balance": 100000,
+  "stage_amounts": [
+    6000,
+    9000
+  ],
+  "bounds": null
+}

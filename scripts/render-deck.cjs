@@ -1,0 +1,4 @@
+const path=require('node:path');const fs=require('node:fs');
+const {chromium}=require(process.env.HOURLINK_PLAYWRIGHT || '/Users/pomelo/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+fs.mkdirSync('tmp/pdfs',{recursive:true});fs.mkdirSync('output/pdf',{recursive:true});
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1280,height:720}});await p.goto('file://'+path.resolve('artifacts/pitch-deck.html'));await p.evaluate(()=>document.fonts.ready);await p.pdf({path:'output/pdf/hourlink-pitch.pdf',printBackground:true,preferCSSPageSize:true});const slides=p.locator('.slide');for(let i=0;i<await slides.count();i++)await slides.nth(i).screenshot({path:`tmp/pdfs/slide-${i+1}.png`});console.log('Rendered',await slides.count(),'slides');await b.close()})().catch(e=>{console.error(e);process.exit(1)});
