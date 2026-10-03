@@ -750,6 +750,20 @@ function local(v) {
     async (p, c) => {
       const q = await seededProposal(p, c);
       const original = await api(c, `/proposals/${q.id}`);
+      const initial = await api(c, `/proposals/${q.id}/perspectives`);
+      assert.equal(initial.views.length, 0);
+      assert.equal(initial.estimates.length, 2);
+      await p.getByRole("heading", { name: "平台先估算這份時間的價值" }).waitFor();
+      await p.locator('.algorithm-estimate[data-recipient="zao"]').getByText("算法建議", { exact: true }).waitFor();
+      const adoptionForm = p.locator(".perspective-form");
+      await adoptionForm.getByRole("button", { name: "採用平台估值" }).click();
+      assert.equal(await adoptionForm.getByLabel("收到的整份服務，對我值得多少（HKD）").inputValue(), "150");
+      assert((await adoptionForm.getByLabel("為什麼我這樣判斷").inputValue()).includes("平台本單估值"));
+      assert.equal(await adoptionForm.getByRole("checkbox").isChecked(), false);
+      await action(p, `/proposals/${q.id}/perspectives`, () => adoptionForm.getByRole("button", { name: "保存我的價值判斷" }).click(), 200, "PUT");
+      assert.equal((await api(c, `/proposals/${q.id}/perspectives`)).views[0].received_value, 15000);
+      await role(p, "lin");
+      assert.equal((await api(c, `/proposals/${q.id}/perspectives`)).views.length, 0);
       for (const [user, value, reason, shared] of [
         ["lin", "80", "我只需短時口語練習，額外時長對我幫助有限。", false],
         ["zao", "200", "這次辅導能解決急需的公式問題，對我價值較高。", true],
@@ -850,6 +864,34 @@ function local(v) {
     },
     { width: 390, height: 844 },
   );
+  await scenario("goal-aware-value-plan-and-complete", "barter", async (p, c) => {
+    const q = await seededProposal(p, c);
+    await p.goto(base + "/value-model");
+    await p.getByRole("heading", { name: "把難量化的幫助，拆成可說明的價值" }).waitFor();
+    await p.getByLabel("本次目標分鐘").fill("120");
+    const experiment = await action(p, "/value-model/simulate", () => p.getByRole("button", { name: "分析時間與受益" }).click());
+    assert.equal(experiment.benefit.score, 84.6);
+    assert.equal(experiment.reference.reference_amount, 15000);
+    await p.locator(".value-model-result").waitFor();
+    assert(await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
+    await p.goto(base + "/proposal/" + q.id);
+    await role(p, "lin");
+    await p.locator(".benefit-panel").getByText("確認我的目標與偏好（僅本人可見）", { exact: true }).click();
+    await p.getByLabel("目標練習時長（分鐘）").fill("60");
+    await action(p, `/proposals/${q.id}/value-context`, () => p.getByRole("button", { name: "確認目標與偏好", exact: true }).click(), 200, "PUT");
+    assert.deepEqual((await api(c, `/proposals/${q.id}`)).data, q.data);
+    const values = await api(c, `/proposals/${q.id}/perspectives`);
+    assert.equal(values.goal_plan.amount, 5000);
+    assert.equal(values.goal_plan.reverse_minutes, 60);
+    const changed = await action(p, `/proposals/${q.id}/apply-value-plan`, () => p.getByRole("button", { name: "確認目標並帶入方案" }).click());
+    assert.equal(changed.mode, "HYBRID");
+    assert.equal(changed.data.payer_id, "zao");
+    assert(await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
+    await p.screenshot({ path: `${out}/goal-value-proposal-mobile.png`, fullPage: true });
+    const id = await createAndSign(p);
+    await finish(p, id);
+    await balances(p, { zao: 95000, lin: 105000 });
+  }, { width: 390, height: 844 });
   assert.deepEqual(report.external, []);
   assert.deepEqual(report.pageErrors, []);
   report.completedAt = new Date().toISOString();

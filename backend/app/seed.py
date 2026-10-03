@@ -260,6 +260,7 @@ def reset(s, case):
         "agreements",
         "preferences",
         "perspectives",
+        "value_contexts",
         "proposals",
         "listings",
         "accounts",

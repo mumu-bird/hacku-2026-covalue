@@ -178,6 +178,18 @@ def create_app(data_dir=None, demo_mode=None):
             d.fail("UNAUTHORIZED_ACTION", "機制實驗僅供演示", status=403)
         return mechanism.simulate(body.model_dump())
 
+    @app.get("/api/v1/value-model")
+    def value_report():
+        if not demo:
+            d.fail("UNAUTHORIZED_ACTION", "模型實驗僅供演示", status=403)
+        return mechanism.value_report()
+
+    @app.post("/api/v1/value-model/simulate")
+    def value_simulate(body: sc.ValueSimulation):
+        if not demo:
+            d.fail("UNAUTHORIZED_ACTION", "模型實驗僅供演示", status=403)
+        return mechanism.simulate_value(body.model_dump())
+
     @app.get("/api/v1/demo/users")
     def users():
         if not demo:
@@ -454,6 +466,22 @@ def create_app(data_dir=None, demo_mode=None):
             request,
             body,
             lambda s, u, b: d.save_perspective(s, u, d.get(s, "proposals", id), b),
+        )
+
+    @app.put("/api/v1/proposals/{id}/value-context")
+    def save_value_context(request: Request, id: str, body: sc.ValueContext):
+        return command(
+            request,
+            body,
+            lambda s, u, b: d.save_value_context(s, u, d.get(s, "proposals", id), b),
+        )
+
+    @app.post("/api/v1/proposals/{id}/apply-value-plan")
+    def apply_value_plan(request: Request, id: str, body: sc.ValueContext):
+        return command(
+            request,
+            body,
+            lambda s, u, b: d.apply_value_plan(s, u, d.get(s, "proposals", id), b),
         )
 
     @app.post("/api/v1/proposals/{id}/select")

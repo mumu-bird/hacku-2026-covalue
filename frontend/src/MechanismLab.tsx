@@ -51,6 +51,9 @@ export function MechanismLab() {
         </p>
       </div>
       <section className="panel">
+        <Link className="text-button" to="/value-model">
+          時間投入之外：看目標受益的理論與模型
+        </Link>
         <h2>改變條件，看規則如何回應</h2>
         <p>
           固定英語參考

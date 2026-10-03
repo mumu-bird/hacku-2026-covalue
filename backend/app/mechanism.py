@@ -9,6 +9,64 @@ from . import domain as d
 from .config import RULE_VERSION
 from .db import DB, dump
 from .seed import seed
+from .value_model import MODEL_VERSION, SOURCES, recipient_benefit
+
+
+def simulate_value(inputs):
+    with TemporaryDirectory(prefix="hourlink-value-") as folder:
+        db = DB(Path(folder) / "experiment.sqlite3")
+        try:
+            with db.tx() as s:
+                seed(s, "barter")
+                s.execute(
+                    "UPDATE evidence SET quality=? WHERE owner_id='zao' AND category='english'",
+                    (inputs["quality"],),
+                )
+                listing = d.get(s, "listings", "offer-zao-english")
+                task = listing["data"] | {
+                    "category": "english",
+                    "duration": inputs["received_minutes"],
+                    "required_skills": ["英語交流", "口語回饋"],
+                }
+                reference = d.evaluate(s, "zao", task)
+                benefit = recipient_benefit(
+                    reference,
+                    "english",
+                    inputs["target_minutes"],
+                    {k: inputs[f"swing_{k}"] for k in ("fit", "quality", "quantity")},
+                )
+                benefit["preference_source"] = "SYNTHETIC_EXPERIMENT"
+                return {
+                    "inputs": inputs,
+                    "reference": reference["value_estimate"],
+                    "benefit": benefit,
+                    "is_demo": True,
+                }
+        finally:
+            db.engine.dispose()
+
+
+VALUE_DEFAULTS = {
+    "received_minutes": 90,
+    "target_minutes": 60,
+    "quality": 74,
+    "swing_fit": 40,
+    "swing_quality": 40,
+    "swing_quantity": 20,
+}
+
+
+def value_report():
+    return {
+        "model_version": MODEL_VERSION,
+        "sources": SOURCES,
+        "is_demo": True,
+        "experiments": [
+            simulate_value(VALUE_DEFAULTS | {"received_minutes": minutes})
+            for minutes in (30, 60, 90, 120)
+        ],
+        "method": "相同能力與目標，改變服務分鐘。使用正式評估、受益模型和隔離SQLite；不是用戶研究。",
+    }
 
 
 def simulate(inputs):

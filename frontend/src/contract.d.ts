@@ -89,6 +89,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/value-model": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Value Report */
+        get: operations["value_report_api_v1_value_model_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/value-model/simulate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Value Simulate */
+        post: operations["value_simulate_api_v1_value_model_simulate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/demo/users": {
         parameters: {
             query?: never;
@@ -376,6 +410,40 @@ export interface paths {
         /** Save Perspective */
         put: operations["save_perspective_api_v1_proposals__id__perspectives_put"];
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/proposals/{id}/value-context": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Save Value Context */
+        put: operations["save_value_context_api_v1_proposals__id__value_context_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/proposals/{id}/apply-value-plan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Apply Value Plan */
+        post: operations["apply_value_plan_api_v1_proposals__id__apply_value_plan_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1324,6 +1392,66 @@ export interface components {
             /** Context */
             ctx?: Record<string, never>;
         };
+        /** ValueContext */
+        ValueContext: {
+            /** Expected Version */
+            expected_version: number;
+            /** Scope Version */
+            scope_version: number;
+            /**
+             * Target Minutes
+             * @default 60
+             */
+            target_minutes: number;
+            /**
+             * Swing Fit
+             * @default 40
+             */
+            swing_fit: number;
+            /**
+             * Swing Quality
+             * @default 40
+             */
+            swing_quality: number;
+            /**
+             * Swing Quantity
+             * @default 20
+             */
+            swing_quantity: number;
+        };
+        /** ValueSimulation */
+        ValueSimulation: {
+            /**
+             * Received Minutes
+             * @default 90
+             */
+            received_minutes: number;
+            /**
+             * Target Minutes
+             * @default 60
+             */
+            target_minutes: number;
+            /**
+             * Quality
+             * @default 74
+             */
+            quality: number;
+            /**
+             * Swing Fit
+             * @default 40
+             */
+            swing_fit: number;
+            /**
+             * Swing Quality
+             * @default 40
+             */
+            swing_quality: number;
+            /**
+             * Swing Quantity
+             * @default 20
+             */
+            swing_quantity: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -1423,6 +1551,59 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["MechanismInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    value_report_api_v1_value_model_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    value_simulate_api_v1_value_model_simulate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ValueSimulation"];
             };
         };
         responses: {
@@ -2086,6 +2267,76 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["Perspective"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_value_context_api_v1_proposals__id__value_context_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ValueContext"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    apply_value_plan_api_v1_proposals__id__apply_value_plan_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ValueContext"];
             };
         };
         responses: {

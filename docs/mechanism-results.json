@@ -44,9 +44,59 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "NOT_ELIGIBLE",
+          "suggested_amount": null,
+          "reference_amount": 10000,
+          "amount_range": null,
+          "reference_range": [
+            8000,
+            12000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 59.0,
+          "quality_coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            8000,
+            12000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 10000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "fbd45a913950b549cdce87ea65e6d97ddd8df968f3ca4956311339db5e7bdd14",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 10000,
         "time_amount": 10000,
@@ -146,9 +196,62 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 10000,
+          "reference_amount": 10000,
+          "amount_range": [
+            8000,
+            12000
+          ],
+          "reference_range": [
+            8000,
+            12000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 60.0,
+          "quality_coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            8000,
+            12000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 10000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "159b4d52c2ae2a57592eee5aa44f4816bb1bc8625d343b15f691e333920e881f",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 10000,
         "time_amount": 10000,
@@ -226,9 +329,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            48,
-            72
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 10000,
+            "reference_amount": 10000,
+            "amount_range": [
+              8000,
+              12000
+            ],
+            "reference_range": [
+              8000,
+              12000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 60.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              8000,
+              12000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 10000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "159b4d52c2ae2a57592eee5aa44f4816bb1bc8625d343b15f691e333920e881f",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 10000,
           "time_amount": 10000,
@@ -304,9 +460,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            36,
-            84
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 10000,
+            "reference_amount": 10000,
+            "amount_range": [
+              6000,
+              14000
+            ],
+            "reference_range": [
+              6000,
+              14000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 10000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 10000,
           "time_amount": 10000,
@@ -340,7 +549,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.518602+00:00",
+        "created": "2026-10-03T08:21:12.184287+00:00",
         "is_demo": true
       },
       "negotiation": {
@@ -350,7 +559,8 @@
         "unit": "分鐘",
         "scope_version": 1,
         "rule_version": "time-value-v0.3",
-        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+        "model": "NASH_LINEAR_RESERVATION_APPROXIMATION",
+        "explanation": "以接受界限作線性偏好近似，最大化雙方增益乘積；零寬範圍只表示雙方可接受，不表示正增益。仍受時段與分輪限制，不代表已量測真實效用或客觀公平。"
       },
       "status": "ACCEPTABLE_CANDIDATE",
       "failure": null,
@@ -400,9 +610,62 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 10000,
+          "reference_amount": 10000,
+          "amount_range": [
+            8000,
+            12000
+          ],
+          "reference_range": [
+            8000,
+            12000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 79.0,
+          "quality_coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            8000,
+            12000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 10000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "58f7e4aafa7ead6b5ca662a4fedbb70276446ba59ee9f71d3348744f9c8c1402",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 10000,
         "time_amount": 10000,
@@ -480,9 +743,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            48,
-            72
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 10000,
+            "reference_amount": 10000,
+            "amount_range": [
+              8000,
+              12000
+            ],
+            "reference_range": [
+              8000,
+              12000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 79.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              8000,
+              12000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 10000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "58f7e4aafa7ead6b5ca662a4fedbb70276446ba59ee9f71d3348744f9c8c1402",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 10000,
           "time_amount": 10000,
@@ -558,9 +874,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            36,
-            84
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 10000,
+            "reference_amount": 10000,
+            "amount_range": [
+              6000,
+              14000
+            ],
+            "reference_range": [
+              6000,
+              14000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 10000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 10000,
           "time_amount": 10000,
@@ -594,7 +963,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.526199+00:00",
+        "created": "2026-10-03T08:21:12.193007+00:00",
         "is_demo": true
       },
       "negotiation": {
@@ -604,7 +973,8 @@
         "unit": "分鐘",
         "scope_version": 1,
         "rule_version": "time-value-v0.3",
-        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+        "model": "NASH_LINEAR_RESERVATION_APPROXIMATION",
+        "explanation": "以接受界限作線性偏好近似，最大化雙方增益乘積；零寬範圍只表示雙方可接受，不表示正增益。仍受時段與分輪限制，不代表已量測真實效用或客觀公平。"
       },
       "status": "ACCEPTABLE_CANDIDATE",
       "failure": null,
@@ -654,9 +1024,62 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 12500,
+          "reference_amount": 12500,
+          "amount_range": [
+            10000,
+            15000
+          ],
+          "reference_range": [
+            10000,
+            15000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 80.0,
+          "quality_coefficient": 1.25,
+          "hourly_rate": 12500,
+          "hourly_range": [
+            10000,
+            15000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 12500,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "18db6caeafcca04ac37f1e33dea15feab449ee3284d880010641aa395f130ec9",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 12500,
         "time_amount": 12500,
@@ -734,9 +1157,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            48,
-            72
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 12500,
+            "reference_amount": 12500,
+            "amount_range": [
+              10000,
+              15000
+            ],
+            "reference_range": [
+              10000,
+              15000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 80.0,
+            "quality_coefficient": 1.25,
+            "hourly_rate": 12500,
+            "hourly_range": [
+              10000,
+              15000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 12500,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "18db6caeafcca04ac37f1e33dea15feab449ee3284d880010641aa395f130ec9",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 12500,
           "time_amount": 12500,
@@ -812,9 +1288,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            45,
-            105
+            75,
+            75
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 12500,
+            "reference_amount": 12500,
+            "amount_range": [
+              7500,
+              17500
+            ],
+            "reference_range": [
+              7500,
+              17500
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 75,
+            "execution_range": [
+              75,
+              75
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 75,
+            "minutes_range": [
+              75,
+              75
+            ],
+            "time_amount": 12500,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 12500,
           "time_amount": 12500,
@@ -848,7 +1377,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.533662+00:00",
+        "created": "2026-10-03T08:21:12.202402+00:00",
         "is_demo": true
       },
       "negotiation": {
@@ -858,7 +1387,8 @@
         "unit": "分鐘",
         "scope_version": 1,
         "rule_version": "time-value-v0.3",
-        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+        "model": "NASH_LINEAR_RESERVATION_APPROXIMATION",
+        "explanation": "以接受界限作線性偏好近似，最大化雙方增益乘積；零寬範圍只表示雙方可接受，不表示正增益。仍受時段與分輪限制，不代表已量測真實效用或客觀公平。"
       },
       "status": "ACCEPTABLE_CANDIDATE",
       "failure": null,
@@ -908,9 +1438,62 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 12500,
+          "reference_amount": 12500,
+          "amount_range": [
+            10000,
+            15000
+          ],
+          "reference_range": [
+            10000,
+            15000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 89.0,
+          "quality_coefficient": 1.25,
+          "hourly_rate": 12500,
+          "hourly_range": [
+            10000,
+            15000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 12500,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "4bcc24678c8a2f70235ac5146d1217642d07e7bc17c0c8b59ca2e6bc9ad5112f",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 12500,
         "time_amount": 12500,
@@ -988,9 +1571,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            48,
-            72
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 12500,
+            "reference_amount": 12500,
+            "amount_range": [
+              10000,
+              15000
+            ],
+            "reference_range": [
+              10000,
+              15000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 89.0,
+            "quality_coefficient": 1.25,
+            "hourly_rate": 12500,
+            "hourly_range": [
+              10000,
+              15000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 12500,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "4bcc24678c8a2f70235ac5146d1217642d07e7bc17c0c8b59ca2e6bc9ad5112f",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 12500,
           "time_amount": 12500,
@@ -1066,9 +1702,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            45,
-            105
+            75,
+            75
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 12500,
+            "reference_amount": 12500,
+            "amount_range": [
+              7500,
+              17500
+            ],
+            "reference_range": [
+              7500,
+              17500
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 75,
+            "execution_range": [
+              75,
+              75
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 75,
+            "minutes_range": [
+              75,
+              75
+            ],
+            "time_amount": 12500,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 12500,
           "time_amount": 12500,
@@ -1102,7 +1791,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.541747+00:00",
+        "created": "2026-10-03T08:21:12.213326+00:00",
         "is_demo": true
       },
       "negotiation": {
@@ -1112,7 +1801,8 @@
         "unit": "分鐘",
         "scope_version": 1,
         "rule_version": "time-value-v0.3",
-        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+        "model": "NASH_LINEAR_RESERVATION_APPROXIMATION",
+        "explanation": "以接受界限作線性偏好近似，最大化雙方增益乘積；零寬範圍只表示雙方可接受，不表示正增益。仍受時段與分輪限制，不代表已量測真實效用或客觀公平。"
       },
       "status": "ACCEPTABLE_CANDIDATE",
       "failure": null,
@@ -1162,9 +1852,62 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 15000,
+          "reference_amount": 15000,
+          "amount_range": [
+            12000,
+            18000
+          ],
+          "reference_range": [
+            12000,
+            18000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 90.0,
+          "quality_coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 15000,
         "time_amount": 15000,
@@ -1242,9 +1985,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            48,
-            72
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              12000,
+              18000
+            ],
+            "reference_range": [
+              12000,
+              18000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 90.0,
+            "quality_coefficient": 1.5,
+            "hourly_rate": 15000,
+            "hourly_range": [
+              12000,
+              18000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -1320,9 +2116,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            54,
-            126
+            90,
+            90
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              9000,
+              21000
+            ],
+            "reference_range": [
+              9000,
+              21000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 90,
+            "execution_range": [
+              90,
+              90
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 90,
+            "minutes_range": [
+              90,
+              90
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -1356,7 +2205,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.549284+00:00",
+        "created": "2026-10-03T08:21:12.222696+00:00",
         "is_demo": true
       },
       "negotiation": {
@@ -1366,7 +2215,8 @@
         "unit": "分鐘",
         "scope_version": 1,
         "rule_version": "time-value-v0.3",
-        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+        "model": "NASH_LINEAR_RESERVATION_APPROXIMATION",
+        "explanation": "以接受界限作線性偏好近似，最大化雙方增益乘積；零寬範圍只表示雙方可接受，不表示正增益。仍受時段與分輪限制，不代表已量測真實效用或客觀公平。"
       },
       "status": "ACCEPTABLE_CANDIDATE",
       "failure": null,
@@ -1416,9 +2266,62 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 15000,
+          "reference_amount": 15000,
+          "amount_range": [
+            12000,
+            18000
+          ],
+          "reference_range": [
+            12000,
+            18000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 90.0,
+          "quality_coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 15000,
         "time_amount": 15000,
@@ -1496,9 +2399,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            48,
-            72
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              12000,
+              18000
+            ],
+            "reference_range": [
+              12000,
+              18000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 90.0,
+            "quality_coefficient": 1.5,
+            "hourly_rate": 15000,
+            "hourly_range": [
+              12000,
+              18000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -1574,9 +2530,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            54,
-            126
+            90,
+            90
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              9000,
+              21000
+            ],
+            "reference_range": [
+              9000,
+              21000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 90,
+            "execution_range": [
+              90,
+              90
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 90,
+            "minutes_range": [
+              90,
+              90
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -1610,7 +2619,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.556778+00:00",
+        "created": "2026-10-03T08:21:12.231489+00:00",
         "is_demo": true
       },
       "negotiation": {
@@ -1620,7 +2629,8 @@
         "unit": "分鐘",
         "scope_version": 1,
         "rule_version": "time-value-v0.3",
-        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+        "model": "NASH_LINEAR_RESERVATION_APPROXIMATION",
+        "explanation": "以接受界限作線性偏好近似，最大化雙方增益乘積；零寬範圍只表示雙方可接受，不表示正增益。仍受時段與分輪限制，不代表已量測真實效用或客觀公平。"
       },
       "status": "ACCEPTABLE_CANDIDATE",
       "failure": null,
@@ -1670,9 +2680,62 @@
         "preparation_minutes": 10,
         "travel_minutes": 0,
         "minutes_range": [
-          56,
-          84
+          70,
+          70
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 17500,
+          "reference_amount": 17500,
+          "amount_range": [
+            14000,
+            21000
+          ],
+          "reference_range": [
+            14000,
+            21000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 90.0,
+          "quality_coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 10,
+          "travel_minutes": 0,
+          "recognized_minutes": 70,
+          "minutes_range": [
+            70,
+            70
+          ],
+          "time_amount": 17500,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 17500,
         "time_amount": 17500,
@@ -1750,9 +2813,62 @@
           "preparation_minutes": 10,
           "travel_minutes": 0,
           "minutes_range": [
-            56,
-            84
+            70,
+            70
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 17500,
+            "reference_amount": 17500,
+            "amount_range": [
+              14000,
+              21000
+            ],
+            "reference_range": [
+              14000,
+              21000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 90.0,
+            "quality_coefficient": 1.5,
+            "hourly_rate": 15000,
+            "hourly_range": [
+              12000,
+              18000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 10,
+            "travel_minutes": 0,
+            "recognized_minutes": 70,
+            "minutes_range": [
+              70,
+              70
+            ],
+            "time_amount": 17500,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 17500,
           "time_amount": 17500,
@@ -1828,9 +2944,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            63,
-            147
+            105,
+            105
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 17500,
+            "reference_amount": 17500,
+            "amount_range": [
+              10500,
+              24500
+            ],
+            "reference_range": [
+              10500,
+              24500
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 105,
+            "execution_range": [
+              105,
+              105
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 105,
+            "minutes_range": [
+              105,
+              105
+            ],
+            "time_amount": 17500,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 17500,
           "time_amount": 17500,
@@ -1864,7 +3033,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.564624+00:00",
+        "created": "2026-10-03T08:21:12.240301+00:00",
         "is_demo": true
       },
       "negotiation": {
@@ -1874,7 +3043,8 @@
         "unit": "分鐘",
         "scope_version": 1,
         "rule_version": "time-value-v0.3",
-        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+        "model": "NASH_LINEAR_RESERVATION_APPROXIMATION",
+        "explanation": "以接受界限作線性偏好近似，最大化雙方增益乘積；零寬範圍只表示雙方可接受，不表示正增益。仍受時段與分輪限制，不代表已量測真實效用或客觀公平。"
       },
       "status": "ACCEPTABLE_CANDIDATE",
       "failure": null,
@@ -1924,9 +3094,62 @@
         "preparation_minutes": 20,
         "travel_minutes": 0,
         "minutes_range": [
-          64,
-          96
+          80,
+          80
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 20000,
+          "reference_amount": 20000,
+          "amount_range": [
+            16000,
+            24000
+          ],
+          "reference_range": [
+            16000,
+            24000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 90.0,
+          "quality_coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 20,
+          "travel_minutes": 0,
+          "recognized_minutes": 80,
+          "minutes_range": [
+            80,
+            80
+          ],
+          "time_amount": 20000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 20000,
         "time_amount": 20000,
@@ -2004,9 +3227,62 @@
           "preparation_minutes": 20,
           "travel_minutes": 0,
           "minutes_range": [
-            64,
-            96
+            80,
+            80
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 20000,
+            "reference_amount": 20000,
+            "amount_range": [
+              16000,
+              24000
+            ],
+            "reference_range": [
+              16000,
+              24000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 90.0,
+            "quality_coefficient": 1.5,
+            "hourly_rate": 15000,
+            "hourly_range": [
+              12000,
+              18000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 20,
+            "travel_minutes": 0,
+            "recognized_minutes": 80,
+            "minutes_range": [
+              80,
+              80
+            ],
+            "time_amount": 20000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 20000,
           "time_amount": 20000,
@@ -2082,9 +3358,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            72,
-            168
+            120,
+            120
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 20000,
+            "reference_amount": 20000,
+            "amount_range": [
+              12000,
+              28000
+            ],
+            "reference_range": [
+              12000,
+              28000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 120,
+            "execution_range": [
+              120,
+              120
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 120,
+            "minutes_range": [
+              120,
+              120
+            ],
+            "time_amount": 20000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 20000,
           "time_amount": 20000,
@@ -2118,7 +3447,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.572182+00:00",
+        "created": "2026-10-03T08:21:12.249305+00:00",
         "is_demo": true
       },
       "negotiation": {
@@ -2128,7 +3457,8 @@
         "unit": "分鐘",
         "scope_version": 1,
         "rule_version": "time-value-v0.3",
-        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+        "model": "NASH_LINEAR_RESERVATION_APPROXIMATION",
+        "explanation": "以接受界限作線性偏好近似，最大化雙方增益乘積；零寬範圍只表示雙方可接受，不表示正增益。仍受時段與分輪限制，不代表已量測真實效用或客觀公平。"
       },
       "status": "ACCEPTABLE_CANDIDATE",
       "failure": null,
@@ -2178,9 +3508,62 @@
         "preparation_minutes": 31,
         "travel_minutes": 0,
         "minutes_range": [
-          72,
-          109
+          91,
+          91
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 22800,
+          "reference_amount": 22800,
+          "amount_range": [
+            18200,
+            27300
+          ],
+          "reference_range": [
+            18200,
+            27300
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 90.0,
+          "quality_coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 31,
+          "travel_minutes": 0,
+          "recognized_minutes": 91,
+          "minutes_range": [
+            91,
+            91
+          ],
+          "time_amount": 22800,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 22800,
         "time_amount": 22800,
@@ -2280,9 +3663,62 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 15000,
+          "reference_amount": 15000,
+          "amount_range": [
+            12000,
+            18000
+          ],
+          "reference_range": [
+            12000,
+            18000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 90.0,
+          "quality_coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 15000,
         "time_amount": 15000,
@@ -2382,9 +3818,62 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 15000,
+          "reference_amount": 15000,
+          "amount_range": [
+            12000,
+            18000
+          ],
+          "reference_range": [
+            12000,
+            18000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 90.0,
+          "quality_coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 15000,
         "time_amount": 15000,
@@ -2462,9 +3951,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            48,
-            72
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              12000,
+              18000
+            ],
+            "reference_range": [
+              12000,
+              18000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 90.0,
+            "quality_coefficient": 1.5,
+            "hourly_rate": 15000,
+            "hourly_range": [
+              12000,
+              18000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -2540,9 +4082,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            18,
-            42
+            30,
+            30
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 5000,
+            "reference_amount": 5000,
+            "amount_range": [
+              3000,
+              7000
+            ],
+            "reference_range": [
+              3000,
+              7000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 30,
+            "execution_range": [
+              30,
+              30
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 30,
+            "minutes_range": [
+              30,
+              30
+            ],
+            "time_amount": 5000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 5000,
           "time_amount": 5000,
@@ -2576,7 +4171,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.593405+00:00",
+        "created": "2026-10-03T08:21:12.273731+00:00",
         "is_demo": true
       },
       "negotiation": null,
@@ -2632,9 +4227,62 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 15000,
+          "reference_amount": 15000,
+          "amount_range": [
+            12000,
+            18000
+          ],
+          "reference_range": [
+            12000,
+            18000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 90.0,
+          "quality_coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 15000,
         "time_amount": 15000,
@@ -2712,9 +4360,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            48,
-            72
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              12000,
+              18000
+            ],
+            "reference_range": [
+              12000,
+              18000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 90.0,
+            "quality_coefficient": 1.5,
+            "hourly_rate": 15000,
+            "hourly_range": [
+              12000,
+              18000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -2790,9 +4491,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            36,
-            84
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 10000,
+            "reference_amount": 10000,
+            "amount_range": [
+              6000,
+              14000
+            ],
+            "reference_range": [
+              6000,
+              14000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 10000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 10000,
           "time_amount": 10000,
@@ -2826,7 +4580,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.601423+00:00",
+        "created": "2026-10-03T08:21:12.282603+00:00",
         "is_demo": true
       },
       "negotiation": {
@@ -2836,7 +4590,8 @@
         "unit": "分鐘",
         "scope_version": 1,
         "rule_version": "time-value-v0.3",
-        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+        "model": "NASH_LINEAR_RESERVATION_APPROXIMATION",
+        "explanation": "以接受界限作線性偏好近似，最大化雙方增益乘積；零寬範圍只表示雙方可接受，不表示正增益。仍受時段與分輪限制，不代表已量測真實效用或客觀公平。"
       },
       "status": "ACCEPTABLE_CANDIDATE",
       "failure": null,
@@ -2886,9 +4641,62 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 15000,
+          "reference_amount": 15000,
+          "amount_range": [
+            12000,
+            18000
+          ],
+          "reference_range": [
+            12000,
+            18000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 90.0,
+          "quality_coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 15000,
         "time_amount": 15000,
@@ -2966,9 +4774,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            48,
-            72
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              12000,
+              18000
+            ],
+            "reference_range": [
+              12000,
+              18000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 90.0,
+            "quality_coefficient": 1.5,
+            "hourly_rate": 15000,
+            "hourly_range": [
+              12000,
+              18000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -3044,9 +4905,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            54,
-            126
+            90,
+            90
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              9000,
+              21000
+            ],
+            "reference_range": [
+              9000,
+              21000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 90,
+            "execution_range": [
+              90,
+              90
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 90,
+            "minutes_range": [
+              90,
+              90
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -3080,7 +4994,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.609192+00:00",
+        "created": "2026-10-03T08:21:12.291777+00:00",
         "is_demo": true
       },
       "negotiation": {
@@ -3090,7 +5004,8 @@
         "unit": "分鐘",
         "scope_version": 1,
         "rule_version": "time-value-v0.3",
-        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+        "model": "NASH_LINEAR_RESERVATION_APPROXIMATION",
+        "explanation": "以接受界限作線性偏好近似，最大化雙方增益乘積；零寬範圍只表示雙方可接受，不表示正增益。仍受時段與分輪限制，不代表已量測真實效用或客觀公平。"
       },
       "status": "ACCEPTABLE_CANDIDATE",
       "failure": null,
@@ -3140,9 +5055,62 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 15000,
+          "reference_amount": 15000,
+          "amount_range": [
+            12000,
+            18000
+          ],
+          "reference_range": [
+            12000,
+            18000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 90.0,
+          "quality_coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 15000,
         "time_amount": 15000,
@@ -3220,9 +5188,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            48,
-            72
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              12000,
+              18000
+            ],
+            "reference_range": [
+              12000,
+              18000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 90.0,
+            "quality_coefficient": 1.5,
+            "hourly_rate": 15000,
+            "hourly_range": [
+              12000,
+              18000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -3298,9 +5319,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            54,
-            126
+            90,
+            90
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              9000,
+              21000
+            ],
+            "reference_range": [
+              9000,
+              21000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 90,
+            "execution_range": [
+              90,
+              90
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 90,
+            "minutes_range": [
+              90,
+              90
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -3334,7 +5408,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.616764+00:00",
+        "created": "2026-10-03T08:21:12.300721+00:00",
         "is_demo": true
       },
       "negotiation": null,
@@ -3390,9 +5464,62 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 15000,
+          "reference_amount": 15000,
+          "amount_range": [
+            12000,
+            18000
+          ],
+          "reference_range": [
+            12000,
+            18000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 90.0,
+          "quality_coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 15000,
         "time_amount": 15000,
@@ -3470,9 +5597,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            48,
-            72
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              12000,
+              18000
+            ],
+            "reference_range": [
+              12000,
+              18000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 90.0,
+            "quality_coefficient": 1.5,
+            "hourly_rate": 15000,
+            "hourly_range": [
+              12000,
+              18000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -3548,9 +5728,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            54,
-            126
+            90,
+            90
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              9000,
+              21000
+            ],
+            "reference_range": [
+              9000,
+              21000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 90,
+            "execution_range": [
+              90,
+              90
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 90,
+            "minutes_range": [
+              90,
+              90
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -3584,7 +5817,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.624256+00:00",
+        "created": "2026-10-03T08:21:12.308817+00:00",
         "is_demo": true
       },
       "negotiation": {
@@ -3594,7 +5827,8 @@
         "unit": "分鐘",
         "scope_version": 1,
         "rule_version": "time-value-v0.3",
-        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+        "model": "NASH_LINEAR_RESERVATION_APPROXIMATION",
+        "explanation": "以接受界限作線性偏好近似，最大化雙方增益乘積；零寬範圍只表示雙方可接受，不表示正增益。仍受時段與分輪限制，不代表已量測真實效用或客觀公平。"
       },
       "status": "ACCEPTABLE_CANDIDATE",
       "failure": null,
@@ -3644,9 +5878,62 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          48,
-          72
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "ESTIMATED",
+          "suggested_amount": 15000,
+          "reference_amount": 15000,
+          "amount_range": [
+            12000,
+            18000
+          ],
+          "reference_range": [
+            12000,
+            18000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": 90.0,
+          "quality_coefficient": 1.5,
+          "hourly_rate": 15000,
+          "hourly_range": [
+            12000,
+            18000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 15000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 3,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.2,
+          "independent_peers": 3,
+          "reviewed_external_count": 0,
+          "evidence_count": 3,
+          "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 15000,
         "time_amount": 15000,
@@ -3724,9 +6011,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            48,
-            72
+            60,
+            60
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              12000,
+              18000
+            ],
+            "reference_range": [
+              12000,
+              18000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 90.0,
+            "quality_coefficient": 1.5,
+            "hourly_rate": 15000,
+            "hourly_range": [
+              12000,
+              18000
+            ],
+            "execution_minutes": 60,
+            "execution_range": [
+              60,
+              60
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 60,
+            "minutes_range": [
+              60,
+              60
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 3,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.2,
+            "independent_peers": 3,
+            "reviewed_external_count": 0,
+            "evidence_count": 3,
+            "evidence_digest": "b4329e6fd8b0bc0713edfc847a67482669ac3e1639bb4cbfc9c61e05c6b0b45b",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -3802,9 +6142,62 @@
           "preparation_minutes": 0,
           "travel_minutes": 0,
           "minutes_range": [
-            54,
-            126
+            90,
+            90
           ],
+          "value_estimate": {
+            "algorithm_version": "value-estimate-v1",
+            "pricing_rule_version": "time-value-v0.3",
+            "status": "ESTIMATED",
+            "suggested_amount": 15000,
+            "reference_amount": 15000,
+            "amount_range": [
+              9000,
+              21000
+            ],
+            "reference_range": [
+              9000,
+              21000
+            ],
+            "currency": "HKD",
+            "base_hourly_rate": 10000,
+            "quality": 74.0,
+            "quality_coefficient": 1.0,
+            "hourly_rate": 10000,
+            "hourly_range": [
+              6000,
+              14000
+            ],
+            "execution_minutes": 90,
+            "execution_range": [
+              90,
+              90
+            ],
+            "preparation_minutes": 0,
+            "travel_minutes": 0,
+            "recognized_minutes": 90,
+            "minutes_range": [
+              90,
+              90
+            ],
+            "time_amount": 15000,
+            "material_amount": 0,
+            "transport_amount": 0,
+            "duration_source": "約定服務時長",
+            "duration_sample_count": 0,
+            "duration_mad_minutes": null,
+            "duration_band": 0.0,
+            "rate_band": 0.4,
+            "independent_peers": 0,
+            "reviewed_external_count": 1,
+            "evidence_count": 1,
+            "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+            "difficulty": "basic",
+            "workload": "medium",
+            "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+            "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+            "is_demo": true
+          },
           "estimate_source": "約定服務時長",
           "total_amount": 15000,
           "time_amount": 15000,
@@ -3838,7 +6231,7 @@
         ],
         "rule_version": "time-value-v0.3",
         "scope_version": 1,
-        "created": "2026-10-03T05:00:01.632105+00:00",
+        "created": "2026-10-03T08:21:12.317651+00:00",
         "is_demo": true
       },
       "negotiation": {
@@ -3849,7 +6242,8 @@
         "unit": "分鐘",
         "scope_version": 1,
         "rule_version": "time-value-v0.3",
-        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格"
+        "model": "NASH_LINEAR_RESERVATION_APPROXIMATION",
+        "explanation": "以接受界限作線性偏好近似，最大化雙方增益乘積；零寬範圍只表示雙方可接受，不表示正增益。仍受時段與分輪限制，不代表已量測真實效用或客觀公平。"
       },
       "status": "ACCEPTABLE_CANDIDATE",
       "failure": null,
@@ -3895,9 +6289,59 @@
         "preparation_minutes": 0,
         "travel_minutes": 0,
         "minutes_range": [
-          36,
-          84
+          60,
+          60
         ],
+        "value_estimate": {
+          "algorithm_version": "value-estimate-v1",
+          "pricing_rule_version": "time-value-v0.3",
+          "status": "TEMPLATE_ONLY",
+          "suggested_amount": null,
+          "reference_amount": 10000,
+          "amount_range": null,
+          "reference_range": [
+            6000,
+            14000
+          ],
+          "currency": "HKD",
+          "base_hourly_rate": 10000,
+          "quality": null,
+          "quality_coefficient": 1.0,
+          "hourly_rate": 10000,
+          "hourly_range": [
+            6000,
+            14000
+          ],
+          "execution_minutes": 60,
+          "execution_range": [
+            60,
+            60
+          ],
+          "preparation_minutes": 0,
+          "travel_minutes": 0,
+          "recognized_minutes": 60,
+          "minutes_range": [
+            60,
+            60
+          ],
+          "time_amount": 10000,
+          "material_amount": 0,
+          "transport_amount": 0,
+          "duration_source": "約定服務時長",
+          "duration_sample_count": 0,
+          "duration_mad_minutes": null,
+          "duration_band": 0.0,
+          "rate_band": 0.4,
+          "independent_peers": 0,
+          "reviewed_external_count": 0,
+          "evidence_count": 0,
+          "evidence_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "difficulty": "basic",
+          "workload": "medium",
+          "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+          "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+          "is_demo": true
+        },
         "estimate_source": "約定服務時長",
         "total_amount": 10000,
         "time_amount": 10000,

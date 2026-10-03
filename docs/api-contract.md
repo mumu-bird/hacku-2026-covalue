@@ -4,6 +4,8 @@
 
 Cookie `hour_session` 为12小时演示会话，HttpOnly/SameSite=Strict；`hour_case`选择独立数据库。授权身份只能由后端会话解析。金额为整数HKD分，时间为整数分钟，日期必须带时区。命令输入禁止未知字段。
 
+`GET /proposals/{id}/perspectives`在没有个人填写记录时也返回`estimates`，含`valuation`自动建议／范围／分项来源、`source`当前证据或协议快照；`views`仍仅本人或已授权分享的判断。`benefit`和`own_context`只提供给对应接收者本人，对方的`benefit`为null。未确认偏好使用标注的演示默认假设。`goal_plan`只供本人、未建立协议且合法的可调整反向服务；带入时需expected_version和scope_version，事务中重算金额及付款方向，不接受客户端提交金额。模型分数不作为货币或概率。公开候选的`benefit`统一按模板假设计算，`benefit_frontier_ids`为未被全面支配的候选，不包含个人目标和偏好。
+
 除演示登录和演示专用重置外，写入命令必须提供唯一 `Idempotency-Key`。携带 Origin 时必须为当前来源。更新须提交 `expected_version`；合同确认另提交 `terms_version`，结清确认另提交 `agreement_version`。
 
 ## 主要接口
@@ -25,6 +27,10 @@ Cookie `hour_session` 为12小时演示会话，HttpOnly/SameSite=Strict；`hour
 | POST /proposals/{id}/calculate | 辅助协商，可返回NO_FEASIBLE_PLAN |
 | POST /proposals/{id}/select | 原子选用当前候选，保留同服务接受条件并记录可执行轮数 |
 | GET/PUT /proposals/{id}/perspectives | 当事人的价值判断；本人可见或自愿向对方分享，不改成交条款 |
+| PUT /proposals/{id}/value-context | 本人确认目标时长及改善偏好，绑定scope_version，仅本人可读；不改价 |
+| POST /proposals/{id}/apply-value-plan | 原子带入本人目标的反向时长＋补差方案，重算建议与清除旧条件；不改已有协议 |
+| GET /value-model | 演示模型、理论来源与4组目标饱和实验 |
+| POST /value-model/simulate | 目标、品质、时长与偏好的隔离参数实验，不写业务数据 |
 | GET /mechanism | 演示18组隔离控制实验与取舍计数 |
 | POST /mechanism/simulate | 有界参数实验，不写入现有业务案例 |
 | POST /agreements | 按当前提案创建分轮合同 |

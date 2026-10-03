@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
 import { ValuePerspectives } from "./ValuePerspectives";
+import { ValueModelLab } from "./ValueModelLab";
 import { MechanismLab } from "./MechanismLab";
 import { UserStudy } from "./UserStudy";
 import { createRoot } from "react-dom/client";
@@ -325,6 +326,7 @@ function App() {
           <Route path="/me" element={<Profile />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/mechanism" element={<MechanismLab />} />
+          <Route path="/value-model" element={<ValueModelLab />} />
           <Route path="/study" element={<UserStudy />} />
           <Route path="*" element={<Empty title="找不到這個頁面" />} />
         </Routes>
@@ -1165,6 +1167,14 @@ function Listing() {
                   </div>
                 </div>
                 <div className="candidate-meta">
+                  {c.benefit?.score != null && (
+                    <span>
+                      本單幫助指標 {c.benefit.score}／100 · 演示模板假設
+                      {matching?.benefit_frontier_ids?.includes(c.user_id)
+                        ? " · 在幫助、總價與工時比較中未被其他候選全面優於"
+                        : ""}
+                    </span>
+                  )}
                   <span>
                     {money(c.hourly_rate)}／小時（{money(c.hourly_range[0])}—
                     {money(c.hourly_range[1])}） · {c.independent_peers}{" "}

@@ -2,10 +2,12 @@ import uuid
 from datetime import UTC, datetime, timedelta
 from fractions import Fraction
 from hashlib import sha256
+from math import ceil, floor
 from statistics import median
 
 from .config import POLICY, RULE_VERSION, TEMPLATES
 from .db import dump, unpack
+from .value_model import SWINGS, nash_candidates, recipient_benefit
 
 
 class DomainError(Exception):
@@ -209,6 +211,30 @@ def evaluate(s, user, scope):
     minutes = execution + prep + travel
     confidence = "充足" if len(peers) >= 3 else "有限" if rows else "待驗證"
     band = Fraction(1, 5) if len(peers) >= 3 else Fraction(2, 5)
+    if basis == "DURATION":
+        execution_range = [execution, execution]
+        duration_band = Fraction(0)
+        duration_mad = None
+    elif sufficient:
+        center = Fraction(median(samples))
+        duration_mad = median(abs(Fraction(x) - center) for x in samples)
+        duration_band = max(Fraction(1, 5), duration_mad / center)
+        execution_range = [
+            max(1, floor(execution * (1 - duration_band))),
+            max(1, ceil(execution * (1 + duration_band))),
+        ]
+    else:
+        duration_band = Fraction(2, 5)
+        duration_mad = None
+        execution_range = [
+            max(1, floor(execution * (1 - duration_band))),
+            max(1, ceil(execution * (1 + duration_band))),
+        ]
+    minutes_range = [x + prep + travel for x in execution_range]
+    hourly_range = [
+        amount_round(rate * (1 - band)),
+        amount_round(rate * (1 + band)),
+    ]
     total = (
         amount_round(Fraction(rate * minutes, 60))
         + scope.get("material_amount", 0)
@@ -224,6 +250,56 @@ def evaluate(s, user, scope):
             [{"id": r["id"], "quality": r["quality"], "data": r["data"]} for r in rows]
         ).encode()
     ).hexdigest()
+    fees = scope.get("material_amount", 0) + scope.get("transport_amount", 0)
+    total_range = [
+        amount_round(Fraction(hourly_range[i] * minutes_range[i], 60)) + fees
+        for i in (0, 1)
+    ]
+    suggested = eligible and q is not None
+    valuation = {
+        "algorithm_version": "value-estimate-v1",
+        "pricing_rule_version": RULE_VERSION,
+        "status": "ESTIMATED"
+        if suggested
+        else "TEMPLATE_ONLY"
+        if eligible
+        else "NOT_ELIGIBLE",
+        "suggested_amount": total if suggested else None,
+        "reference_amount": total,
+        "amount_range": total_range if suggested else None,
+        "reference_range": total_range,
+        "currency": POLICY["currency"],
+        "base_hourly_rate": template["base_rate"],
+        "quality": q,
+        "quality_coefficient": float(k),
+        "hourly_rate": rate,
+        "hourly_range": hourly_range,
+        "execution_minutes": execution,
+        "execution_range": execution_range,
+        "preparation_minutes": prep,
+        "travel_minutes": travel,
+        "recognized_minutes": minutes,
+        "minutes_range": minutes_range,
+        "time_amount": total - fees,
+        "material_amount": scope.get("material_amount", 0),
+        "transport_amount": scope.get("transport_amount", 0),
+        "duration_source": source,
+        "duration_sample_count": len(samples),
+        "duration_mad_minutes": float(duration_mad)
+        if duration_mad is not None
+        else None,
+        "duration_band": float(duration_band),
+        "rate_band": float(band),
+        "independent_peers": len(peers),
+        "reviewed_external_count": external,
+        "evidence_count": len(rows),
+        "evidence_digest": digest,
+        "difficulty": scope.get("difficulty", "basic"),
+        "workload": scope.get("workload", "medium"),
+        "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+        "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+        "is_demo": True,
+    }
     return {
         "user_id": user,
         "category": scope["category"],
@@ -239,18 +315,13 @@ def evaluate(s, user, scope):
         "confidence": confidence,
         "coefficient": float(k),
         "hourly_rate": rate,
-        "hourly_range": [
-            amount_round(rate * (1 - band)),
-            amount_round(rate * (1 + band)),
-        ],
+        "hourly_range": hourly_range,
         "estimated_minutes": minutes,
         "execution_minutes": execution,
         "preparation_minutes": prep,
         "travel_minutes": travel,
-        "minutes_range": [
-            max(1, int(minutes * (1 - band))),
-            max(1, int(minutes * (1 + band))),
-        ],
+        "minutes_range": minutes_range,
+        "value_estimate": valuation,
         "estimate_source": source,
         "total_amount": total,
         "time_amount": amount_round(Fraction(rate * minutes, 60)),
@@ -300,6 +371,9 @@ def matches(s, listing):
         if user == listing["owner_id"] or user in seen:
             continue
         result = evaluate(s, user, scope)
+        result["benefit"] = recipient_benefit(
+            result, scope["category"], scope.get("duration", 60)
+        )
         d = offer["data"]
         p = capacity(s, user, listing["category"])
         reason = None
@@ -345,9 +419,26 @@ def matches(s, listing):
     pending = sorted(
         [c for c in candidates if c["quality"] is None], key=lambda c: c["user_id"]
     )
+    frontier = [
+        c["user_id"]
+        for c in verified
+        if not any(
+            other["user_id"] != c["user_id"]
+            and other["benefit"]["score"] >= c["benefit"]["score"]
+            and other["total_amount"] <= c["total_amount"]
+            and other["estimated_minutes"] <= c["estimated_minutes"]
+            and (
+                other["benefit"]["score"] > c["benefit"]["score"]
+                or other["total_amount"] < c["total_amount"]
+                or other["estimated_minutes"] < c["estimated_minutes"]
+            )
+            for other in verified
+        )
+    ]
     return {
         "candidates": verified + pending,
         "pending_verification": pending,
+        "benefit_frontier_ids": frontier,
         "excluded": excluded,
         "recommended_id": verified[0]["user_id"] if verified else None,
         "budget_id": min(verified, key=lambda c: (c["total_amount"], c["user_id"]))[
@@ -600,6 +691,7 @@ def recommend(s, user, p, expected):
     rec = recommendation(s, p)
     if rec["reverse_minutes"] != p["data"].get("reverse_minutes"):
         s.execute("DELETE FROM perspectives WHERE proposal_id=?", (p["id"],))
+        s.execute("DELETE FROM value_contexts WHERE proposal_id=?", (p["id"],))
     d = {
         **p["data"],
         "recommendation": rec,
@@ -740,39 +832,209 @@ def save_perspective(s, user, p, body):
     return perspectives(s, user, p)
 
 
+def save_value_context(s, user, p, body):
+    participant(p, user)
+    version(p, body["expected_version"])
+    if body["scope_version"] != p["scope_version"]:
+        fail("VERSION_CONFLICT", "服務範圍已變更，請重新確認目標")
+    if p["mode"] == "MONEY" and user == p["provider_id"]:
+        fail("INVALID_INPUT", "本單此方接收款項，沒有接收服務目標", status=422)
+    data = {
+        "target_minutes": body["target_minutes"],
+        "swings": {k: body[f"swing_{k}"] for k in SWINGS},
+    }
+    s.execute(
+        "INSERT INTO value_contexts(proposal_id,user_id,scope_version,data) VALUES(?,?,?,?) ON CONFLICT(proposal_id,user_id) DO UPDATE SET scope_version=excluded.scope_version,data=excluded.data",
+        (p["id"], user, p["scope_version"], dump(data)),
+    )
+    emit(s, user, "proposal", p["id"], "VALUE_CONTEXT_CONFIRMED")
+    return perspectives(s, user, p)
+
+
+def goal_plan(s, user, p, target):
+    if user != p["provider_id"] or p["mode"] == "MONEY" or not p["data"].get("reverse"):
+        return None
+    if TEMPLATES[p["data"]["reverse"]["category"]]["basis"] != "DURATION" or any(
+        "HYBRID" not in scope.get("accepted_modes", [])
+        for scope in (p["data"]["scope"], p["data"]["reverse"])
+    ):
+        return None
+    if s.one(
+        "SELECT id FROM agreements WHERE proposal_id=? AND status!='CANCELLED'",
+        (p["id"],),
+    ):
+        return None
+    minutes = ceil(Fraction(target, POLICY["time_step"])) * POLICY["time_step"]
+    if minutes >= p["data"]["reverse_minutes"]:
+        return None
+    candidate = p | {"mode": "HYBRID", "data": p["data"] | {"reverse_minutes": minutes}}
+    try:
+        rec = recommendation(s, candidate)
+    except DomainError:
+        return None
+    return {
+        "mode": "HYBRID",
+        "reverse_minutes": minutes,
+        "amount": rec["amount"],
+        "payer_id": rec["payer_id"],
+        "payee_id": rec["payee_id"],
+        "rounds": rec["rounds"],
+        "explanation": "目標時長達到後，額外時長不增加此模型的時長受益。減少反向服務，以本單參考價差建議補差；仍須雙方同意現金與全部條件。",
+    }
+
+
+def apply_value_plan(s, user, p, body):
+    participant(p, user)
+    version(p, body["expected_version"])
+    if body["scope_version"] != p["scope_version"]:
+        fail("VERSION_CONFLICT", "目標方案的適用範圍已更新")
+    plan = goal_plan(s, user, p, body["target_minutes"])
+    if not plan:
+        fail(
+            "NO_FEASIBLE_PLAN",
+            "目前沒有可帶入的目標方案；已建立協議須保留原條款",
+            status=422,
+        )
+    updated = revise(
+        s,
+        user,
+        p,
+        {
+            "expected_version": p["version"],
+            "mode": plan["mode"],
+            "reverse_minutes": plan["reverse_minutes"],
+            "amount": plan["amount"],
+            "cash_payer_id": plan["payer_id"],
+        },
+    )
+    updated = recommend(s, user, updated, updated["version"])
+    save_value_context(
+        s,
+        user,
+        updated,
+        body
+        | {
+            "expected_version": updated["version"],
+            "scope_version": updated["scope_version"],
+        },
+    )
+    return updated
+
+
 def perspectives(s, user, p):
     participant(p, user)
+    context_row = unpack(
+        s.one(
+            "SELECT * FROM value_contexts WHERE proposal_id=? AND user_id=? AND scope_version=?",
+            (p["id"], user, p["scope_version"]),
+        )
+    )
+    context = context_row["data"] if context_row else None
+    agreement = s.one(
+        "SELECT * FROM agreements WHERE proposal_id=? AND status!='CANCELLED'",
+        (p["id"],),
+    )
+    snapshot = unpack(agreement)["data"] if agreement else None
+    estimates = []
+    services = [(p["requester_id"], p["provider_id"], p["data"]["scope"], "main")]
+    if p["mode"] != "MONEY" and p["data"].get("reverse"):
+        services.append(
+            (
+                p["provider_id"],
+                p["requester_id"],
+                p["data"]["reverse"] | {"duration": p["data"]["reverse_minutes"]},
+                "reverse",
+            )
+        )
+    for recipient, service_provider, received, side in services:
+        reference = (
+            snapshot[f"{side}_estimate"]
+            if snapshot
+            else evaluate(s, service_provider, received)
+        )
+        valuation = reference.get("value_estimate")
+        if not valuation:
+            # Preserve old agreements' original estimates; never use today's evidence
+            # to retrofit or reprice an existing agreement.
+            valuation = {
+                "algorithm_version": "legacy-snapshot",
+                "status": "ESTIMATED"
+                if reference["quality"] is not None and reference["eligible"]
+                else "TEMPLATE_ONLY",
+                "suggested_amount": reference["total_amount"]
+                if reference["quality"] is not None and reference["eligible"]
+                else None,
+                "reference_amount": reference["total_amount"],
+                "amount_range": None,
+                "range_basis": "沿用原協議估值；此歷史快照未保存新版總價範圍",
+                "duration_source": reference["estimate_source"],
+                "formula": "沿用建立協議時的能力與投入快照",
+                "is_demo": True,
+            }
+        target = (
+            context["target_minutes"]
+            if context and recipient == user
+            else p["data"]["reverse" if side == "reverse" else "scope"].get(
+                "duration", 60
+            )
+        )
+        benefit = (
+            recipient_benefit(
+                reference,
+                received["category"],
+                target,
+                context["swings"] if context and recipient == user else None,
+                bool(context),
+            )
+            if recipient == user
+            else None
+        )
+        estimates.append(
+            {
+                "user_id": recipient,
+                "provider_id": service_provider,
+                "received_title": received["title"],
+                "platform_value": reference["total_amount"],
+                "platform_minutes": reference["estimated_minutes"],
+                "valuation": valuation,
+                "benefit": benefit,
+                "source": "AGREEMENT_SNAPSHOT" if snapshot else "CURRENT_EVIDENCE",
+                "agreement_id": agreement["id"] if agreement else None,
+            }
+        )
     rows = s.all(
         "SELECT * FROM perspectives WHERE proposal_id=? AND scope_version=? AND (user_id=? OR shared=1)",
         (p["id"], p["scope_version"], user),
     )
     result = []
     for row in rows:
-        received = (
-            p["data"]["reverse"] | {"duration": p["data"]["reverse_minutes"]}
-            if row["user_id"] == p["provider_id"]
-            else p["data"]["scope"]
-        )
-        service_provider = (
-            p["requester_id"]
-            if row["user_id"] == p["provider_id"]
-            else p["provider_id"]
-        )
-        reference = evaluate(s, service_provider, received)
+        estimate = next(x for x in estimates if x["user_id"] == row["user_id"])
         result.append(
             {
                 **row,
-                "received_title": received["title"],
-                "platform_value": reference["total_amount"],
-                "platform_minutes": reference["estimated_minutes"],
-                "difference": row["received_value"] - reference["total_amount"],
-                "reference_basis": reference["estimate_source"],
+                "received_title": estimate["received_title"],
+                "platform_value": estimate["platform_value"],
+                "platform_minutes": estimate["platform_minutes"],
+                "difference": row["received_value"] - estimate["platform_value"],
+                "reference_basis": estimate["valuation"]["duration_source"],
             }
         )
     return {
         "scope_version": p["scope_version"],
+        "own_context": context,
+        "goal_plan": goal_plan(
+            s,
+            user,
+            p,
+            context["target_minutes"]
+            if context
+            else p["data"].get("reverse", {}).get("duration", 60),
+        )
+        if p["data"].get("reverse")
+        else None,
+        "estimates": estimates,
         "views": result,
-        "explanation": "個人對收到服務的價值判斷與平台參考並列；不是成交價、不自動改價。私人接受底線始終不公開。",
+        "explanation": "平台先根據相關能力、工時與納入投入給出估值；個人可採用或調整。確認價值不自動改成交條件，私人接受底線始終不公開。",
     }
 
 
@@ -824,14 +1086,14 @@ def calculate(s, user, p, expected):
         ]
     if not candidates:
         fail("NO_FEASIBLE_PLAN", "時段或數量限制內沒有方案", status=422)
-    loss = min(abs(2 * x - low - high) for x in candidates)
-    result = sorted(x for x in candidates if abs(2 * x - low - high) == loss)
+    result = nash_candidates(candidates, low, high)
     return {
         "candidates": result,
         "unit": "分鐘" if p["mode"] == "BARTER" else "港仙",
         "scope_version": p["scope_version"],
         "rule_version": RULE_VERSION,
-        "explanation": "在雙方接受範圍內取最接近中點的合法候選；不代表客觀公平價格",
+        "model": "NASH_LINEAR_RESERVATION_APPROXIMATION",
+        "explanation": "以接受界限作線性偏好近似，最大化雙方增益乘積；零寬範圍只表示雙方可接受，不表示正增益。仍受時段與分輪限制，不代表已量測真實效用或客觀公平。",
     }
 
 

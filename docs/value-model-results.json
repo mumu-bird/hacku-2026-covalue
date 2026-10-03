@@ -1,0 +1,448 @@
+{
+  "model_version": "contextual-value-v1",
+  "sources": [
+    {
+      "title": "Becker (1965): A Theory of the Allocation of Time",
+      "url": "https://academic.oup.com/ej/article/75/299/493/5250146",
+      "application": "時間投入與產出效用分開建模；演示基準不等於個人的機會成本"
+    },
+    {
+      "title": "UK Government Analysis Function (2024): MCDA",
+      "url": "https://analysisfunction.civilservice.gov.uk/policy-store/an-introductory-guide-to-mcda/",
+      "application": "定義指標尺度、偏好權重、成本分列與敏感性分析；加法模型有偏好獨立假設"
+    },
+    {
+      "title": "Nash (1950): The Bargaining Problem",
+      "url": "https://www.haverford.edu/sites/default/files/Nash1950.pdf",
+      "application": "在可行集合最大化雙方相對不成交的增益乘積；本版只採線性保留界限近似"
+    }
+  ],
+  "is_demo": true,
+  "experiments": [
+    {
+      "inputs": {
+        "received_minutes": 30,
+        "target_minutes": 60,
+        "quality": 74,
+        "swing_fit": 40,
+        "swing_quality": 40,
+        "swing_quantity": 20
+      },
+      "reference": {
+        "algorithm_version": "value-estimate-v1",
+        "pricing_rule_version": "time-value-v0.3",
+        "status": "ESTIMATED",
+        "suggested_amount": 5000,
+        "reference_amount": 5000,
+        "amount_range": [
+          3000,
+          7000
+        ],
+        "reference_range": [
+          3000,
+          7000
+        ],
+        "currency": "HKD",
+        "base_hourly_rate": 10000,
+        "quality": 74.0,
+        "quality_coefficient": 1.0,
+        "hourly_rate": 10000,
+        "hourly_range": [
+          6000,
+          14000
+        ],
+        "execution_minutes": 30,
+        "execution_range": [
+          30,
+          30
+        ],
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "recognized_minutes": 30,
+        "minutes_range": [
+          30,
+          30
+        ],
+        "time_amount": 5000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "duration_source": "約定服務時長",
+        "duration_sample_count": 0,
+        "duration_mad_minutes": null,
+        "duration_band": 0.0,
+        "rate_band": 0.4,
+        "independent_peers": 0,
+        "reviewed_external_count": 1,
+        "evidence_count": 1,
+        "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+        "difficulty": "basic",
+        "workload": "medium",
+        "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+        "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+        "is_demo": true
+      },
+      "benefit": {
+        "model_version": "contextual-value-v1",
+        "score": 79.6,
+        "scale": "0—100本單幫助指標；只供同一需求的方案比較",
+        "components": {
+          "fit": 100.0,
+          "quality": 74.0,
+          "quantity": 50.0
+        },
+        "weights": {
+          "fit": 0.4,
+          "quality": 0.4,
+          "quantity": 0.2
+        },
+        "contributions": {
+          "fit": 40.0,
+          "quality": 29.6,
+          "quantity": 10.0
+        },
+        "target_minutes": 60,
+        "extra_minutes_after_target": 0,
+        "quantity_basis": "min(約定服務分鐘 ÷ 目標分鐘, 1)；達到目標後停止增加此項受益",
+        "preference_source": "SYNTHETIC_EXPERIMENT",
+        "sensitivity_range": [
+          76.91,
+          82.89
+        ],
+        "sensitivity_basis": "逐項改變偏好評分±10並重新正規化；不是統計置信區間",
+        "evidence_score": 10,
+        "outcome_plan": {
+          "goal": "完成有回饋的口語練習",
+          "observable_checks": [
+            "完成約定話題與目標練習時長",
+            "回饋能指向具體問題",
+            "同一題型記錄練習前後的表現"
+          ],
+          "unmeasured": "交流時長不等於流利度改善；目前未量測長期進步"
+        },
+        "actual_outcome_measured": false,
+        "limitations": "加法模型假設各指標可分開權衡；品質是相關歷史的代理量，不是成功機率。不能將分數乘上價格，也不能跨人比較幸福或公平。缺少技能或能力證據時不生成綜合分數。",
+        "is_demo": true
+      },
+      "is_demo": true
+    },
+    {
+      "inputs": {
+        "received_minutes": 60,
+        "target_minutes": 60,
+        "quality": 74,
+        "swing_fit": 40,
+        "swing_quality": 40,
+        "swing_quantity": 20
+      },
+      "reference": {
+        "algorithm_version": "value-estimate-v1",
+        "pricing_rule_version": "time-value-v0.3",
+        "status": "ESTIMATED",
+        "suggested_amount": 10000,
+        "reference_amount": 10000,
+        "amount_range": [
+          6000,
+          14000
+        ],
+        "reference_range": [
+          6000,
+          14000
+        ],
+        "currency": "HKD",
+        "base_hourly_rate": 10000,
+        "quality": 74.0,
+        "quality_coefficient": 1.0,
+        "hourly_rate": 10000,
+        "hourly_range": [
+          6000,
+          14000
+        ],
+        "execution_minutes": 60,
+        "execution_range": [
+          60,
+          60
+        ],
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "recognized_minutes": 60,
+        "minutes_range": [
+          60,
+          60
+        ],
+        "time_amount": 10000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "duration_source": "約定服務時長",
+        "duration_sample_count": 0,
+        "duration_mad_minutes": null,
+        "duration_band": 0.0,
+        "rate_band": 0.4,
+        "independent_peers": 0,
+        "reviewed_external_count": 1,
+        "evidence_count": 1,
+        "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+        "difficulty": "basic",
+        "workload": "medium",
+        "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+        "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+        "is_demo": true
+      },
+      "benefit": {
+        "model_version": "contextual-value-v1",
+        "score": 89.6,
+        "scale": "0—100本單幫助指標；只供同一需求的方案比較",
+        "components": {
+          "fit": 100.0,
+          "quality": 74.0,
+          "quantity": 100.0
+        },
+        "weights": {
+          "fit": 0.4,
+          "quality": 0.4,
+          "quantity": 0.2
+        },
+        "contributions": {
+          "fit": 40.0,
+          "quality": 29.6,
+          "quantity": 20.0
+        },
+        "target_minutes": 60,
+        "extra_minutes_after_target": 0,
+        "quantity_basis": "min(約定服務分鐘 ÷ 目標分鐘, 1)；達到目標後停止增加此項受益",
+        "preference_source": "SYNTHETIC_EXPERIMENT",
+        "sensitivity_range": [
+          88.18,
+          91.33
+        ],
+        "sensitivity_basis": "逐項改變偏好評分±10並重新正規化；不是統計置信區間",
+        "evidence_score": 10,
+        "outcome_plan": {
+          "goal": "完成有回饋的口語練習",
+          "observable_checks": [
+            "完成約定話題與目標練習時長",
+            "回饋能指向具體問題",
+            "同一題型記錄練習前後的表現"
+          ],
+          "unmeasured": "交流時長不等於流利度改善；目前未量測長期進步"
+        },
+        "actual_outcome_measured": false,
+        "limitations": "加法模型假設各指標可分開權衡；品質是相關歷史的代理量，不是成功機率。不能將分數乘上價格，也不能跨人比較幸福或公平。缺少技能或能力證據時不生成綜合分數。",
+        "is_demo": true
+      },
+      "is_demo": true
+    },
+    {
+      "inputs": {
+        "received_minutes": 90,
+        "target_minutes": 60,
+        "quality": 74,
+        "swing_fit": 40,
+        "swing_quality": 40,
+        "swing_quantity": 20
+      },
+      "reference": {
+        "algorithm_version": "value-estimate-v1",
+        "pricing_rule_version": "time-value-v0.3",
+        "status": "ESTIMATED",
+        "suggested_amount": 15000,
+        "reference_amount": 15000,
+        "amount_range": [
+          9000,
+          21000
+        ],
+        "reference_range": [
+          9000,
+          21000
+        ],
+        "currency": "HKD",
+        "base_hourly_rate": 10000,
+        "quality": 74.0,
+        "quality_coefficient": 1.0,
+        "hourly_rate": 10000,
+        "hourly_range": [
+          6000,
+          14000
+        ],
+        "execution_minutes": 90,
+        "execution_range": [
+          90,
+          90
+        ],
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "recognized_minutes": 90,
+        "minutes_range": [
+          90,
+          90
+        ],
+        "time_amount": 15000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "duration_source": "約定服務時長",
+        "duration_sample_count": 0,
+        "duration_mad_minutes": null,
+        "duration_band": 0.0,
+        "rate_band": 0.4,
+        "independent_peers": 0,
+        "reviewed_external_count": 1,
+        "evidence_count": 1,
+        "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+        "difficulty": "basic",
+        "workload": "medium",
+        "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+        "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+        "is_demo": true
+      },
+      "benefit": {
+        "model_version": "contextual-value-v1",
+        "score": 89.6,
+        "scale": "0—100本單幫助指標；只供同一需求的方案比較",
+        "components": {
+          "fit": 100.0,
+          "quality": 74.0,
+          "quantity": 100.0
+        },
+        "weights": {
+          "fit": 0.4,
+          "quality": 0.4,
+          "quantity": 0.2
+        },
+        "contributions": {
+          "fit": 40.0,
+          "quality": 29.6,
+          "quantity": 20.0
+        },
+        "target_minutes": 60,
+        "extra_minutes_after_target": 30,
+        "quantity_basis": "min(約定服務分鐘 ÷ 目標分鐘, 1)；達到目標後停止增加此項受益",
+        "preference_source": "SYNTHETIC_EXPERIMENT",
+        "sensitivity_range": [
+          88.18,
+          91.33
+        ],
+        "sensitivity_basis": "逐項改變偏好評分±10並重新正規化；不是統計置信區間",
+        "evidence_score": 10,
+        "outcome_plan": {
+          "goal": "完成有回饋的口語練習",
+          "observable_checks": [
+            "完成約定話題與目標練習時長",
+            "回饋能指向具體問題",
+            "同一題型記錄練習前後的表現"
+          ],
+          "unmeasured": "交流時長不等於流利度改善；目前未量測長期進步"
+        },
+        "actual_outcome_measured": false,
+        "limitations": "加法模型假設各指標可分開權衡；品質是相關歷史的代理量，不是成功機率。不能將分數乘上價格，也不能跨人比較幸福或公平。缺少技能或能力證據時不生成綜合分數。",
+        "is_demo": true
+      },
+      "is_demo": true
+    },
+    {
+      "inputs": {
+        "received_minutes": 120,
+        "target_minutes": 60,
+        "quality": 74,
+        "swing_fit": 40,
+        "swing_quality": 40,
+        "swing_quantity": 20
+      },
+      "reference": {
+        "algorithm_version": "value-estimate-v1",
+        "pricing_rule_version": "time-value-v0.3",
+        "status": "ESTIMATED",
+        "suggested_amount": 20000,
+        "reference_amount": 20000,
+        "amount_range": [
+          12000,
+          28000
+        ],
+        "reference_range": [
+          12000,
+          28000
+        ],
+        "currency": "HKD",
+        "base_hourly_rate": 10000,
+        "quality": 74.0,
+        "quality_coefficient": 1.0,
+        "hourly_rate": 10000,
+        "hourly_range": [
+          6000,
+          14000
+        ],
+        "execution_minutes": 120,
+        "execution_range": [
+          120,
+          120
+        ],
+        "preparation_minutes": 0,
+        "travel_minutes": 0,
+        "recognized_minutes": 120,
+        "minutes_range": [
+          120,
+          120
+        ],
+        "time_amount": 20000,
+        "material_amount": 0,
+        "transport_amount": 0,
+        "duration_source": "約定服務時長",
+        "duration_sample_count": 0,
+        "duration_mad_minutes": null,
+        "duration_band": 0.0,
+        "rate_band": 0.4,
+        "independent_peers": 0,
+        "reviewed_external_count": 1,
+        "evidence_count": 1,
+        "evidence_digest": "4c92ad195c6de1a15828955191e5ab9bf9efb88066a6754ee7c7725aab64d583",
+        "difficulty": "basic",
+        "workload": "medium",
+        "formula": "小時基準 × 能力系數 × 認可投入分鐘 ÷ 60 ＋ 單列現金費用",
+        "range_basis": "時薪演示範圍與工時範圍組合；固定時長及已納入的準備、差旅不作隨機浮動；不是統計置信區間",
+        "is_demo": true
+      },
+      "benefit": {
+        "model_version": "contextual-value-v1",
+        "score": 89.6,
+        "scale": "0—100本單幫助指標；只供同一需求的方案比較",
+        "components": {
+          "fit": 100.0,
+          "quality": 74.0,
+          "quantity": 100.0
+        },
+        "weights": {
+          "fit": 0.4,
+          "quality": 0.4,
+          "quantity": 0.2
+        },
+        "contributions": {
+          "fit": 40.0,
+          "quality": 29.6,
+          "quantity": 20.0
+        },
+        "target_minutes": 60,
+        "extra_minutes_after_target": 60,
+        "quantity_basis": "min(約定服務分鐘 ÷ 目標分鐘, 1)；達到目標後停止增加此項受益",
+        "preference_source": "SYNTHETIC_EXPERIMENT",
+        "sensitivity_range": [
+          88.18,
+          91.33
+        ],
+        "sensitivity_basis": "逐項改變偏好評分±10並重新正規化；不是統計置信區間",
+        "evidence_score": 10,
+        "outcome_plan": {
+          "goal": "完成有回饋的口語練習",
+          "observable_checks": [
+            "完成約定話題與目標練習時長",
+            "回饋能指向具體問題",
+            "同一題型記錄練習前後的表現"
+          ],
+          "unmeasured": "交流時長不等於流利度改善；目前未量測長期進步"
+        },
+        "actual_outcome_measured": false,
+        "limitations": "加法模型假設各指標可分開權衡；品質是相關歷史的代理量，不是成功機率。不能將分數乘上價格，也不能跨人比較幸福或公平。缺少技能或能力證據時不生成綜合分數。",
+        "is_demo": true
+      },
+      "is_demo": true
+    }
+  ],
+  "method": "相同能力與目標，改變服務分鐘。使用正式評估、受益模型和隔離SQLite；不是用戶研究。"
+}

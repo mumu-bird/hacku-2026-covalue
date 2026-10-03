@@ -2559,3 +2559,90 @@ legend {
     min-width: 580px;
   }
 }
+.algorithm-estimate {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line, #dce3dd);
+  margin-bottom: 16px;
+}
+.algorithm-estimate > strong {
+  display: block;
+  font-size: 28px;
+  color: #164e43;
+  margin: 8px 0;
+}
+.algorithm-estimate details {
+  margin-top: 12px;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.algorithm-estimate summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.algorithm-estimate details p {
+  margin: 10px 0;
+}
+.algorithm-estimate small {
+  display: block;
+  line-height: 1.7;
+}
+.estimate-adoption {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.benefit-panel {
+  border-top: 1px solid #dce3dd;
+  padding-top: 24px;
+  margin-top: 24px;
+}
+.benefit-panel details {
+  margin: 16px 0;
+  overflow-wrap: anywhere;
+}
+.benefit-panel summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.benefit-score {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+.benefit-score strong {
+  font-size: 26px;
+  color: #164e43;
+}
+.benefit-components {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.benefit-components b,
+.benefit-components small {
+  display: block;
+  padding: 4px 0;
+}
+.value-context-form {
+  display: grid;
+  gap: 12px;
+  padding: 16px 0;
+}
+.value-context-form input {
+  width: 100%;
+}
+.notice.goal-plan {
+  display: block;
+  margin-top: 20px;
+}
+.value-model-page li {
+  margin-bottom: 12px;
+  line-height: 1.8;
+}
+.value-model-result {
+  padding: 20px 0;
+}

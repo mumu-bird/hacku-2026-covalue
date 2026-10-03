@@ -105,6 +105,58 @@
         }
       }
     },
+    "/api/v1/value-model": {
+      "get": {
+        "summary": "Value Report",
+        "operationId": "value_report_api_v1_value_model_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/value-model/simulate": {
+      "post": {
+        "summary": "Value Simulate",
+        "operationId": "value_simulate_api_v1_value_model_simulate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValueSimulation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/demo/users": {
       "get": {
         "summary": "Users",
@@ -977,6 +1029,100 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Perspective"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/proposals/{id}/value-context": {
+      "put": {
+        "summary": "Save Value Context",
+        "operationId": "save_value_context_api_v1_proposals__id__value_context_put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValueContext"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/proposals/{id}/apply-value-plan": {
+      "post": {
+        "summary": "Apply Value Plan",
+        "operationId": "apply_value_plan_api_v1_proposals__id__apply_value_plan_post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValueContext"
               }
             }
           }
@@ -3117,6 +3263,104 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "ValueContext": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "scope_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Scope Version"
+          },
+          "target_minutes": {
+            "type": "integer",
+            "maximum": 1440.0,
+            "minimum": 15.0,
+            "title": "Target Minutes",
+            "default": 60
+          },
+          "swing_fit": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Swing Fit",
+            "default": 40
+          },
+          "swing_quality": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Swing Quality",
+            "default": 40
+          },
+          "swing_quantity": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Swing Quantity",
+            "default": 20
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "scope_version"
+        ],
+        "title": "ValueContext"
+      },
+      "ValueSimulation": {
+        "properties": {
+          "received_minutes": {
+            "type": "integer",
+            "maximum": 240.0,
+            "minimum": 15.0,
+            "title": "Received Minutes",
+            "default": 90
+          },
+          "target_minutes": {
+            "type": "integer",
+            "maximum": 240.0,
+            "minimum": 15.0,
+            "title": "Target Minutes",
+            "default": 60
+          },
+          "quality": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Quality",
+            "default": 74
+          },
+          "swing_fit": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Swing Fit",
+            "default": 40
+          },
+          "swing_quality": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Swing Quality",
+            "default": 40
+          },
+          "swing_quantity": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Swing Quantity",
+            "default": 20
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ValueSimulation"
       }
     }
   }

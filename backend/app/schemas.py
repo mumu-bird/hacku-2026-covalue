@@ -87,6 +87,35 @@ class Perspective(Command):
     shared: bool = False
 
 
+class ValueContext(Command):
+    scope_version: int = Field(ge=1)
+    target_minutes: int = Field(default=60, ge=15, le=1440)
+    swing_fit: int = Field(default=40, ge=0, le=100)
+    swing_quality: int = Field(default=40, ge=0, le=100)
+    swing_quantity: int = Field(default=20, ge=0, le=100)
+
+    @model_validator(mode="after")
+    def positive_swings(self):
+        if self.swing_fit + self.swing_quality + self.swing_quantity == 0:
+            raise ValueError("至少一項偏好評分大於零")
+        return self
+
+
+class ValueSimulation(Input):
+    received_minutes: int = Field(default=90, ge=15, le=240)
+    target_minutes: int = Field(default=60, ge=15, le=240)
+    quality: int = Field(default=74, ge=0, le=100)
+    swing_fit: int = Field(default=40, ge=0, le=100)
+    swing_quality: int = Field(default=40, ge=0, le=100)
+    swing_quantity: int = Field(default=20, ge=0, le=100)
+
+    @model_validator(mode="after")
+    def positive_swings(self):
+        if self.swing_fit + self.swing_quality + self.swing_quantity == 0:
+            raise ValueError("至少一項偏好評分大於零")
+        return self
+
+
 class MechanismInput(Input):
     quality: int = Field(default=90, ge=0, le=100)
     main_minutes: int = Field(default=60, ge=15, le=240)
